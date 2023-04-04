@@ -36,9 +36,8 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 9.0
-height = 12.0
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 15.7, 15.7 )
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 11.0
@@ -56,7 +55,7 @@ playing = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 3 )
 scale = Vector2( 1.5, 1.5 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 0
