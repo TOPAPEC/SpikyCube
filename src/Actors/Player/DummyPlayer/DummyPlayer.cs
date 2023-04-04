@@ -64,28 +64,16 @@ public class DummyPlayer : KinematicBody2D
                 _isMoving = true;
                 _currentVelocity = Vector2.Down * Speed;
             }
-            else if (Input.IsActionPressed("move_up") && IsOnFloor())
+            else if (Input.IsActionPressed("move_up"))
             {
                 _isMoving = true;
-                _isMovingUp = true;
                 _currentVelocity = Vector2.Up * Speed;
             }
-            else
-            {
-                _currentVelocity = Vector2.Down * Gravity;
-            }
         }
 
-        if (!_isMovingUp)
-        {
-            _currentGravity = Mathf.Lerp(_currentGravity, Gravity, 0.3f * delta);
-        }
-
-        if (!(MoveAndSlide(_currentVelocity + Vector2.Down * _currentGravity, Vector2.Up) == _currentVelocity))
+        if (!(MoveAndSlide(_currentVelocity, Vector2.Up) == _currentVelocity))
         {
             _isMoving = false;
-            _isMovingUp = false;
-            _currentGravity = 0f;
         }
 
     }
