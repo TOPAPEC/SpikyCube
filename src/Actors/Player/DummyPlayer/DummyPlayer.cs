@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public class DummyPlayer : KinematicBody2D
 {
@@ -8,12 +9,20 @@ public class DummyPlayer : KinematicBody2D
     // private string b = "text";
 
     // Called when the node enters the scene tree for the first time.
-    [Export] public int Speed = 800;
+    [Export] public int Speed = 1000;
+    [Export] public int Gravity = 500;
     private bool _isMoving;
+    private bool _isMovingUp;
     private Vector2 _currentVelocity;
+    private float _currentGravity;
+    private AnimatedSprite _playerSprite;
+    private Area2D _hitbox;
+    
     public override void _Ready()
     {
-        
+        _playerSprite = GetNode<AnimatedSprite>("PlayerSprite");
+        _hitbox = GetNode<Area2D>("Hitbox");
+        _hitbox.Connect("area_entered", this, "Die");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,19 +31,31 @@ public class DummyPlayer : KinematicBody2D
 //      
 //  }
 
+    public void Freee()
+    {
+        QueueFree();
+    }
+
+    public void Die(Area2D other)
+    {
+        _playerSprite.Animation = "death";
+        _playerSprite.Connect("animation_finished", this, "Freee");
+    }
+
     public override void _PhysicsProcess(float delta)
     {
         base._PhysicsProcess(delta);
-        GD.Print(_currentVelocity);
         if (!_isMoving)
         {
             if (Input.IsActionPressed("move_right"))
             {
+                _playerSprite.FlipH = false;
                 _isMoving = true;
                 _currentVelocity = Vector2.Right * Speed;
             }    
             else if (Input.IsActionPressed("move_left"))
             {
+                _playerSprite.FlipH = true;
                 _isMoving = true;
                 _currentVelocity = Vector2.Left * Speed;
             }
@@ -43,18 +64,29 @@ public class DummyPlayer : KinematicBody2D
                 _isMoving = true;
                 _currentVelocity = Vector2.Down * Speed;
             }
-            else if (Input.IsActionPressed("move_up"))
+            else if (Input.IsActionPressed("move_up") && IsOnFloor())
             {
                 _isMoving = true;
+                _isMovingUp = true;
                 _currentVelocity = Vector2.Up * Speed;
+            }
+            else
+            {
+                _currentVelocity = Vector2.Down * Gravity;
             }
         }
 
-        if (!(MoveAndCollide(_currentVelocity) is null))
+        if (!_isMovingUp)
+        {
+            _currentGravity = Mathf.Lerp(_currentGravity, Gravity, 0.3f * delta);
+        }
+
+        if (!(MoveAndSlide(_currentVelocity + Vector2.Down * _currentGravity, Vector2.Up) == _currentVelocity))
         {
             _isMoving = false;
-            _currentVelocity = Vector2.Zero;
+            _isMovingUp = false;
+            _currentGravity = 0f;
         }
-        
+
     }
 }
