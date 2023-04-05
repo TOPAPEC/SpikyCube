@@ -11,6 +11,7 @@ public class DummyPlayer : KinematicBody2D
     // Called when the node enters the scene tree for the first time.
     [Export] public int Speed = 1000;
     [Export] public int Gravity = 500;
+    public GridTranslator GridTranslator { get; set; }
     private bool _isMoving;
     private bool _isMovingUp;
     private Vector2 _currentVelocity;
@@ -74,6 +75,7 @@ public class DummyPlayer : KinematicBody2D
         if (!(MoveAndSlide(_currentVelocity, Vector2.Up) == _currentVelocity))
         {
             _isMoving = false;
+            GD.Print($"{GlobalPosition} -> {GridTranslator.SnapPositionToGrid(GlobalPosition)}");
         }
 
     }

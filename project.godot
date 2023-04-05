@@ -11,12 +11,11 @@ config_version=4
 [application]
 
 config/name="Spiky Cube"
-run/main_scene="res://src/Field/DummyField/DummyField.tscn"
+run/main_scene="res://src/Field/FixedField/FixedField.tscn"
 config/icon="res://icon.png"
 
 [display]
 
-window/size/width=720
 window/size/height=1280
 
 [gui]
