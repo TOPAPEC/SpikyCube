@@ -44,6 +44,7 @@ public class FixedField : Node2D
     {
         _gridTranslator = new GridTranslator(new Tuple<int, int>(64, 64), new Tuple<int, int>(64, 64));
         GetNode<DummyPlayer>("DummyPlayer").GridTranslator = _gridTranslator;
+        
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
