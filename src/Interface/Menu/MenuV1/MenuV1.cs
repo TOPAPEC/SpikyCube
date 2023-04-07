@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class LevelSelectionV1 : Control
+public class MenuV1 : Control
 {
     // Declare member variables here. Examples:
     // private int a = 2;
@@ -55,12 +55,4 @@ public class LevelSelectionV1 : Control
         _buttonsBlock.MarginLeft = _visibleButtonsBlockMarginLeft;
         _buttonsBlockState = "exiting";
     }
-    
-    
-
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
 }
