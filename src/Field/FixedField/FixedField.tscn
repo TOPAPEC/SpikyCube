@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://resources/Top down level assets/Floor - Dirt 1 64x64.png" type="Texture" id=1]
 [ext_resource path="res://src/Field/FixedField/FixedField.cs" type="Script" id=2]
 [ext_resource path="res://src/Actors/Player/DummyPlayer/DummyPlayer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Actors/Enemies/DummyEnemy/DummyEnemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Field/RotateArea/TestRotate.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -47,3 +49,14 @@ tile_data = PoolIntArray( -196613, 0, 0, -196612, 0, 0, -196611, 0, 0, 65537, 0,
 
 [node name="DummyPlayer" parent="." instance=ExtResource( 3 )]
 position = Vector2( 731, 161 )
+
+[node name="RotateClockwise" parent="." instance=ExtResource( 5 )]
+position = Vector2( 547, 548 )
+collision_layer = 8
+
+[node name="DummyEnemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 207, 755 )
+
+[node name="RotateClockwise2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 610, 735 )
+collision_layer = 8
