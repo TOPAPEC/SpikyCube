@@ -1,0 +1,8 @@
+/home/topapec/Soft/Godot_v3.5-stable_mono_x11_64/projects/SpikyCube/.mono/temp/bin/Debug/Spiky Cube.dll
+/home/topapec/Soft/Godot_v3.5-stable_mono_x11_64/projects/SpikyCube/.mono/temp/bin/Debug/Spiky Cube.pdb
+/home/topapec/Soft/Godot_v3.5-stable_mono_x11_64/projects/SpikyCube/.mono/temp/obj/Debug/Spiky Cube.csproj.AssemblyReference.cache
+/home/topapec/Soft/Godot_v3.5-stable_mono_x11_64/projects/SpikyCube/.mono/temp/obj/Debug/Spiky Cube.AssemblyInfoInputs.cache
+/home/topapec/Soft/Godot_v3.5-stable_mono_x11_64/projects/SpikyCube/.mono/temp/obj/Debug/Spiky Cube.AssemblyInfo.cs
+/home/topapec/Soft/Godot_v3.5-stable_mono_x11_64/projects/SpikyCube/.mono/temp/obj/Debug/Spiky Cube.csproj.CoreCompileInputs.cache
+/home/topapec/Soft/Godot_v3.5-stable_mono_x11_64/projects/SpikyCube/.mono/temp/obj/Debug/Spiky Cube.dll
+/home/topapec/Soft/Godot_v3.5-stable_mono_x11_64/projects/SpikyCube/.mono/temp/obj/Debug/Spiky Cube.pdb
