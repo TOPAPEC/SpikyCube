@@ -45,6 +45,8 @@ public class HUDV1 : CanvasLayer
     public void ShowHud()
     {
         _isTimerStarted = true;
+        ElapsedTime = 0;
+        Visible = true;
     }
 
     public override void _Process(float delta)
@@ -62,6 +64,7 @@ public class HUDV1 : CanvasLayer
 
     public void HideHud()
     {
+        Visible = false;
         _isTimerStarted = false;
     }
 

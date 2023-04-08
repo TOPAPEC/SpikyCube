@@ -17,6 +17,12 @@ namespace SpikyCube.SceneController
 
         private int _coinsCollected;
         private int _keysCollected;
+
+        public PlayerStats()
+        {
+            LevelScores = new List<List<int>>(1);
+            LevelScores.Add(new List<int>(new int[20]));
+        }
         
         public int CoinsCollected
         {

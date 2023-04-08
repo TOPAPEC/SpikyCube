@@ -5,7 +5,7 @@ using SpikyCube.SceneController;
 
 public class SceneController : Node2D
 {
-    public Node2D CurrentLevel;
+    public Node CurrentLevel;
     public readonly String CurrentLevelName = "GameLayer/CurrentLevel";
     public static readonly LevelsDict Levels = new LevelsDict();
     public HUDV1 HUD;
@@ -22,8 +22,12 @@ public class SceneController : Node2D
                 "LevelSelection", "res://src/Interface/LevelSelection/LevelSelectionV1/LevelSelectionV1.tscn"
             },
             {
-                "Chapter1Level1", "res://src/Field/FixedField/FixedField.tscn"
+                "Chapter0Level0", "res://src/Field/Levels/Chapter1/Level1/Level.tscn"
+            },
+            {
+                "Chapter0Level1", "res://src/Field/Levels/Chapter1/Level2/Level2.tscn"
             }
+            
         };
 
         public PackedScene this[String levelName]
@@ -35,7 +39,7 @@ public class SceneController : Node2D
     public override void _Ready()
     {
         HUD = GetNode<HUDV1>("GameLayer/HUD");
-        CurrentLevel = GetNode<Node2D>(CurrentLevelName);
+        CurrentLevel = GetNode<Node>(CurrentLevelName);
         _pauseMenu = GetNode<MenuV1>("UILayer/PauseMenu");
         _UILayer = GetNode<CanvasLayer>("UILayer");
         _gameLayer = GetNode<CanvasLayer>("GameLayer");
@@ -44,6 +48,7 @@ public class SceneController : Node2D
         HUD.Connect("HudPauseButtonPressed", this, "PauseGame");
         _pauseMenu.Connect("ResumeGamePressed", this, "ResumeGame");
         _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
+        _pauseMenu.Connect("SelectLevelPressed", this, "ShowLevelSelection");
     }
 
     public void PauseGame()
@@ -80,28 +85,37 @@ public class SceneController : Node2D
 
     public void ChangeScene(String newSceneName)
     {
+        ResumeGame();
+        HUD.ShowHud();
         if (!(CurrentLevel is null))
         {
             ((IScene)CurrentLevel).ExitScene();
-            RemoveChild(GetNode(CurrentLevelName));
             CurrentLevel.QueueFree();
         }
 
-        if (_checkIfSceneIsInterface(newSceneName))
-        {
-            HUD.Visible = false;
-        }
-        else
-        {
-            HUD.Visible = true;
-        }
+
         
 
         var newScene = Levels[newSceneName];
         var newSceneInstance = newScene.Instance();
         newSceneInstance.Name = CurrentLevelName;
         ((IScene)newSceneInstance).EnterScene();
-        CurrentLevel = (Node2D)newSceneInstance;
-        AddChild(newSceneInstance);
+        CurrentLevel = (Node)newSceneInstance;
+        if (_checkIfSceneIsInterface(newSceneName))
+        {
+            HUD.HideHud();
+        }
+        else
+        {
+            HUD.ShowHud();
+            ((Node2D)CurrentLevel).ZIndex = -1;
+        }
+        _gameLayer.AddChild(newSceneInstance);
+    }
+
+    public void ShowLevelSelection()
+    {
+        ChangeScene("LevelSelection");
+        CurrentLevel.Connect("ChangeLevelTo", this, "ChangeScene");
     }
 }
