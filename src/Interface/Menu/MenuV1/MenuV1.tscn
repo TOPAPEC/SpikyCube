@@ -17,10 +17,10 @@ rect_pivot_offset = Vector2( 488, 575 )
 script = ExtResource( 2 )
 
 [node name="ButtonsBlock" type="Control" parent="."]
-margin_right = 568.0
-margin_bottom = 408.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="TextureButton2" type="TextureButton" parent="ButtonsBlock"]
+[node name="ResumeGameButton" type="TextureButton" parent="ButtonsBlock"]
 margin_left = 304.0
 margin_top = 264.0
 margin_right = 1023.0
@@ -29,16 +29,17 @@ rect_pivot_offset = Vector2( 570, -45 )
 texture_normal = ExtResource( 1 )
 expand = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ButtonsBlock/TextureButton2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="ButtonsBlock/ResumeGameButton"]
 margin_left = 89.0
 margin_top = 89.0
 margin_right = 657.0
 margin_bottom = 196.0
+mouse_filter = 2
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 custom_fonts/normal_font = SubResource( 1 )
 text = "Продолжить игру"
 
-[node name="TextureButton" type="TextureButton" parent="ButtonsBlock"]
+[node name="SelectLevelButton" type="TextureButton" parent="ButtonsBlock"]
 margin_left = 304.0
 margin_top = 520.0
 margin_right = 1023.0
@@ -47,11 +48,12 @@ rect_pivot_offset = Vector2( 570, -45 )
 texture_normal = ExtResource( 1 )
 expand = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ButtonsBlock/TextureButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="ButtonsBlock/SelectLevelButton"]
 margin_left = 89.0
 margin_top = 89.0
 margin_right = 657.0
 margin_bottom = 196.0
+mouse_filter = 2
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 custom_fonts/normal_font = SubResource( 1 )
 text = "Выбрать уровень"

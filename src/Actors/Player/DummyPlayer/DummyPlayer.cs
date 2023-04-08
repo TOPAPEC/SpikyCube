@@ -88,7 +88,6 @@ public class DummyPlayer : KinematicBody2D
         if (!(MoveAndSlide(_currentVelocity, Vector2.Up) == _currentVelocity))
         {
             _isMoving = false;
-            GD.Print($"{GlobalPosition} -> {GridTranslator.SnapPositionToGrid(GlobalPosition)}");
         }
 
     }

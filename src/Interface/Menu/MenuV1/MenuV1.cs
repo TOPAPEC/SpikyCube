@@ -6,8 +6,18 @@ public class MenuV1 : Control
     // Declare member variables here. Examples:
     // private int a = 2;
     // private string b = "text";
+    [Signal]
+    public delegate void ResumeGamePressed();
+
+    [Signal]
+    public delegate void SelectLevelPressed();
+
+    [Signal]
+    public delegate void ButtonsHidden();
 
     private Control _buttonsBlock;
+    private TextureButton _resumeGameButton;
+    private TextureButton _selectLevelButton;
 
     private int _hiddenButtonsBlockMarginLeft = 700;
 
@@ -18,6 +28,22 @@ public class MenuV1 : Control
     public override void _Ready()
     {
         _buttonsBlock = GetNode<Control>("ButtonsBlock");
+        _resumeGameButton = GetNode<TextureButton>("ButtonsBlock/ResumeGameButton");
+        _selectLevelButton = GetNode<TextureButton>("ButtonsBlock/SelectLevelButton");
+        _buttonsBlock.Visible = false;
+        _resumeGameButton.Connect("pressed", this, "_emitResumeGamePressed");
+        _selectLevelButton.Connect("pressed", this, "_emitSelectLevelPressed");
+
+    }
+
+    private void _emitResumeGamePressed()
+    {
+        EmitSignal("ResumeGamePressed");
+    }
+
+    private void _emitSelectLevelPressed()
+    {
+        EmitSignal("SelectLevelPressed");
     }
 
     public override void _Process(float delta)
@@ -29,13 +55,16 @@ public class MenuV1 : Control
                  _buttonsBlock.MarginLeft = Mathf.Lerp(_buttonsBlock.MarginLeft, _visibleButtonsBlockMarginLeft, 4f * delta);
                  break;
              case "exiting":
-                 _buttonsBlock.MarginLeft = Mathf.Lerp(_buttonsBlock.MarginLeft, _hiddenButtonsBlockMarginLeft, 4f * delta);
-                 if (Mathf.Abs(_buttonsBlock.MarginLeft - _hiddenButtonsBlockMarginLeft) < 0.0001f)
+                 _buttonsBlock.MarginLeft = Mathf.Lerp(_buttonsBlock.MarginLeft, _hiddenButtonsBlockMarginLeft, 16f * delta);
+                 if (Mathf.Abs(_buttonsBlock.MarginLeft - _hiddenButtonsBlockMarginLeft) < 0.01f)
                  {
                      _buttonsBlockState = "idle";
                      _buttonsBlock.Visible = false;
+                     Visible = false;
                      _buttonsBlock.SetProcess(false);
                      _buttonsBlock.SetPhysicsProcess(false);
+                     EmitSignal("ButtonsHidden");
+                     GD.Print("PAUSE HIDDEN");
                  }
                  break;
          }
@@ -46,6 +75,7 @@ public class MenuV1 : Control
         _buttonsBlock.MarginLeft = _hiddenButtonsBlockMarginLeft;
         _buttonsBlockState = "entering";
         _buttonsBlock.Visible = true;
+        Visible = true;
         _buttonsBlock.SetProcess(true);
         _buttonsBlock.SetPhysicsProcess(true);
     }

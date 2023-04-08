@@ -5,12 +5,15 @@ using SpikyCube.SceneController;
 
 public class SceneController : Node2D
 {
-    public Node CurrentScene;
-    public String CurrentSceneChildName = "CurrentLevel";
+    public Node2D CurrentLevel;
+    public readonly String CurrentLevelName = "GameLayer/CurrentLevel";
     public static readonly LevelsDict Levels = new LevelsDict();
     public HUDV1 HUD;
-    public PlayerStats CurrentPlayerStats;
-
+    private MenuV1 _pauseMenu;
+    private CanvasLayer _gameLayer;
+    private CanvasLayer _UILayer;
+    private ColorRect _greyScaleShader;
+    
     public class LevelsDict
     {
         public Dictionary<String, String> LevelPaths = new Dictionary<string, String>()
@@ -31,8 +34,37 @@ public class SceneController : Node2D
 
     public override void _Ready()
     {
-        HUD = GetNode<HUDV1>("HUD");
+        HUD = GetNode<HUDV1>("GameLayer/HUD");
+        CurrentLevel = GetNode<Node2D>(CurrentLevelName);
+        _pauseMenu = GetNode<MenuV1>("UILayer/PauseMenu");
+        _UILayer = GetNode<CanvasLayer>("UILayer");
+        _gameLayer = GetNode<CanvasLayer>("GameLayer");
+        _greyScaleShader = GetNode<ColorRect>("GameLayer/GreyScaleShader");
         HUD.ShowHud();
+        HUD.Connect("HudPauseButtonPressed", this, "PauseGame");
+        _pauseMenu.Connect("ResumeGamePressed", this, "ResumeGame");
+        _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
+    }
+
+    public void PauseGame()
+    {
+        _greyScaleShader.Visible = true;
+        _pauseMenu.ShowButtons();
+        _UILayer.Visible = true;
+        GetTree().Paused = true;
+    }
+
+    public void ResumeGame()
+    {
+        _greyScaleShader.Visible = false;
+         _pauseMenu.HideButtons();
+    }
+
+    public void HideUI()
+    {
+        GD.Print("UI");
+        _UILayer.Visible = false;
+        GetTree().Paused = false;
     }
 
     private bool _checkIfSceneIsInterface(String sceneName)
@@ -48,11 +80,11 @@ public class SceneController : Node2D
 
     public void ChangeScene(String newSceneName)
     {
-        if (!(CurrentScene is null))
+        if (!(CurrentLevel is null))
         {
-            ((IScene)CurrentScene).ExitScene();
-            RemoveChild(GetNode(CurrentSceneChildName));
-            CurrentScene.QueueFree();
+            ((IScene)CurrentLevel).ExitScene();
+            RemoveChild(GetNode(CurrentLevelName));
+            CurrentLevel.QueueFree();
         }
 
         if (_checkIfSceneIsInterface(newSceneName))
@@ -67,9 +99,9 @@ public class SceneController : Node2D
 
         var newScene = Levels[newSceneName];
         var newSceneInstance = newScene.Instance();
+        newSceneInstance.Name = CurrentLevelName;
         ((IScene)newSceneInstance).EnterScene();
-        CurrentScene = newSceneInstance;
-        CurrentSceneChildName = newSceneName;
+        CurrentLevel = (Node2D)newSceneInstance;
         AddChild(newSceneInstance);
     }
 }

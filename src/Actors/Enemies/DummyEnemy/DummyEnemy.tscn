@@ -95,7 +95,7 @@ script = ExtResource( 1 )
 position = Vector2( -5, -40 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 4
+frame = 3
 playing = true
 flip_h = true
 

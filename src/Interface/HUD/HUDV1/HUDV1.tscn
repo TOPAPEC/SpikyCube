@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://resources/Fonts/Spectral-ExtraBold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/Interface/HUD/HUDV1/HUDV1.cs" type="Script" id=2]
+[ext_resource path="res://resources/PXUI-Basic/panel_Example2.png" type="Texture" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -53,3 +54,25 @@ custom_fonts/normal_font = SubResource( 1 )
 bbcode_enabled = true
 bbcode_text = "[center]  00:00:00 [/center]"
 text = "  00:00:00 "
+
+[node name="PauseButton" type="TextureButton" parent="."]
+margin_left = 744.0
+margin_top = -16.0
+margin_right = 1032.0
+margin_bottom = 128.0
+texture_normal = ExtResource( 3 )
+expand = true
+
+[node name="PauseText" type="RichTextLabel" parent="PauseButton"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -136.0
+margin_top = 24.0
+margin_right = 136.0
+margin_bottom = 131.0
+mouse_filter = 2
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center] Пауза [/center]"
+text = " Пауза "

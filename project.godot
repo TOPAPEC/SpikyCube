@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Spiky Cube"
-run/main_scene="res://src/Field/FixedField/FixedField.tscn"
+run/main_scene="res://src/SceneController/SceneController.tscn"
 config/icon="res://icon.png"
 
 [autoload]

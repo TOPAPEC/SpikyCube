@@ -7,10 +7,10 @@ namespace SpikyCube.SceneController
     public class PlayerStats : Node
     {
         [Signal]
-        delegate void CoinsAmountChanged(int newAmount);
+        public delegate void CoinsAmountChanged(int newAmount);
 
         [Signal]
-        delegate void KeysAmountChanged(int newAmount);
+        public delegate void KeysAmountChanged(int newAmount);
         
         // -1 Level was never tried
         public List<List<int>> LevelScores;
