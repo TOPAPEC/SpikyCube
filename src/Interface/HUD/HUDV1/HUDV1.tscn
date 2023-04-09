@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://resources/Fonts/Spectral-ExtraBold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/Interface/HUD/HUDV1/HUDV1.cs" type="Script" id=2]
 [ext_resource path="res://resources/PXUI-Basic/panel_Example2.png" type="Texture" id=3]
+[ext_resource path="res://resources/LevelItems/coinGold.png" type="Texture" id=4]
+[ext_resource path="res://resources/LevelItems/keyYellow.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -41,6 +43,22 @@ custom_fonts/normal_font = SubResource( 1 )
 bbcode_enabled = true
 bbcode_text = "[center]  0  [/center]"
 text = "  0  "
+
+[node name="CoinSprite" type="TextureRect" parent="CoinsKeysCount"]
+margin_left = 96.0
+margin_top = -8.0
+margin_right = 200.0
+margin_bottom = 96.0
+texture = ExtResource( 4 )
+expand = true
+
+[node name="KeySprite" type="TextureRect" parent="CoinsKeysCount"]
+margin_left = 96.0
+margin_top = 64.0
+margin_right = 200.0
+margin_bottom = 168.0
+texture = ExtResource( 5 )
+expand = true
 
 [node name="ElapsedTime" type="RichTextLabel" parent="."]
 anchor_left = 0.5

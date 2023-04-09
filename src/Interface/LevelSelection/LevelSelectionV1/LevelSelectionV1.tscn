@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://resources/Fonts/Spectral-ExtraBold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://resources/PXUI-Basic/CroppedSquare.png" type="Texture" id=2]
 [ext_resource path="res://src/Interface/LevelSelection/LevelSelectionV1/LevelSelectionV1.cs" type="Script" id=3]
 [ext_resource path="res://src/Interface/LevelSelection/LevelSelectionV1/CoinsCounter.tscn" type="PackedScene" id=4]
+[ext_resource path="res://resources/GUIItems/CrabirintLogoLarge.png" type="Texture" id=5]
+[ext_resource path="res://resources/PXUI-Basic/arrow_exampleMirror.png" type="Texture" id=6]
+[ext_resource path="res://resources/PXUI-Basic/arrow_example.png" type="Texture" id=7]
 
 [sub_resource type="Gradient" id=4]
 offsets = PoolRealArray( 0 )
@@ -13,7 +16,14 @@ colors = PoolColorArray( 0.976471, 0.886275, 0.686275, 1 )
 gradient = SubResource( 4 )
 
 [sub_resource type="DynamicFont" id=5]
+resource_local_to_scene = true
 size = 50
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 80
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )
@@ -32,6 +42,14 @@ grow_horizontal = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = SubResource( 3 )
+expand = true
+
+[node name="GameLogo" type="TextureButton" parent="."]
+margin_left = 192.0
+margin_top = -48.0
+margin_right = 835.0
+margin_bottom = 274.0
+texture_normal = ExtResource( 5 )
 expand = true
 
 [node name="LevelsGrid" type="GridContainer" parent="."]
@@ -617,3 +635,38 @@ margin_left = 852.0
 margin_top = 591.0
 margin_right = 956.0
 margin_bottom = 639.0
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchor_left = 0.05
+anchor_top = 0.85
+anchor_right = 0.95
+anchor_bottom = 1.0
+custom_constants/hseparation = 721
+columns = 2
+
+[node name="ChapterPrevious" type="TextureButton" parent="GridContainer"]
+margin_right = 100.0
+margin_bottom = 150.0
+texture_normal = ExtResource( 6 )
+
+[node name="ChapterNext" type="TextureButton" parent="GridContainer"]
+margin_left = 821.0
+margin_right = 921.0
+margin_bottom = 150.0
+texture_normal = ExtResource( 7 )
+
+[node name="ChapterNumber" type="RichTextLabel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.9
+anchor_right = 0.5
+anchor_bottom = 0.9
+margin_left = -176.0
+margin_top = -40.0
+margin_right = 184.0
+margin_bottom = 112.0
+mouse_filter = 2
+custom_colors/default_color = Color( 1, 1, 1, 1 )
+custom_fonts/normal_font = SubResource( 6 )
+bbcode_enabled = true
+bbcode_text = "[center] Глава 1 [/center]"
+text = " Глава 1 "
