@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://resources/Fonts/Spectral-ExtraBold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://resources/PXUI-Basic/CroppedSquare.png" type="Texture" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://resources/GUIItems/CrabirintLogoLarge.png" type="Texture" id=5]
 [ext_resource path="res://resources/PXUI-Basic/arrow_exampleMirror.png" type="Texture" id=6]
 [ext_resource path="res://resources/PXUI-Basic/arrow_example.png" type="Texture" id=7]
+[ext_resource path="res://resources/UISounds/MainMenu.wav" type="AudioStream" id=8]
+[ext_resource path="res://resources/UISounds/ErrorSound.wav" type="AudioStream" id=9]
 
 [sub_resource type="Gradient" id=4]
 offsets = PoolRealArray( 0 )
@@ -481,6 +483,7 @@ anchor_right = 0.05
 anchor_bottom = 0.5
 margin_right = 40.0
 margin_bottom = 40.0
+mouse_filter = 2
 custom_constants/vseparation = 149
 custom_constants/hseparation = 109
 columns = 5
@@ -644,12 +647,12 @@ anchor_bottom = 1.0
 custom_constants/hseparation = 721
 columns = 2
 
-[node name="ChapterPrevious" type="TextureButton" parent="GridContainer"]
+[node name="PreviousChapterButton" type="TextureButton" parent="GridContainer"]
 margin_right = 100.0
 margin_bottom = 150.0
 texture_normal = ExtResource( 6 )
 
-[node name="ChapterNext" type="TextureButton" parent="GridContainer"]
+[node name="NextChapterButton" type="TextureButton" parent="GridContainer"]
 margin_left = 821.0
 margin_right = 921.0
 margin_bottom = 150.0
@@ -670,3 +673,11 @@ custom_fonts/normal_font = SubResource( 6 )
 bbcode_enabled = true
 bbcode_text = "[center] Глава 1 [/center]"
 text = " Глава 1 "
+
+[node name="LevelSelectionClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="BlockedSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="ChangeChapterSound" type="AudioStreamPlayer" parent="."]

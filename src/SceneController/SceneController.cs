@@ -15,6 +15,7 @@ public class SceneController : Node2D
     private ColorRect _greyScaleShader;
     private AudioStreamPlayer _gameAudio;
     private float _audioPlaybackPosition;
+    private String _levelId;
     
     public class LevelsDict
     {
@@ -76,8 +77,11 @@ public class SceneController : Node2D
         GD.Print("UI");
         _UILayer.Visible = false;
         GetTree().Paused = false;
-        _gameAudio.Play();
-        _gameAudio.Seek(_audioPlaybackPosition);
+        if (!_checkIfSceneIsInterface(_levelId))
+        {
+            _gameAudio.Play();
+            _gameAudio.Seek(_audioPlaybackPosition);
+        } 
     }
 
     private bool _checkIfSceneIsInterface(String sceneName)
@@ -93,6 +97,7 @@ public class SceneController : Node2D
 
     public void ChangeScene(String newSceneName)
     {
+        _levelId = newSceneName;
         ResumeGame();
         HUD.ShowHud();
         if (!(CurrentLevel is null))

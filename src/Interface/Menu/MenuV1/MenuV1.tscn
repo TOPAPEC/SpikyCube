@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://resources/PXUI-Basic/panel_Example2.png" type="Texture" id=1]
 [ext_resource path="res://src/Interface/Menu/MenuV1/MenuV1.cs" type="Script" id=2]
 [ext_resource path="res://resources/Fonts/Spectral-ExtraBold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://resources/UISounds/PauseMenu.wav" type="AudioStream" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -57,3 +58,6 @@ mouse_filter = 2
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 custom_fonts/normal_font = SubResource( 1 )
 text = "Выбрать уровень"
+
+[node name="PauseButtonsAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )

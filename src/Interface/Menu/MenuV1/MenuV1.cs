@@ -18,6 +18,7 @@ public class MenuV1 : Control
     private Control _buttonsBlock;
     private TextureButton _resumeGameButton;
     private TextureButton _selectLevelButton;
+    private AudioStreamPlayer _pauseButtonsAudio;
 
     private int _hiddenButtonsBlockMarginLeft = 700;
 
@@ -30,10 +31,12 @@ public class MenuV1 : Control
         _buttonsBlock = GetNode<Control>("ButtonsBlock");
         _resumeGameButton = GetNode<TextureButton>("ButtonsBlock/ResumeGameButton");
         _selectLevelButton = GetNode<TextureButton>("ButtonsBlock/SelectLevelButton");
+        _pauseButtonsAudio = GetNode<AudioStreamPlayer>("PauseButtonsAudio");
         _buttonsBlock.Visible = false;
         _resumeGameButton.Connect("pressed", this, "_emitResumeGamePressed");
         _selectLevelButton.Connect("pressed", this, "_emitSelectLevelPressed");
-
+        _selectLevelButton.Connect("pressed", _pauseButtonsAudio, "play");
+        _resumeGameButton.Connect("pressed", _pauseButtonsAudio, "play");
     }
 
     private void _emitResumeGamePressed()

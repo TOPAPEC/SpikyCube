@@ -17,7 +17,10 @@ public class LevelSelectionV1 : Control, IScene
     private TextureButton _nextChapter;
     private TextureButton _previousChapter;
     private PlayerStats _playerStats;
+    private AudioStreamPlayer _mainMenuClickSound;
+    private AudioStreamPlayer _blockedSound;
     private int _chapterNumber;
+    
     
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -25,10 +28,15 @@ public class LevelSelectionV1 : Control, IScene
         _playerStats = GetNode<PlayerStats>("/root/PlayerStats");
         _levelButtonsGrid = GetNode<GridContainer>("LevelsGrid");
         _coinsCounterGrid = GetNode<GridContainer>("StarGrid");
-
+        _mainMenuClickSound = GetNode<AudioStreamPlayer>("LevelSelectionClickSound");
+        _blockedSound = GetNode<AudioStreamPlayer>("BlockedSound");
+        _nextChapter = GetNode<TextureButton>("GridContainer/PreviousChapterButton");
+        _previousChapter = GetNode<TextureButton>("GridContainer/NextChapterButton");
+ 
         var levelButtons = _levelButtonsGrid.GetChildren();
         for (int i = 0; i < levelButtons.Count; ++i)
         {
+            GD.Print(i);
             ((TextureButton)levelButtons[i]).Connect("pressed", this, "_levelChosen", new Godot.Collections.Array { i });
         }
         
@@ -37,10 +45,15 @@ public class LevelSelectionV1 : Control, IScene
         {
             ((CoinsCounter)counters[i]).ChangeCoinsCount(_playerStats.LevelScores[_chapterNumber][i]);
         }
+
+        _nextChapter.Connect("pressed", _blockedSound, "play");
+        _previousChapter.Connect("pressed", _blockedSound, "play");
     }
 
     private void _levelChosen(int levelNumber)
     {
+        _mainMenuClickSound.Play();
+        System.Threading.Thread.Sleep(500);
         EmitSignal("ChangeLevelTo", $"Chapter{_chapterNumber}Level{levelNumber}");
     }
 
