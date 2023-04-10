@@ -44,6 +44,7 @@ position = Vector2( 1.19209e-07, -1.19209e-07 )
 scale = Vector2( 0.579, 0.579 )
 frames = SubResource( 2 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="Hitbox" type="Area2D" parent="."]
