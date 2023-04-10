@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/SceneController/SceneController.cs" type="Script" id=1]
 [ext_resource path="res://src/Interface/HUD/HUDV1/HUDV1.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Field/Levels/Chapter1/Level1/Level.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Interface/Menu/MenuV1/MenuV1.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/Interface/Menu/MenuV1/greyscale.shader" type="Shader" id=5]
+[ext_resource path="res://resources/soundtrack.mp3" type="AudioStream" id=6]
 
 [sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0 )
@@ -31,6 +32,9 @@ texture = SubResource( 3 )
 expand = true
 
 [node name="GameLayer" type="CanvasLayer" parent="."]
+
+[node name="GameAudio" type="AudioStreamPlayer" parent="GameLayer"]
+stream = ExtResource( 6 )
 
 [node name="HUD" parent="GameLayer" instance=ExtResource( 2 )]
 layer = 2

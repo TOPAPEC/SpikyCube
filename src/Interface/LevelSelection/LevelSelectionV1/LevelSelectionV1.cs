@@ -14,6 +14,8 @@ public class LevelSelectionV1 : Control, IScene
 
     private GridContainer _levelButtonsGrid;
     private GridContainer _coinsCounterGrid;
+    private TextureButton _nextChapter;
+    private TextureButton _previousChapter;
     private PlayerStats _playerStats;
     private int _chapterNumber;
     

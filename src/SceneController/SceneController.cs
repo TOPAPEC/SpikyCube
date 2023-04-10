@@ -13,6 +13,8 @@ public class SceneController : Node2D
     private CanvasLayer _gameLayer;
     private CanvasLayer _UILayer;
     private ColorRect _greyScaleShader;
+    private AudioStreamPlayer _gameAudio;
+    private float _audioPlaybackPosition;
     
     public class LevelsDict
     {
@@ -44,8 +46,10 @@ public class SceneController : Node2D
         _UILayer = GetNode<CanvasLayer>("UILayer");
         _gameLayer = GetNode<CanvasLayer>("GameLayer");
         _greyScaleShader = GetNode<ColorRect>("GameLayer/GreyScaleShader");
+        _gameAudio = GetNode<AudioStreamPlayer>("GameLayer/GameAudio");
         HUD.ShowHud();
         HUD.Connect("HudPauseButtonPressed", this, "PauseGame");
+        _gameAudio.Playing = true;
         _pauseMenu.Connect("ResumeGamePressed", this, "ResumeGame");
         _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
         _pauseMenu.Connect("SelectLevelPressed", this, "ShowLevelSelection");
@@ -53,6 +57,8 @@ public class SceneController : Node2D
 
     public void PauseGame()
     {
+        _audioPlaybackPosition = _gameAudio.GetPlaybackPosition();
+        _gameAudio.Stop();
         _greyScaleShader.Visible = true;
         _pauseMenu.ShowButtons();
         _UILayer.Visible = true;
@@ -70,6 +76,8 @@ public class SceneController : Node2D
         GD.Print("UI");
         _UILayer.Visible = false;
         GetTree().Paused = false;
+        _gameAudio.Play();
+        _gameAudio.Seek(_audioPlaybackPosition);
     }
 
     private bool _checkIfSceneIsInterface(String sceneName)
