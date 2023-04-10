@@ -44,8 +44,8 @@ public class DummyPlayer : KinematicBody2D
 
     public void Die(Area2D other)
     {
-        _playerSprite.Animation = "death";
         _died = true;
+        _playerSprite.Animation = "death";
         _playerSprite.Connect("animation_finished", this, "Freee");
     }
 
@@ -87,8 +87,9 @@ public class DummyPlayer : KinematicBody2D
                 _currentVelocity = Vector2.Up * Speed;
             }
         }
-
-        if (!(MoveAndSlide(_currentVelocity, Vector2.Up) == _currentVelocity))
+        if (_died) {
+            _currentVelocity = new Vector2();
+        } else if (!(MoveAndSlide(_currentVelocity, Vector2.Up) == _currentVelocity))
         {
             _isMoving = false;
         }
