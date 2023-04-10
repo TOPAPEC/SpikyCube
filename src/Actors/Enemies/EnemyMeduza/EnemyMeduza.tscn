@@ -1,0 +1,69 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://resources/Meduza/Death/tile004.png" type="Texture" id=1]
+[ext_resource path="res://src/Actors/Enemies/EnemyMeduza/EnemyMeduza.gd" type="Script" id=2]
+[ext_resource path="res://resources/Meduza/Death/tile003.png" type="Texture" id=3]
+[ext_resource path="res://resources/Meduza/Idle/tile001.png" type="Texture" id=4]
+[ext_resource path="res://resources/Meduza/Death/tile002.png" type="Texture" id=5]
+[ext_resource path="res://resources/Meduza/Idle/tile003.png" type="Texture" id=6]
+[ext_resource path="res://resources/Meduza/Idle/tile002.png" type="Texture" id=7]
+[ext_resource path="res://resources/Meduza/Idle/tile000.png" type="Texture" id=8]
+[ext_resource path="res://resources/Meduza/Death/tile000.png" type="Texture" id=9]
+[ext_resource path="res://resources/Meduza/Death/tile001.png" type="Texture" id=10]
+[ext_resource path="res://resources/Meduza/Death/tile005.png" type="Texture" id=11]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 3.5, 7 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 1 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "death",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "idle",
+"speed": 10.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 3.5, 7 )
+
+[node name="EnemyMeduza" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+show_behind_parent = true
+position = Vector2( 0.5, 1 )
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 1.19209e-07, -1.19209e-07 )
+scale = Vector2( 0.579, 0.579 )
+frames = SubResource( 2 )
+animation = "idle"
+playing = true
+
+[node name="Hitbox" type="Area2D" parent="."]
+light_mask = 4096
+collision_layer = 0
+collision_mask = 4096
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2( 0.5, 1 )
+shape = SubResource( 3 )
+
+[node name="AttackBox" type="Area2D" parent="."]
+light_mask = 4096
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
+position = Vector2( 0.5, 1 )
+shape = SubResource( 3 )
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
+[connection signal="area_entered" from="AttackBox" to="." method="_on_AttackBox_area_entered"]
