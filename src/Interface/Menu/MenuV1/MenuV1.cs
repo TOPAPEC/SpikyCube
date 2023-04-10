@@ -55,7 +55,7 @@ public class MenuV1 : Control
                  _buttonsBlock.MarginLeft = Mathf.Lerp(_buttonsBlock.MarginLeft, _visibleButtonsBlockMarginLeft, 4f * delta);
                  break;
              case "exiting":
-                 _buttonsBlock.MarginLeft = Mathf.Lerp(_buttonsBlock.MarginLeft, _hiddenButtonsBlockMarginLeft, 16f * delta);
+                 _buttonsBlock.MarginLeft = Mathf.Lerp(_buttonsBlock.MarginLeft, _hiddenButtonsBlockMarginLeft, 64f * delta);
                  if (Mathf.Abs(_buttonsBlock.MarginLeft - _hiddenButtonsBlockMarginLeft) < 0.01f)
                  {
                      _buttonsBlockState = "idle";
