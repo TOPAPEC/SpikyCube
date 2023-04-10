@@ -32,6 +32,7 @@ animations = [ {
 extents = Vector2( 3.5, 7 )
 
 [node name="EnemyMeduza" type="KinematicBody2D"]
+scale = Vector2( 4, 4 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -44,7 +45,7 @@ position = Vector2( 1.19209e-07, -1.19209e-07 )
 scale = Vector2( 0.579, 0.579 )
 frames = SubResource( 2 )
 animation = "idle"
-frame = 2
+frame = 1
 playing = true
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -67,4 +68,3 @@ shape = SubResource( 3 )
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
-[connection signal="area_entered" from="AttackBox" to="." method="_on_AttackBox_area_entered"]

@@ -18,6 +18,7 @@ public class DummyPlayer : KinematicBody2D
     private AnimatedSprite _playerSprite;
     private Area2D _hitbox;
     private Area2D _rotatebox;
+    private Area2D _hitboxforenemy;
     
     public override void _Ready()
     {
@@ -26,6 +27,8 @@ public class DummyPlayer : KinematicBody2D
         _hitbox.Connect("area_entered", this, "Die");
         _rotatebox = GetNode<Area2D>("RotateBox");
         _rotatebox.Connect("area_entered", this, "Rotate");
+        _hitboxforenemy = GetNode<Area2D>("HitBoxForEnemy");
+        _hitboxforenemy.Connect("area_entered", this, "Die");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
