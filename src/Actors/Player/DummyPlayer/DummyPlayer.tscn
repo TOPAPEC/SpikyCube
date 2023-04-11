@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://resources/Crab/Idle/Crab5.png" type="Texture" id=1]
 [ext_resource path="res://resources/Crab/Idle/Crab1.png" type="Texture" id=2]
@@ -48,10 +48,13 @@ radius = 23.0217
 extents = Vector2( 21.5001, 29 )
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 28, 5 )
+extents = Vector2( 26, 5 )
 
 [sub_resource type="CircleShape2D" id=8]
 radius = 10.0499
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 13.0
 
 [node name="DummyPlayer" type="KinematicBody2D"]
 script = ExtResource( 7 )
@@ -60,7 +63,6 @@ script = ExtResource( 7 )
 scale = Vector2( 3.2, 3 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -98,3 +100,10 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RotateCounterBox"]
 shape = SubResource( 8 )
+
+[node name="EndBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8388608
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndBox"]
+shape = SubResource( 9 )

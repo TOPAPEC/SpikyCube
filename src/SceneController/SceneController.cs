@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using SpikyCube.SceneController;
+using System.Text.RegularExpressions;
 
 public class SceneController : Node2D
 {
@@ -69,6 +70,7 @@ public class SceneController : Node2D
 
         _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
         _player.Connect("RestartLevel", this, "ChangeToCurrentLevel");
+        _player.Connect("NextLevel", this, "ChangeToNextLevel");
     }
 
     public void PauseGame()
@@ -139,6 +141,7 @@ public class SceneController : Node2D
             ((Node2D)CurrentLevel).ZIndex = -1;
             _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
             _player.Connect("RestartLevel", this, "ChangeToCurrentLevel");
+            _player.Connect("NextLevel", this, "ChangeToNextLevel");
         }
         _gameLayer.AddChild(newSceneInstance);
     }
@@ -146,6 +149,34 @@ public class SceneController : Node2D
     public void ChangeToCurrentLevel()
     {
         ChangeScene(_levelId);
+    }
+    
+    public void ChangeToNextLevel()
+    {
+        String sceneName = _levelId;
+        string pattern = "Chapter(.+)Level(.+)";
+        int chapter = 0;
+        int level = 0;
+        foreach (Match match in Regex.Matches(sceneName, pattern, RegexOptions.IgnoreCase)) 
+        {
+            int.TryParse(match.Groups[1].Value, out chapter);
+            int.TryParse(match.Groups[2].Value, out level);
+        }
+        String sceneNameNextLevel = String.Format("Chapter{0}Level{1}", chapter, level + 1);
+        String sceneNameNextChapter = String.Format("Chapter{0}Level{1}", chapter + 1, 0);
+        if (Levels.LevelPaths.ContainsKey(sceneNameNextLevel)) 
+        {
+            ChangeScene(sceneNameNextLevel);
+        } 
+        else if (Levels.LevelPaths.ContainsKey(sceneNameNextChapter)) 
+        {
+            ChangeScene(sceneNameNextChapter);
+        } 
+        else 
+        {
+            ChangeScene("LevelSelection");
+            CurrentLevel.Connect("ChangeLevelTo", this, "ChangeScene");
+        }
     }
 
     public void ShowLevelSelection()
