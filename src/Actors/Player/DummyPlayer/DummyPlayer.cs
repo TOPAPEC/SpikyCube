@@ -22,6 +22,7 @@ public class DummyPlayer : KinematicBody2D
 
     public GridTranslator GridTranslator { get; set; }
     private bool _isMoving;
+    private int _dir; // 0=up 1=right 2=down 3=left
     private bool _isMovingForward;
     private bool _died;
     private bool _end;
@@ -90,7 +91,7 @@ public class DummyPlayer : KinematicBody2D
         {
             RotationDegrees -= 90;
         }
-        //GD.Print(RotationDegrees);
+        SetMovingForward();
     }
 
     public void Idle()
@@ -119,6 +120,23 @@ public class DummyPlayer : KinematicBody2D
         return _isMovingForward || !_isMoving;
     }
 
+    private void SetMovingForward()
+    {
+        float posRotate = RotationDegrees < 0 ? RotationDegrees + 360 : RotationDegrees;
+        if ((posRotate == 0 && _dir == 0) ||
+            (posRotate == 90 && _dir == 1) ||
+            (posRotate == 180 && _dir == 2) ||
+            (posRotate == 270 && _dir == 3))
+        {
+            _isMovingForward = true;
+        }
+        else
+        {
+            _isMovingForward = false;
+        }
+
+    }
+
     public override void _PhysicsProcess(float delta)
     {
         base._PhysicsProcess(delta);
@@ -127,50 +145,30 @@ public class DummyPlayer : KinematicBody2D
             if (Input.IsActionPressed("move_right"))
             {
                 _isMoving = true;
+                _dir = 1;
                 _currentVelocity = Vector2.Right * Speed;
-                if (RotationDegrees == 90)
-                {
-                    _isMovingForward = true;
-                }
-                else {
-                    _isMovingForward = false;
-                }
+                SetMovingForward();
             }    
             else if (Input.IsActionPressed("move_left"))
             {
                 _isMoving = true;
+                _dir = 3;
                 _currentVelocity = Vector2.Left * Speed;
-                if (RotationDegrees == -90)
-                {
-                    _isMovingForward = true;
-                }
-                else {
-                    _isMovingForward = false;
-                }
+                SetMovingForward();
             }
             else if (Input.IsActionPressed("move_down"))
             {
                 _isMoving = true;
+                _dir = 2;
                 _currentVelocity = Vector2.Down * Speed;
-                if (Math.Abs(RotationDegrees) == 180)
-                {
-                    _isMovingForward = true;
-                }
-                else {
-                    _isMovingForward = false;
-                }
+                SetMovingForward();
             }
             else if (Input.IsActionPressed("move_up"))
             {
                 _isMoving = true;
+                _dir = 0;
                 _currentVelocity = Vector2.Up * Speed;
-                if (RotationDegrees == 0)
-                {
-                    _isMovingForward = true;
-                }
-                else {
-                    _isMovingForward = false;
-                }
+                SetMovingForward();
             }
         }
         if (_died || _end) {
