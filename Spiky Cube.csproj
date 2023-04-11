@@ -3,4 +3,10 @@
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>SpikyCube</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="src\Field\Levels\Chapter1\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="src\Field\Levels\Chapter1\**" />
+  </ItemGroup>
 </Project>

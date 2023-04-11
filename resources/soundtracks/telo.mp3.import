@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/telo.mp3-d9178fbb85205892feb71b7960ea9e80.mp3str"
+
+[deps]
+
+source_file="res://resources/soundtracks/telo.mp3"
+dest_files=[ "res://.import/telo.mp3-d9178fbb85205892feb71b7960ea9e80.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/trackwithbegining.mp3-98df208f086637ea40840bfe513e1028.mp3str"
+
+[deps]
+
+source_file="res://resources/soundtracks/trackwithbegining.mp3"
+dest_files=[ "res://.import/trackwithbegining.mp3-98df208f086637ea40840bfe513e1028.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

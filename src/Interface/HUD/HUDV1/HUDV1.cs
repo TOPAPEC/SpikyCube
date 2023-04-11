@@ -34,12 +34,12 @@ public class HUDV1 : CanvasLayer
 
     private void _handleCoinAmountChange(int newAmount)
     {
-        _coinsCountLabel.Text = $"[center] {newAmount.ToString()} [/center]";
+        _coinsCountLabel.BbcodeText = $"[center] {newAmount.ToString()} [/center]";
     }
 
     private void _handleKeysAmountChange(int newAmount)
     {
-        _keysCountLabel.Text = $"[center] {newAmount.ToString()} [/center]";
+        _keysCountLabel.BbcodeText = $"[center] {newAmount.ToString()} [/center]";
     }
 
     public void ShowHud()

@@ -26,25 +26,21 @@ public class SceneController : Node2D
             {
                 "LevelSelection", "res://src/Interface/LevelSelection/LevelSelectionV1/LevelSelectionV1.tscn"
             },
-            {
-                "Chapter0Level0", "res://src/Field/Levels/Chapter1/Level1/Level.tscn"
-            },
-            {
-                "Chapter0Level1", "res://src/Field/Levels/Chapter1/Level2/Level2.tscn"
-            },
-            {
-                "Chapter0Level2", "res://src/Field/Levels/Chapter1/Level3/Level3.tscn"
-            },
-            {
-                "Chapter0Level3", "res://src/Field/Levels/Chapter1/Level4/Level_1_4.tscn"
-            },
-            {
-                "Chapter0Level4", "res://src/Field/Levels/Chapter1/Level5/Level2.tscn"
-            },
-            {
-                "Chapter0Level5", "res://src/Field/Levels/Chapter1/Level6/Level2.tscn"
-            }
         };
+
+        public LevelsDict()
+        {
+            _fillLevelDict(0, 0, 19);
+        }
+        
+        private void _fillLevelDict(int chapter, int fromLevel, int toLevel)
+        {
+            for (int i = fromLevel; i < toLevel; ++i)
+            {
+                String levelName = $"Chapter{chapter}Level{i}";
+                LevelPaths[levelName] = $"res://src/Field/Levels/Chapter{chapter}/Level{i}/Level_{chapter}_{i}.tscn";
+            }
+        }
 
         public PackedScene this[String levelName]
         {
@@ -54,6 +50,7 @@ public class SceneController : Node2D
 
     public override void _Ready()
     {
+        
         HUD = GetNode<HUDV1>("GameLayer/HUD");
         CurrentLevel = GetNode<Node>(CurrentLevelName);
         _pauseMenu = GetNode<MenuV1>("UILayer/PauseMenu");
@@ -72,6 +69,8 @@ public class SceneController : Node2D
         _player.Connect("RestartLevel", this, "ChangeToCurrentLevel");
         _player.Connect("NextLevel", this, "ChangeToNextLevel");
     }
+
+
 
     public void PauseGame()
     {
@@ -148,6 +147,7 @@ public class SceneController : Node2D
 
     public void ChangeToCurrentLevel()
     {
+        _audioPlaybackPosition = _gameAudio.GetPlaybackPosition() + 0.2f;
         ChangeScene(_levelId);
     }
     

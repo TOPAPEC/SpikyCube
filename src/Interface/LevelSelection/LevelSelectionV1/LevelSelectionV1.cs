@@ -19,7 +19,7 @@ public class LevelSelectionV1 : Control, IScene
     private PlayerStats _playerStats;
     private AudioStreamPlayer _mainMenuClickSound;
     private AudioStreamPlayer _blockedSound;
-    private int _chapterNumber;
+    private int _chapterNumber = 0;
     
     
     // Called when the node enters the scene tree for the first time.
