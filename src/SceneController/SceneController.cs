@@ -15,7 +15,8 @@ public class SceneController : Node2D
     private ColorRect _greyScaleShader;
     private AudioStreamPlayer _gameAudio;
     private float _audioPlaybackPosition;
-    private String _levelId;
+    private String _levelId = "Chapter0Level0";
+    private KinematicBody2D _player;
     
     public class LevelsDict
     {
@@ -54,6 +55,9 @@ public class SceneController : Node2D
         _pauseMenu.Connect("ResumeGamePressed", this, "ResumeGame");
         _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
         _pauseMenu.Connect("SelectLevelPressed", this, "ShowLevelSelection");
+
+        _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
+        _player.Connect("RestartLevel", this, "ChangeToCurrentLevel");
     }
 
     public void PauseGame()
@@ -122,8 +126,15 @@ public class SceneController : Node2D
         {
             HUD.ShowHud();
             ((Node2D)CurrentLevel).ZIndex = -1;
+            _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
+            _player.Connect("RestartLevel", this, "ChangeToCurrentLevel");
         }
         _gameLayer.AddChild(newSceneInstance);
+    }
+
+    public void ChangeToCurrentLevel()
+    {
+        ChangeScene(_levelId);
     }
 
     public void ShowLevelSelection()

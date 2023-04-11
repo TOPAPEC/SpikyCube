@@ -54,7 +54,6 @@ extents = Vector2( 28, 5 )
 radius = 10.0499
 
 [node name="DummyPlayer" type="KinematicBody2D"]
-collision_layer = 16385
 script = ExtResource( 7 )
 
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]

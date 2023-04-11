@@ -9,13 +9,14 @@ public class Key : Area2D
     //[Signal]
     //delegate void CollectKey(string name);
 
-    public void Freee(string name)
+    public void Freee(Area2D other)
     {
-        GD.Print(name);
-        GD.Print(this.Name);
-        if (name == this.Name)
+        //GD.Print(name);
+        //GD.Print(this.Name);
+        var parent = (DummyPlayer)(other.GetParent());
+
+        if (parent.MovingForward)
         {
-            GD.Print("Collect key");
             QueueFree();
         }
     }
@@ -24,7 +25,7 @@ public class Key : Area2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        this.Connect("CollectKey", this, "Freee");
+        this.Connect("area_entered", this, "Freee");
     }
 
     

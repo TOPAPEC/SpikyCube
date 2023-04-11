@@ -15,7 +15,8 @@ public class DummyPlayer : KinematicBody2D
     [Export] public int Gravity = 500;
 
     [Signal]
-    delegate void CollectKey(string name);
+    public delegate void RestartLevel();
+
     public GridTranslator GridTranslator { get; set; }
     private bool _isMoving;
     private bool _isMovingForward;
@@ -50,6 +51,7 @@ public class DummyPlayer : KinematicBody2D
     public void Freee()
     {
         QueueFree();
+        EmitSignal("RestartLevel");
     }
 
     public void Die(Area2D other)
@@ -57,6 +59,7 @@ public class DummyPlayer : KinematicBody2D
         _died = true;
         _playerSprite.Animation = "death";
         _playerSprite.Connect("animation_finished", this, "Freee");
+
     }
 
     public void Rotate(Area2D other)
@@ -85,13 +88,12 @@ public class DummyPlayer : KinematicBody2D
         if ((_isMovingForward || !_isMoving) && !_died)
         {
             _playerSprite.Animation = "attack";
-            
-            if (other.Name.StartsWith("Key"))
-            {
-                GD.Print("Emit");
-                EmitSignal(nameof(CollectKey), other.Name);
-            }
         }
+    }
+
+    public bool MovingForward
+    {
+        get => _isMovingForward;
     }
 
     public bool GetAttackPossibility()
