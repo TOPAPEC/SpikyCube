@@ -30,8 +30,19 @@ public class SceneController : Node2D
             },
             {
                 "Chapter0Level1", "res://src/Field/Levels/Chapter1/Level2/Level2.tscn"
+            },
+            {
+                "Chapter0Level2", "res://src/Field/Levels/Chapter1/Level3/Level3.tscn"
+            },
+            {
+                "Chapter0Level3", "res://src/Field/Levels/Chapter1/Level4/Level_1_4.tscn"
+            },
+            {
+                "Chapter0Level4", "res://src/Field/Levels/Chapter1/Level5/Level2.tscn"
+            },
+            {
+                "Chapter0Level5", "res://src/Field/Levels/Chapter1/Level6/Level2.tscn"
             }
-            
         };
 
         public PackedScene this[String levelName]
