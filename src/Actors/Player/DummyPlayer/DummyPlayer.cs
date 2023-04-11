@@ -16,17 +16,22 @@ public class DummyPlayer : KinematicBody2D
 
     [Signal]
     public delegate void RestartLevel();
+    
+    [Signal]
+    public delegate void NextLevel();
 
     public GridTranslator GridTranslator { get; set; }
     private bool _isMoving;
     private bool _isMovingForward;
     private bool _died;
+    private bool _end;
     private Vector2 _currentVelocity;
     private AnimatedSprite _playerSprite;
     private Area2D _hitbox;
     private Area2D _rotatebox;
     private Area2D _hitboxforenemy;
     private Area2D _attackbox;
+    private Area2D _endbox;
     
     public override void _Ready()
     {
@@ -38,6 +43,8 @@ public class DummyPlayer : KinematicBody2D
         _attackbox = GetNode<Area2D>("AttackBox");
         _attackbox.Connect("area_entered", this, "Attack");
         _playerSprite.Connect("animation_finished", this, "Idle");
+        _endbox = GetNode<Area2D>("EndBox");
+        _endbox.Connect("area_entered", this, "End");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,6 +57,19 @@ public class DummyPlayer : KinematicBody2D
     {
         QueueFree();
         EmitSignal("RestartLevel");
+    }
+    
+    public void Freeee()
+    {
+        QueueFree();
+        EmitSignal("NextLevel");
+    }
+
+    public void End(Area2D other)
+    {
+        _end = true;
+        _playerSprite.Animation = "idle";
+        _playerSprite.Connect("animation_finished", this, "Freeee");;
     }
 
     public void Die(Area2D other)
@@ -153,7 +173,7 @@ public class DummyPlayer : KinematicBody2D
                 }
             }
         }
-        if (_died) {
+        if (_died || _end) {
             _currentVelocity = new Vector2();
         } else if (!(MoveAndSlide(_currentVelocity, Vector2.Up) == _currentVelocity))
         {
