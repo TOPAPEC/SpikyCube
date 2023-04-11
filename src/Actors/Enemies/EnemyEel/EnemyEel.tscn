@@ -15,7 +15,7 @@
 [ext_resource path="res://resources/Eel/death/tile003.png" type="Texture" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 9.25, 2.5 )
+extents = Vector2( 9.625, 3 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -31,10 +31,10 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 10, 3.125 )
+extents = Vector2( 9.5625, 3.25 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 9.6875, 2.75 )
+extents = Vector2( 10, 3.25 )
 
 [node name="EnemyEel" type="KinematicBody2D"]
 scale = Vector2( 4, 4 )
@@ -42,24 +42,22 @@ script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 show_behind_parent = true
-position = Vector2( -1.5, 1.5 )
+position = Vector2( -1.125, 1 )
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, 0.5 )
 scale = Vector2( 0.579, 0.579 )
 frames = SubResource( 2 )
 animation = "idle"
-frame = 4
 playing = true
 
 [node name="Hitbox" type="Area2D" parent="."]
 light_mask = 4096
-collision_layer = 0
+collision_layer = 8192
 collision_mask = 4096
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2( -1.5, 1.375 )
+position = Vector2( -1.75, 1 )
 shape = SubResource( 3 )
 
 [node name="AttackBox" type="Area2D" parent="."]
@@ -68,7 +66,7 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
-position = Vector2( -1.4375, 1.5 )
+position = Vector2( -1.25, 1 )
 shape = SubResource( 4 )
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]

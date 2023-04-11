@@ -2,6 +2,8 @@ using Godot;
 using System;
 using System.Threading.Tasks;
 
+
+
 public class DummyPlayer : KinematicBody2D
 {
     // Declare member variables here. Examples:
@@ -11,6 +13,9 @@ public class DummyPlayer : KinematicBody2D
     // Called when the node enters the scene tree for the first time.
     [Export] public int Speed = 1000;
     [Export] public int Gravity = 500;
+
+    [Signal]
+    delegate void CollectKey(string name);
     public GridTranslator GridTranslator { get; set; }
     private bool _isMoving;
     private bool _isMovingForward;
@@ -25,14 +30,15 @@ public class DummyPlayer : KinematicBody2D
     public override void _Ready()
     {
         _playerSprite = GetNode<AnimatedSprite>("PlayerSprite");
-        _hitbox = GetNode<Area2D>("Hitbox");
-        _hitbox.Connect("area_entered", this, "Die");
+        //_hitbox = GetNode<Area2D>("Hitbox");
+        //_hitbox.Connect("area_entered", this, "Die");
         _rotatebox = GetNode<Area2D>("RotateBox");
         _rotatebox.Connect("area_entered", this, "Rotate");
         _hitboxforenemy = GetNode<Area2D>("HitBoxForEnemy");
         _hitboxforenemy.Connect("area_entered", this, "Die");
         _attackbox = GetNode<Area2D>("AttackBox");
         _attackbox.Connect("area_entered", this, "Attack");
+        _playerSprite.Connect("animation_finished", this, "Idle");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -55,7 +61,7 @@ public class DummyPlayer : KinematicBody2D
 
     public void Rotate(Area2D other)
     {
-        if (other.Name == "RotateClockwise")
+        if (other.Name.StartsWith("RotateClockwise"))
         {
             RotationDegrees += 90;
         }
@@ -68,18 +74,29 @@ public class DummyPlayer : KinematicBody2D
 
     public void Idle()
     {
-        GD.Print("check idle");
-        _playerSprite.Animation = "idle";
-        //_playerSprite.Disconnect("animation_finished");
+        if (_playerSprite.Animation != "idle")
+        {
+            _playerSprite.Animation = "idle";
+        }
     }
 
     public void Attack(Area2D other)
     {
-        if (_isMovingForward)
+        if ((_isMovingForward || !_isMoving) && !_died)
         {
             _playerSprite.Animation = "attack";
-            _playerSprite.Connect("animation_finished", this, "Idle");
+            
+            if (other.Name.StartsWith("Key"))
+            {
+                GD.Print("Emit");
+                EmitSignal(nameof(CollectKey), other.Name);
+            }
         }
+    }
+
+    public bool GetAttackPossibility()
+    {
+        return _isMovingForward || !_isMoving;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -141,6 +158,7 @@ public class DummyPlayer : KinematicBody2D
         } else if (!(MoveAndSlide(_currentVelocity, Vector2.Up) == _currentVelocity))
         {
             _isMoving = false;
+            _isMovingForward = false;
         }
 
     }
