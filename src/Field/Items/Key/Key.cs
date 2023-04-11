@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using SpikyCube.SceneController;
 
 public class Key : Area2D
 {
@@ -8,26 +9,25 @@ public class Key : Area2D
     // private string b = "text";
     //[Signal]
     //delegate void CollectKey(string name);
-
-    public void Freee(Area2D other)
-    {
-        //GD.Print(name);
-        //GD.Print(this.Name);
-        var parent = (DummyPlayer)(other.GetParent());
-
-        if (parent.MovingForward)
-        {
-            QueueFree();
-        }
-    }
-
+    private PlayerStats _ps;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         this.Connect("area_entered", this, "Freee");
+        _ps = GetNode<PlayerStats>("/root/PlayerStats");
     }
 
+    public void Freee(Area2D other)
+    {
+        _ps.KeysCollected += 1;
+
+        var parent = (DummyPlayer)(other.GetParent());
+        if (parent.MovingForward)
+        {
+            QueueFree();
+        }
+    }
     
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
 //  public override void _Process(float delta)

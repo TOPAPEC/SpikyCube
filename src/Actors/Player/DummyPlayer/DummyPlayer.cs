@@ -31,8 +31,6 @@ public class DummyPlayer : KinematicBody2D
     public override void _Ready()
     {
         _playerSprite = GetNode<AnimatedSprite>("PlayerSprite");
-        //_hitbox = GetNode<Area2D>("Hitbox");
-        //_hitbox.Connect("area_entered", this, "Die");
         _rotatebox = GetNode<Area2D>("RotateBox");
         _rotatebox.Connect("area_entered", this, "Rotate");
         _hitboxforenemy = GetNode<Area2D>("HitBoxForEnemy");
