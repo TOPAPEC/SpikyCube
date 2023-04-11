@@ -1,6 +1,6 @@
-# Templorary folders
-.mono
-.import
+# Templorary folders and files 
+.mono/
+.import/
 mono_crash*
 
 # Mac OS files
