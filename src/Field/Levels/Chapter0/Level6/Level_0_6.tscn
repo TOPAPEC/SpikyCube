@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/Actors/Enemies/EnemySpike/EnemySpike.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Actors/Player/DummyPlayer/DummyPlayer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://resources/Top down level assets/Floor - Dirt 1 64x64.png" type="Texture" id=3]
+[ext_resource path="res://src/Field/Levels/Chapter0/Level6/Level_0_6.cs" type="Script" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -38,6 +39,7 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 0/z_index = 0
 
 [node name="Chapter1Level1" type="Node2D"]
+script = ExtResource( 4 )
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2( 127, 200 )

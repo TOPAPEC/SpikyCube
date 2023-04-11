@@ -30,7 +30,7 @@ public class SceneController : Node2D
 
         public LevelsDict()
         {
-            _fillLevelDict(0, 0, 19);
+            _fillLevelDict(0, 0, 20);
         }
         
         private void _fillLevelDict(int chapter, int fromLevel, int toLevel)
