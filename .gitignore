@@ -1,0 +1,7 @@
+# Templorary folders and files 
+.mono/
+.import/
+mono_crash*
+
+# Mac OS files
+.DS_Store

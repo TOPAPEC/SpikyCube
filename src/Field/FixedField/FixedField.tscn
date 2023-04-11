@@ -4,7 +4,7 @@
 [ext_resource path="res://src/Field/FixedField/FixedField.cs" type="Script" id=2]
 [ext_resource path="res://src/Actors/Player/DummyPlayer/DummyPlayer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Actors/Enemies/DummyEnemy/DummyEnemy.tscn" type="PackedScene" id=4]
-[ext_resource path="res://src/Field/RotateArea/TestRotate.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/Field/Items/RotateArea/RotateClockwise.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )

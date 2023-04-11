@@ -43,7 +43,7 @@ public class DummyEnemy : Area2D
         else if (_enemySprite.Frame >= 2)
         {
             _attackRange.SetPhysicsProcess(true);
-            GD.Print("Monitorable!");
+            //GD.Print("Monitorable!");
         }
         if (_sinceLastAttack > 1f)
         {

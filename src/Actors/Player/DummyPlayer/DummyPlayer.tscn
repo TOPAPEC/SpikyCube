@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://resources/Crab/Idle/Crab5.png" type="Texture" id=1]
 [ext_resource path="res://resources/Crab/Idle/Crab1.png" type="Texture" id=2]
@@ -8,27 +8,29 @@
 [ext_resource path="res://resources/Crab/Moving/CrabMoving1.png" type="Texture" id=6]
 [ext_resource path="res://src/Actors/Player/DummyPlayer/DummyPlayer.cs" type="Script" id=7]
 [ext_resource path="res://resources/Crab/Idle/Crab2.png" type="Texture" id=8]
-[ext_resource path="res://resources/Adventurer/Individual Sprites/adventurer-die-02.png" type="Texture" id=11]
-[ext_resource path="res://resources/Adventurer/Individual Sprites/adventurer-die-05.png" type="Texture" id=12]
-[ext_resource path="res://resources/Adventurer/Individual Sprites/adventurer-die-04.png" type="Texture" id=13]
-[ext_resource path="res://resources/Adventurer/Individual Sprites/adventurer-die-03.png" type="Texture" id=14]
-[ext_resource path="res://resources/Adventurer/Individual Sprites/adventurer-die-00.png" type="Texture" id=15]
-[ext_resource path="res://resources/Adventurer/Individual Sprites/adventurer-die-01.png" type="Texture" id=16]
-[ext_resource path="res://resources/Adventurer/Individual Sprites/adventurer-die-06.png" type="Texture" id=17]
+[ext_resource path="res://resources/Crab/Attack/Crab_Attack1.png" type="Texture" id=9]
+[ext_resource path="res://resources/Crab/Attack/Crab_Attack3.png" type="Texture" id=10]
 [ext_resource path="res://resources/Crab/Idle/Crab3.png" type="Texture" id=18]
 [ext_resource path="res://resources/Crab/Idle/Crab4.png" type="Texture" id=19]
+[ext_resource path="res://resources/Crab/Attack/Crab_Attack2.png" type="Texture" id=20]
+[ext_resource path="res://resources/Crab/Attack/Crab_Attack4.png" type="Texture" id=21]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 17 ) ],
+"frames": [ ExtResource( 9 ), ExtResource( 20 ), ExtResource( 10 ), ExtResource( 21 ) ],
+"loop": true,
+"name": "attack",
+"speed": 9.0
+}, {
+"frames": [ ExtResource( 2 ), null, ExtResource( 2 ), null, ExtResource( 2 ), null, ExtResource( 2 ), null, ExtResource( 2 ) ],
 "loop": true,
 "name": "death",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ ExtResource( 2 ), ExtResource( 8 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "idle",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [ ExtResource( 6 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ) ],
 "loop": true,
@@ -37,18 +39,19 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 15.7, 15.7 )
-
-[sub_resource type="CapsuleShape2D" id=3]
-radius = 11.0
+extents = Vector2( 17.3333, 14.6667 )
 
 [sub_resource type="CircleShape2D" id=5]
+radius = 23.0217
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 22, 24 )
+extents = Vector2( 21.5001, 29 )
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 23, 2.25 )
+extents = Vector2( 28, 5 )
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 10.0499
 
 [node name="DummyPlayer" type="KinematicBody2D"]
 script = ExtResource( 7 )
@@ -57,24 +60,17 @@ script = ExtResource( 7 )
 scale = Vector2( 3.2, 3 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
+frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 7.15256e-07, 5.96046e-07 )
 scale = Vector2( 1.5, 1.5 )
 shape = SubResource( 4 )
 
-[node name="Hitbox" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-self_modulate = Color( 0.619608, 0.137255, 0.137255, 1 )
-shape = SubResource( 3 )
-
 [node name="RotateBox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 8
+collision_mask = 1024
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RotateBox"]
 shape = SubResource( 5 )
@@ -84,14 +80,21 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxForEnemy"]
-position = Vector2( -1.31134e-07, 2 )
+position = Vector2( -3.51667e-06, 3.49995 )
 rotation = 1.5708
 shape = SubResource( 6 )
 
 [node name="AttackBox" type="Area2D" parent="."]
 collision_layer = 4096
-collision_mask = 0
+collision_mask = 8192
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
-position = Vector2( 0, -21.75 )
+position = Vector2( 0, -21 )
 shape = SubResource( 7 )
+
+[node name="RotateCounterBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RotateCounterBox"]
+shape = SubResource( 8 )
