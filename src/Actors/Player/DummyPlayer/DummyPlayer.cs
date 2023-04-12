@@ -3,7 +3,6 @@ using System;
 using System.Threading.Tasks;
 
 
-
 public class DummyPlayer : KinematicBody2D
 {
     // Declare member variables here. Examples:
@@ -33,6 +32,8 @@ public class DummyPlayer : KinematicBody2D
     private Area2D _hitboxforenemy;
     private Area2D _attackbox;
     private Area2D _endbox;
+    private AudioStreamPlayer _audio_attack;
+    private AudioStreamPlayer _audio_death;
     
     public override void _Ready()
     {
@@ -46,6 +47,8 @@ public class DummyPlayer : KinematicBody2D
         _playerSprite.Connect("animation_finished", this, "Idle");
         _endbox = GetNode<Area2D>("EndBox");
         _endbox.Connect("area_entered", this, "End");
+        _audio_attack = GetNode<AudioStreamPlayer>("AttackAudio");
+        _audio_death = GetNode<AudioStreamPlayer>("DeathAudio");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -79,7 +82,7 @@ public class DummyPlayer : KinematicBody2D
         _died = true;
         _playerSprite.Animation = "death";
         _playerSprite.Connect("animation_finished", this, "Freee");
-
+        _audio_death.Play();
     }
 
     public void Rotate(Area2D other)
@@ -108,6 +111,7 @@ public class DummyPlayer : KinematicBody2D
         if ((_isMovingForward || !_isMoving) && !_died)
         {
             _playerSprite.Animation = "attack";
+            _audio_attack.Play();
         }
     }
 

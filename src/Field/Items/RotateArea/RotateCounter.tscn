@@ -10,8 +10,8 @@ collision_layer = 1024
 collision_mask = 0
 
 [node name="Counter" type="Sprite" parent="."]
-position = Vector2( 2.375, -2.375 )
-scale = Vector2( 0.24625, 0.24625 )
+position = Vector2( 3, -2 )
+scale = Vector2( 0.25625, 0.25625 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
