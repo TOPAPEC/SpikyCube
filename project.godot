@@ -20,7 +20,7 @@ PlayerStats="*res://src/SceneController/PlayerStats.cs"
 
 [display]
 
-window/size/height=1280
+window/size/height=1024
 
 [global]
 
