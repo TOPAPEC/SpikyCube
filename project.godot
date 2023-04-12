@@ -61,14 +61,15 @@ move_up={
 
 [layer_names]
 
-2d_physics/layer_1="Player"
+2d_physics/layer_1="World"
 2d_physics/layer_2="PlayerAttacks"
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="EnemyAttacks"
-2d_physics/layer_5="World"
+2d_physics/layer_5="Player"
 2d_physics/layer_6="FinishLayer"
 2d_physics/layer_7="CoinsLayer"
 2d_physics/layer_8="KeysLayer"
+2d_physics/layer_11="RotateLayer"
 
 [mono]
 

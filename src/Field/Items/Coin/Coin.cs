@@ -12,7 +12,7 @@ public class Coin : Area2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        this.Connect("area_entered", this, "Freee");
+        this.Connect("body_entered", this, "Freee");
         _ps = GetNode<PlayerStats>("/root/PlayerStats");
     }
 
