@@ -39,21 +39,22 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 17.3333, 14.6667 )
+extents = Vector2( 14.6667, 14.3334 )
 
 [sub_resource type="CircleShape2D" id=5]
 radius = 23.0217
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 20.5, 27 )
+extents = Vector2( 20, 26 )
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 26, 19.5 )
+extents = Vector2( 24, 19.5 )
 
 [sub_resource type="CircleShape2D" id=9]
 radius = 13.0
 
 [node name="DummyPlayer" type="KinematicBody2D"]
+position = Vector2( 27, -23 )
 script = ExtResource( 7 )
 
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
@@ -64,7 +65,7 @@ frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 7.15256e-07, 5.96046e-07 )
+position = Vector2( 0, -0.500025 )
 scale = Vector2( 1.5, 1.5 )
 shape = SubResource( 4 )
 
@@ -80,7 +81,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxForEnemy"]
-position = Vector2( 7.74264e-05, 2.49988 )
+position = Vector2( 7.24792e-05, 1.99989 )
 rotation = 1.5708
 shape = SubResource( 6 )
 
