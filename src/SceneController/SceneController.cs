@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 public class SceneController : Node2D
 {
     public Node CurrentLevel;
-    public readonly String CurrentLevelName = "Chapter0Level0";
+    public readonly String CurrentLevelName = "GameLayer/Chapter0Level0";
     public static readonly LevelsDict Levels = new LevelsDict();
     public HUDV1 HUD;
     private MenuV1 _pauseMenu;
@@ -52,14 +52,14 @@ public class SceneController : Node2D
     public override void _Ready()
     {
         HUD = GetNode<HUDV1>("GameLayer/HUD");
-        CurrentLevel = GetNode<Node>(CurrentLevelName);
         _pauseMenu = GetNode<MenuV1>("UILayer/PauseMenu");
         _UILayer = GetNode<CanvasLayer>("UILayer");
         _gameLayer = GetNode<CanvasLayer>("GameLayer");
         _greyScaleShader = GetNode<ColorRect>("GameLayer/GreyScaleShader");
         _gameAudio = GetNode<AudioStreamPlayer>("GameLayer/GameAudio");
         _playerStats = GetNode<PlayerStats>("/root/PlayerStats");
-        ChangeScene(CurrentLevelName);
+        ChangeScene(_levelId);
+        CurrentLevel = GetNode<Node>(CurrentLevelName);
         _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
         HUD.ShowHud();
         HUD.Connect("HudPauseButtonPressed", this, "PauseGame");
@@ -136,7 +136,7 @@ public class SceneController : Node2D
 
         var newScene = Levels[newSceneName];
         var newSceneInstance = newScene.Instance();
-        newSceneInstance.Name = CurrentLevelName;
+        newSceneInstance.Name = _levelId;
         ((IScene)newSceneInstance).EnterScene();
         CurrentLevel = newSceneInstance;
         if (_checkIfSceneIsInterface(newSceneName))
