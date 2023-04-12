@@ -4,14 +4,15 @@ var vector = Vector2()
 export var dir = 1
 export var hor = 1
 export var stomach = 1
+export var speed = 50
 
 func _ready():
     if dir == -1:
         $AnimatedSprite.flip_h = true
-    vector.x += stomach * dir * 50
+    vector.x += stomach * dir * speed
     if hor == -1:
         vector.x = 0
-        vector.y += stomach * dir * 50
+        vector.y += stomach * dir * speed
 
 func _on_Hitbox_area_entered(area):
     vector.x = 0
