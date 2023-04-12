@@ -18,6 +18,7 @@ public class SceneController : Node2D
     private float _audioPlaybackPosition;
     private String _levelId = "Chapter0Level0";
     private KinematicBody2D _player;
+    private PlayerStats _playerStats;
     
     public class LevelsDict
     {
@@ -58,6 +59,7 @@ public class SceneController : Node2D
         _gameLayer = GetNode<CanvasLayer>("GameLayer");
         _greyScaleShader = GetNode<ColorRect>("GameLayer/GreyScaleShader");
         _gameAudio = GetNode<AudioStreamPlayer>("GameLayer/GameAudio");
+        _playerStats = GetNode<PlayerStats>("/root/PlayerStats");
         HUD.ShowHud();
         HUD.Connect("HudPauseButtonPressed", this, "PauseGame");
         _gameAudio.Playing = true;
@@ -157,6 +159,7 @@ public class SceneController : Node2D
         string pattern = "Chapter(.+)Level(.+)";
         int chapter = 0;
         int level = 0;
+        _playerStats.SaveLevelProgress(chapter, level);
         foreach (Match match in Regex.Matches(sceneName, pattern, RegexOptions.IgnoreCase)) 
         {
             int.TryParse(match.Groups[1].Value, out chapter);

@@ -11,7 +11,7 @@ namespace SpikyCube.SceneController
 
         [Signal]
         public delegate void KeysAmountChanged(int newAmount);
-        
+
         // -1 Level was never tried
         public List<List<int>> LevelScores;
 
@@ -23,11 +23,12 @@ namespace SpikyCube.SceneController
             LevelScores = new List<List<int>>(1);
             LevelScores.Add(new List<int>(new int[20]));
         }
-        
+
         public int CoinsCollected
         {
             get => _coinsCollected;
-            set {
+            set
+            {
                 EmitSignal("CoinsAmountChanged", value);
                 _coinsCollected = value;
             }
@@ -41,6 +42,13 @@ namespace SpikyCube.SceneController
                 EmitSignal("KeysAmountChanged", value);
                 _keysCollected = value;
             }
+        }
+
+        public void SaveLevelProgress(int chapterId, int levelId)
+        {
+            LevelScores[chapterId][levelId] = _coinsCollected;
+            CoinsCollected = 0;
+            KeysCollected = 0;
         }
     }
 }
