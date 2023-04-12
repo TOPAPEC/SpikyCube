@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://resources/Crab/Idle/Crab5.png" type="Texture" id=1]
 [ext_resource path="res://resources/Crab/Idle/Crab1.png" type="Texture" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://resources/Crab/Idle/Crab2.png" type="Texture" id=8]
 [ext_resource path="res://resources/Crab/Attack/Crab_Attack1.png" type="Texture" id=9]
 [ext_resource path="res://resources/Crab/Attack/Crab_Attack3.png" type="Texture" id=10]
+[ext_resource path="res://resources/GameSounds/Simple Gunshot 002.wav" type="AudioStream" id=11]
+[ext_resource path="res://resources/GameSounds/Death 001.wav" type="AudioStream" id=12]
 [ext_resource path="res://resources/Crab/Idle/Crab3.png" type="Texture" id=18]
 [ext_resource path="res://resources/Crab/Idle/Crab4.png" type="Texture" id=19]
 [ext_resource path="res://resources/Crab/Attack/Crab_Attack2.png" type="Texture" id=20]
@@ -20,7 +22,7 @@ animations = [ {
 "frames": [ ExtResource( 9 ), ExtResource( 20 ), ExtResource( 10 ), ExtResource( 21 ) ],
 "loop": true,
 "name": "attack",
-"speed": 9.0
+"speed": 12.0
 }, {
 "frames": [ ExtResource( 2 ), null, ExtResource( 2 ), null, ExtResource( 2 ), null, ExtResource( 2 ), null, ExtResource( 2 ) ],
 "loop": true,
@@ -61,11 +63,18 @@ __meta__ = {
 "_edit_vertical_guides_": [ -32.0, 32.0 ]
 }
 
+[node name="AttackAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="DeathAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -7.0
+
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 3.2, 3 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 4
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -8,17 +8,30 @@ public class Coin : Area2D
     // private int a = 2;
     // private string b = "text";
     private PlayerStats _ps;
+    private AudioStreamPlayer _audio_coin;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        this.Connect("body_entered", this, "Freee");
+        this.Connect("body_entered", this, "Collect");
         _ps = GetNode<PlayerStats>("/root/PlayerStats");
+        _audio_coin = GetNode<AudioStreamPlayer>("CoinAudio");
+        
+    }
+
+    public void Collect(Area2D other)
+    {
+        if (this.Visible)
+        {
+            _audio_coin.Play();
+            _audio_coin.Connect("finished", this, "Freee");
+            _ps.CoinsCollected += 1;
+            this.Visible = false;
+        }
     }
 
     public void Freee(Area2D other)
     {
-        _ps.CoinsCollected += 1;
         QueueFree();
     }
 
