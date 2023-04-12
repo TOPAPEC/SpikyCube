@@ -34,6 +34,7 @@ public class DummyPlayer : KinematicBody2D
     private Area2D _endbox;
     private AudioStreamPlayer _audio_attack;
     private AudioStreamPlayer _audio_death;
+    private AudioStreamPlayer _audio_finish;
     
     public override void _Ready()
     {
@@ -49,6 +50,7 @@ public class DummyPlayer : KinematicBody2D
         _endbox.Connect("area_entered", this, "End");
         _audio_attack = GetNode<AudioStreamPlayer>("AttackAudio");
         _audio_death = GetNode<AudioStreamPlayer>("DeathAudio");
+        _audio_finish = GetNode<AudioStreamPlayer>("FinishAudio");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -72,7 +74,8 @@ public class DummyPlayer : KinematicBody2D
     public void End(Area2D other)
     {
         _end = true;
-        _playerSprite.Animation = "idle";
+        _audio_finish.Play();
+        _playerSprite.Animation = "running";
         _playerSprite.Connect("animation_finished", this, "Freeee");;
     }
 
