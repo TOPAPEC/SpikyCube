@@ -39,35 +39,39 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 14.6667, 14.3334 )
+extents = Vector2( 18.6667, 18.6667 )
 
 [sub_resource type="CircleShape2D" id=5]
-radius = 23.0217
+radius = 22.0
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 10.4999, 13.5 )
+extents = Vector2( 18.4999, 20 )
 
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 24, 19.5 )
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 18, 2.5 )
 
 [sub_resource type="CircleShape2D" id=9]
 radius = 13.0
 
 [node name="DummyPlayer" type="KinematicBody2D"]
-collision_mask = 0
+collision_layer = 16
 script = ExtResource( 7 )
+__meta__ = {
+"_edit_horizontal_guides_": [ -32.0, 32.0 ],
+"_edit_vertical_guides_": [ -32.0, 32.0 ]
+}
 
 [node name="PlayerSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 3.2, 3 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
+frame = 4
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -0.500025 )
 scale = Vector2( 1.5, 1.5 )
 shape = SubResource( 4 )
+one_way_collision_margin = 0.0
 
 [node name="RotateBox" type="Area2D" parent="."]
 collision_layer = 0
@@ -78,24 +82,26 @@ shape = SubResource( 5 )
 
 [node name="HitBoxForEnemy" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxForEnemy"]
-position = Vector2( 0, 5 )
+position = Vector2( -7.58462e-05, 2.5 )
 rotation = 1.5708
 shape = SubResource( 10 )
 
 [node name="AttackBox" type="Area2D" parent="."]
-collision_layer = 4096
-collision_mask = 8192
+collision_layer = 2
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
-position = Vector2( 0, -6.5 )
-shape = SubResource( 7 )
+position = Vector2( -3.7749e-07, -25.5 )
+rotation = -3.14159
+shape = SubResource( 11 )
+one_way_collision_margin = 0.0
 
 [node name="EndBox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 8388608
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndBox"]
 shape = SubResource( 9 )

@@ -75,6 +75,7 @@ public class DummyPlayer : KinematicBody2D
 
     public void Die(Area2D other)
     {
+        _attackbox.SetCollisionLayerBit(1, false);
         _died = true;
         _playerSprite.Animation = "death";
         _playerSprite.Connect("animation_finished", this, "Freee");
