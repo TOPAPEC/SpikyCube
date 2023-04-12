@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 public class SceneController : Node2D
 {
     public Node CurrentLevel;
-    public readonly String CurrentLevelName = "GameLayer/CurrentLevel";
+    public readonly String CurrentLevelName = "Chapter0Level0";
     public static readonly LevelsDict Levels = new LevelsDict();
     public HUDV1 HUD;
     private MenuV1 _pauseMenu;
@@ -51,7 +51,6 @@ public class SceneController : Node2D
 
     public override void _Ready()
     {
-        
         HUD = GetNode<HUDV1>("GameLayer/HUD");
         CurrentLevel = GetNode<Node>(CurrentLevelName);
         _pauseMenu = GetNode<MenuV1>("UILayer/PauseMenu");
@@ -60,19 +59,30 @@ public class SceneController : Node2D
         _greyScaleShader = GetNode<ColorRect>("GameLayer/GreyScaleShader");
         _gameAudio = GetNode<AudioStreamPlayer>("GameLayer/GameAudio");
         _playerStats = GetNode<PlayerStats>("/root/PlayerStats");
+        ChangeScene(CurrentLevelName);
+        _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
         HUD.ShowHud();
         HUD.Connect("HudPauseButtonPressed", this, "PauseGame");
         _gameAudio.Playing = true;
         _pauseMenu.Connect("ResumeGamePressed", this, "ResumeGame");
         _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
         _pauseMenu.Connect("SelectLevelPressed", this, "ShowLevelSelection");
-
-        _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
         _player.Connect("RestartLevel", this, "ChangeToCurrentLevel");
         _player.Connect("NextLevel", this, "ChangeToNextLevel");
     }
 
-
+    private void _centerLevel()
+    {
+        var levelTileMap = CurrentLevel.GetNode<TileMap>("TileMap");
+        var tileMapRect = levelTileMap.GetUsedRect();
+        var currentResolution = GetViewportRect().End - GetViewportRect().Position;
+        var levelSize = tileMapRect.End - tileMapRect.Position;
+        var levelSizeInPx = levelSize * levelTileMap.CellSize * ((Node2D)CurrentLevel).Transform.Scale;
+        var freeScreenSize = currentResolution - levelSizeInPx;
+        var levelOffsetFractions = new Vector2(0.5f, 0f);
+        ((Node2D)CurrentLevel).Position = new Vector2(freeScreenSize * levelOffsetFractions) + new Vector2(0, 200f);
+        
+    }
 
     public void PauseGame()
     {
@@ -124,14 +134,11 @@ public class SceneController : Node2D
             CurrentLevel.QueueFree();
         }
 
-
-        
-
         var newScene = Levels[newSceneName];
         var newSceneInstance = newScene.Instance();
         newSceneInstance.Name = CurrentLevelName;
         ((IScene)newSceneInstance).EnterScene();
-        CurrentLevel = (Node)newSceneInstance;
+        CurrentLevel = newSceneInstance;
         if (_checkIfSceneIsInterface(newSceneName))
         {
             HUD.HideHud();
@@ -143,8 +150,10 @@ public class SceneController : Node2D
             _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
             _player.Connect("RestartLevel", this, "ChangeToCurrentLevel");
             _player.Connect("NextLevel", this, "ChangeToNextLevel");
+            _centerLevel();
         }
         _gameLayer.AddChild(newSceneInstance);
+        _playerStats.ResetCurrentState();
     }
 
     public void ChangeToCurrentLevel()
@@ -159,12 +168,12 @@ public class SceneController : Node2D
         string pattern = "Chapter(.+)Level(.+)";
         int chapter = 0;
         int level = 0;
-        _playerStats.SaveLevelProgress(chapter, level);
         foreach (Match match in Regex.Matches(sceneName, pattern, RegexOptions.IgnoreCase)) 
         {
             int.TryParse(match.Groups[1].Value, out chapter);
             int.TryParse(match.Groups[2].Value, out level);
         }
+        _playerStats.SaveLevelProgress(chapter, level);
         String sceneNameNextLevel = String.Format("Chapter{0}Level{1}", chapter, level + 1);
         String sceneNameNextChapter = String.Format("Chapter{0}Level{1}", chapter + 1, 0);
         if (Levels.LevelPaths.ContainsKey(sceneNameNextLevel)) 
