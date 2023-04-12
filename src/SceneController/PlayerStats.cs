@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
+
 
 namespace SpikyCube.SceneController
 {
@@ -49,6 +51,17 @@ namespace SpikyCube.SceneController
             LevelScores[chapterId][levelId] = _coinsCollected;
             CoinsCollected = 0;
             KeysCollected = 0;
+            var win = JavaScript.GetInterface("window");
+            // win.Call()
+            var saveArray = JavaScript.Eval("[" + String.Join(",", LevelScores.Select(g =>
+                "[" + String.Join(",", g.Select(i => i.ToString())) + "]"
+            )) + "]");
+        }
+
+        public void ResetCurrentState()
+        {
+            KeysCollected = 0;
+            CoinsCollected = 0;
         }
     }
 }
