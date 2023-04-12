@@ -46,6 +46,7 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 0/z_index = 0
 
 [node name="Level2" type="Node2D"]
+scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 3 )
 
 [node name="TileMap" type="TileMap" parent="."]
