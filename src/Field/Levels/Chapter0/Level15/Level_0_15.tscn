@@ -94,6 +94,7 @@ position = Vector2( 156.25, 92.5 )
 
 [node name="Flag" parent="." instance=ExtResource( 5 )]
 position = Vector2( 162.5, 218.75 )
+open = 0
 
 [node name="Coin" parent="." instance=ExtResource( 9 )]
 position = Vector2( 98.75, 280 )
