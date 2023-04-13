@@ -22,11 +22,7 @@ public class Key : Area2D
     {
         _ps.KeysCollected += 1;
 
-        var parent = (DummyPlayer)(other.GetParent());
-        if (parent.MovingForward)
-        {
-            QueueFree();
-        }
+        QueueFree();
     }
     
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
