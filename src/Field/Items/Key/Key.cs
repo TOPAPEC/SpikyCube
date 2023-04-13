@@ -20,9 +20,13 @@ public class Key : Area2D
 
     public void Freee(Area2D other)
     {
-        _ps.KeysCollected += 1;
-
-        QueueFree();
+        
+        var parent = (DummyPlayer)(other.GetParent());
+        if (parent.MovingForward)
+        {
+            _ps.KeysCollected += 1;
+            QueueFree();
+        }
     }
     
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
