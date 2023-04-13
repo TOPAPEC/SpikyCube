@@ -144,16 +144,18 @@ rotation = 3.14159
 dir = -1
 stomach = -1
 
-[node name="Coin" parent="Enemies" instance=ExtResource( 10 )]
-position = Vector2( 672.5, 477.5 )
-
 [node name="Items" type="Node2D" parent="."]
 
 [node name="Coin" parent="." instance=ExtResource( 10 )]
 position = Vector2( 483.75, 800 )
 
-[node name="Coin" parent="Coin" instance=ExtResource( 10 )]
-position = Vector2( -257.5, -702.5 )
-
 [node name="RotateCounter" parent="." instance=ExtResource( 8 )]
 position = Vector2( 338.75, 803.75 )
+
+[node name="Coin2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 226.25, 97.5 )
+scale = Vector2( 1, 1 )
+
+[node name="Coin3" parent="." instance=ExtResource( 10 )]
+position = Vector2( 672.5, 477.5 )
+scale = Vector2( 1, 1 )
