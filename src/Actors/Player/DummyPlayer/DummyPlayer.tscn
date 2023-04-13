@@ -48,10 +48,10 @@ extents = Vector2( 18.6667, 18.6667 )
 radius = 22.0
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 18.4999, 20 )
+extents = Vector2( 14.5, 20 )
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 18, 2.5 )
+extents = Vector2( 16, 8 )
 
 [sub_resource type="CircleShape2D" id=9]
 radius = 16.0
