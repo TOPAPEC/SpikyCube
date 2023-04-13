@@ -67,8 +67,6 @@ public class SceneController : Node2D
         _pauseMenu.Connect("ResumeGamePressed", this, "ResumeGame");
         _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
         _pauseMenu.Connect("SelectLevelPressed", this, "ShowLevelSelection");
-        _player.Connect("RestartLevel", this, "ChangeToCurrentLevel");
-        _player.Connect("NextLevel", this, "ChangeToNextLevel");
     }
 
     private void _centerLevel()

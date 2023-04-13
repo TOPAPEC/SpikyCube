@@ -21,16 +21,14 @@ public class Coin : Area2D
 
     public void Collect(Area2D other)
     {
-        if (this.Visible)
-        {
-            _audio_coin.Play();
-            _audio_coin.Connect("finished", this, "Freee");
-            _ps.CoinsCollected += 1;
-            this.Visible = false;
-        }
+        CollisionMask = 0;
+        _audio_coin.Connect("finished", this, "Freee");
+        _audio_coin.Play();
+        _ps.CoinsCollected += 1;
+        Hide();
     }
 
-    public void Freee(Area2D other)
+    public void Freee()
     {
         QueueFree();
     }
