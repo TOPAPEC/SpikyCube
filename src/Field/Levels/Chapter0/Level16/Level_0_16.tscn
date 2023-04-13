@@ -62,7 +62,6 @@ position = Vector2( 290, 610 )
 [node name="EnemyEel" parent="Enemies" instance=ExtResource( 9 )]
 position = Vector2( 801.638, 548.273 )
 rotation = 1.5708
-scale = Vector2( 3, 3.5 )
 hor = -1
 
 [node name="EnemySpike" parent="Enemies" instance=ExtResource( 4 )]
