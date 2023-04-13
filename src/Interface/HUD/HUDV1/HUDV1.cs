@@ -6,6 +6,8 @@ public class HUDV1 : CanvasLayer
 {
     [Signal]
     public delegate void HudPauseButtonPressed();
+    [Signal]
+    public delegate void RestartGamePressed();
     public float ElapsedTime = 0;
     private bool _isTimerStarted;
     private long _timerStartTime;
@@ -13,18 +15,26 @@ public class HUDV1 : CanvasLayer
     private RichTextLabel _coinsCountLabel;
     private RichTextLabel _keysCountLabel;
     private TextureButton _pauseButton;
+    private TextureButton _restartLevelButton;
     private PlayerStats PlayerStatsLink;
     
     public override void _Ready()
-    {
+    {        
         PlayerStatsLink = GetNode<PlayerStats>("/root/PlayerStats");
         PlayerStatsLink.Connect("CoinsAmountChanged", this, "_handleCoinAmountChange");
         PlayerStatsLink.Connect("KeysAmountChanged", this, "_handleKeysAmountChange");
         _elapsedTimeLabel = GetNode<RichTextLabel>("ElapsedTime");
         _coinsCountLabel = GetNode<RichTextLabel>("CoinsKeysCount/CoinsCounter");
         _keysCountLabel = GetNode<RichTextLabel>("CoinsKeysCount/KeyCounter");
+        _restartLevelButton = GetNode<TextureButton>("RestartLevelButton");
         _pauseButton = GetNode<TextureButton>("PauseButton");
+        _restartLevelButton.Connect("pressed", this, "_emitRestartGamePressed");
         _pauseButton.Connect("pressed", this, "_emitPauseSignal");
+    }
+
+    private void _emitRestartGamePressed()
+    {
+        EmitSignal("RestartGamePressed");
     }
 
     public void _emitPauseSignal()
@@ -39,6 +49,7 @@ public class HUDV1 : CanvasLayer
 
     private void _handleKeysAmountChange(int newAmount)
     {
+        GD.Print("Hello from C# to Godot :)");
         _keysCountLabel.BbcodeText = $"[center] {newAmount.ToString()} [/center]";
     }
 

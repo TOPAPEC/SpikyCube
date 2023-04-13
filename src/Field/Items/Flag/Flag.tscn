@@ -40,6 +40,7 @@ shape = SubResource( 1 )
 material = SubResource( 4 )
 frames = SubResource( 2 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="EndBox" type="Area2D" parent="."]
