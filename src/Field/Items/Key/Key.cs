@@ -21,14 +21,19 @@ public class Key : Area2D
 
     public void Freee(Area2D other)
     {
-        if (_playerStats.Get("current_keys") is int currentKeys)
+        
+        var parent = (DummyPlayer)(other.GetParent());
+        if (parent.MovingForward)
         {
-            _playerStats.Call("set_current_keys", currentKeys + 1);
-            QueueFree();
-        }
-        else
-        {
-            GD.Print("Error not an int!");
+            if (_playerStats.Get("current_keys") is int currentKeys)
+            {
+                _playerStats.Call("set_current_keys", currentKeys + 1);
+                QueueFree();
+            }
+            else
+            {
+                GD.Print("Error not an int!");
+            }
         }
     }
     
