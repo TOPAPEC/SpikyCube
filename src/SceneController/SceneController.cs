@@ -63,6 +63,7 @@ public class SceneController : Node2D
         _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
         HUD.ShowHud();
         HUD.Connect("HudPauseButtonPressed", this, "PauseGame");
+        HUD.Connect("RestartGamePressed", this, "ChangeToCurrentLevel");
         _gameAudio.Playing = true;
         _pauseMenu.Connect("ResumeGamePressed", this, "ResumeGame");
         _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
