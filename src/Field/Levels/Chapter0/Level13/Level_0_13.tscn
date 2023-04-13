@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/Field/Levels/Chapter0/Level13/Level_0_13.cs" type="Script" id=1]
 [ext_resource path="res://resources/Top down level assets/Floor - Dirt 1 64x64.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/Field/Items/RotateArea/RotateCounter.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Field/Items/Flag/Flag.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/Field/Items/Key/Key.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/Field/Items/Coin/Coin.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -109,3 +110,12 @@ position = Vector2( 673.75, 803.75 )
 [node name="EnemyMeduza" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 798.75, 280 )
 rotation = -1.5708
+
+[node name="Coin4" parent="Enemies" instance=ExtResource( 9 )]
+position = Vector2( 158.75, 675 )
+
+[node name="Coin5" parent="Enemies" instance=ExtResource( 9 )]
+position = Vector2( 350, 478.75 )
+
+[node name="Coin6" parent="Enemies" instance=ExtResource( 9 )]
+position = Vector2( 161.25, 930 )
