@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using SpikyCube.SceneController;
+using Object = Godot.Object;
 
 public class LevelSelectionV1 : Control, IScene
 {
@@ -16,7 +17,7 @@ public class LevelSelectionV1 : Control, IScene
     private GridContainer _coinsCounterGrid;
     private TextureButton _nextChapter;
     private TextureButton _previousChapter;
-    private PlayerStats _playerStats;
+    private Object _playerStats;
     private AudioStreamPlayer _mainMenuClickSound;
     private AudioStreamPlayer _blockedSound;
     private int _chapterNumber = 0;
@@ -25,7 +26,7 @@ public class LevelSelectionV1 : Control, IScene
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        _playerStats = GetNode<PlayerStats>("/root/PlayerStats");
+        _playerStats = GetNode<Object>("/root/PlayerStatsExtended");
         _levelButtonsGrid = GetNode<GridContainer>("LevelsGrid");
         _coinsCounterGrid = GetNode<GridContainer>("StarGrid");
         _mainMenuClickSound = GetNode<AudioStreamPlayer>("LevelSelectionClickSound");
@@ -43,7 +44,7 @@ public class LevelSelectionV1 : Control, IScene
         var counters = _coinsCounterGrid.GetChildren();
         for (int i = 0; i < counters.Count; ++i) 
         {
-            ((CoinsCounter)counters[i]).ChangeCoinsCount(_playerStats.LevelScores[_chapterNumber][i]);
+            ((CoinsCounter)counters[i]).ChangeCoinsCount((int)_playerStats.Call("get_level_score", _chapterNumber, i));
         }
 
         _nextChapter.Connect("pressed", _blockedSound, "play");

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using SpikyCube.SceneController;
+using Object = Godot.Object;
 
 public class HUDV1 : CanvasLayer
 {
@@ -16,13 +17,13 @@ public class HUDV1 : CanvasLayer
     private RichTextLabel _keysCountLabel;
     private TextureButton _pauseButton;
     private TextureButton _restartLevelButton;
-    private PlayerStats PlayerStatsLink;
+    private Object _playerStats;
     
     public override void _Ready()
     {        
-        PlayerStatsLink = GetNode<PlayerStats>("/root/PlayerStats");
-        PlayerStatsLink.Connect("CoinsAmountChanged", this, "_handleCoinAmountChange");
-        PlayerStatsLink.Connect("KeysAmountChanged", this, "_handleKeysAmountChange");
+        _playerStats = GetNode<Object>("/root/PlayerStatsExtended");
+        _playerStats.Connect("coins_amount_changed", this, "_handleCoinAmountChange");
+        _playerStats.Connect("keys_amount_changed", this, "_handleKeysAmountChange");
         _elapsedTimeLabel = GetNode<RichTextLabel>("ElapsedTime");
         _coinsCountLabel = GetNode<RichTextLabel>("CoinsKeysCount/CoinsCounter");
         _keysCountLabel = GetNode<RichTextLabel>("CoinsKeysCount/KeyCounter");

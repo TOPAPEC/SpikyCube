@@ -51,11 +51,6 @@ namespace SpikyCube.SceneController
             LevelScores[chapterId][levelId] = _coinsCollected;
             CoinsCollected = 0;
             KeysCollected = 0;
-            var win = JavaScript.GetInterface("window");
-            // win.Call()
-            var saveArray = JavaScript.Eval("[" + String.Join(",", LevelScores.Select(g =>
-                "[" + String.Join(",", g.Select(i => i.ToString())) + "]"
-            )) + "]");
         }
 
         public void ResetCurrentState()

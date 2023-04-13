@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using SpikyCube.SceneController;
 using System.Text.RegularExpressions;
+    using Object = Godot.Object;
 
-public class SceneController : Node2D
+    public class SceneController : Node2D
 {
     public Node CurrentLevel;
     public readonly String CurrentLevelName = "GameLayer/Chapter0Level0";
@@ -18,7 +19,7 @@ public class SceneController : Node2D
     private float _audioPlaybackPosition;
     private String _levelId = "Chapter0Level0";
     private KinematicBody2D _player;
-    private PlayerStats _playerStats;
+    private Object _playerStats;
     
     public class LevelsDict
     {
@@ -57,7 +58,7 @@ public class SceneController : Node2D
         _gameLayer = GetNode<CanvasLayer>("GameLayer");
         _greyScaleShader = GetNode<ColorRect>("GameLayer/GreyScaleShader");
         _gameAudio = GetNode<AudioStreamPlayer>("GameLayer/GameAudio");
-        _playerStats = GetNode<PlayerStats>("/root/PlayerStats");
+        _playerStats = GetNode<Object>("/root/PlayerStatsExtended");
         ChangeScene(_levelId);
         CurrentLevel = GetNode<Node>(CurrentLevelName);
         _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
@@ -152,7 +153,7 @@ public class SceneController : Node2D
             _centerLevel();
         }
         _gameLayer.AddChild(newSceneInstance);
-        _playerStats.ResetCurrentState();
+        _playerStats.Call("reset_current_state");
     }
 
     public void ChangeToCurrentLevel()
@@ -172,7 +173,7 @@ public class SceneController : Node2D
             int.TryParse(match.Groups[1].Value, out chapter);
             int.TryParse(match.Groups[2].Value, out level);
         }
-        _playerStats.SaveLevelProgress(chapter, level);
+        _playerStats.Call("save_level_progress", chapter, level);
         String sceneNameNextLevel = String.Format("Chapter{0}Level{1}", chapter, level + 1);
         String sceneNameNextChapter = String.Format("Chapter{0}Level{1}", chapter + 1, 0);
         if (Levels.LevelPaths.ContainsKey(sceneNameNextLevel)) 

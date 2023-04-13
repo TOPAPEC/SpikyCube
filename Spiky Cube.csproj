@@ -9,4 +9,7 @@
   <ItemGroup>
     <EmbeddedResource Remove="src\Field\Levels\Chapter1\**" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\SceneController\PlayerStatsExtended.gd" />
+  </ItemGroup>
 </Project>

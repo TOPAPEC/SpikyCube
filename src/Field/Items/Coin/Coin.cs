@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using SpikyCube.SceneController;
 
 public class Coin : Area2D
@@ -7,14 +6,14 @@ public class Coin : Area2D
     // Declare member variables here. Examples:
     // private int a = 2;
     // private string b = "text";
-    private PlayerStats _ps;
+    private Object _playerStats;
     private AudioStreamPlayer _audio_coin;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         this.Connect("body_entered", this, "Collect");
-        _ps = GetNode<PlayerStats>("/root/PlayerStats");
+        _playerStats = GetNode<Object>("/root/PlayerStatsExtended");
         _audio_coin = GetNode<AudioStreamPlayer>("CoinAudio");
         
     }
@@ -24,7 +23,7 @@ public class Coin : Area2D
         CollisionMask = 0;
         _audio_coin.Connect("finished", this, "Freee");
         _audio_coin.Play();
-        _ps.CoinsCollected += 1;
+        _playerStats.Call("set_current_coins", (int)_playerStats.Get("current_coins") + 1);
         Hide();
     }
 
