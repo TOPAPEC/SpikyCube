@@ -75,10 +75,22 @@ position = Vector2( 63.75, 512.25 )
 rotation = 1.5708
 
 [node name="EnemySpike2" parent="Enemies" instance=ExtResource( 4 )]
-position = Vector2( 319.75, 696.25 )
+position = Vector2( 320, 703.75 )
+
+[node name="EnemySpike4" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 832.5, 320 )
+rotation = 4.71239
+
+[node name="EnemySpike5" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 832.5, 383.75 )
+rotation = 4.71239
+
+[node name="EnemySpike6" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 832.5, 255 )
+rotation = 4.71239
 
 [node name="EnemySpike3" parent="Enemies" instance=ExtResource( 4 )]
-position = Vector2( 255.75, 696.25 )
+position = Vector2( 256.25, 705 )
 
 [node name="EnemyMeduza" parent="Enemies" instance=ExtResource( 8 )]
 position = Vector2( 671.75, 608.25 )

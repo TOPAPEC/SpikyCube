@@ -74,6 +74,7 @@ public class DummyPlayer : KinematicBody2D
     public void End(Area2D other)
     {
         _end = true;
+        CollisionMask = 0;
         _audio_finish.Play();
         _playerSprite.Animation = "running";
         _playerSprite.Connect("animation_finished", this, "Freeee");;
