@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Threading.Tasks;
-
+using SpikyCube.SceneController;
 
 public class DummyPlayer : KinematicBody2D
 {
@@ -35,6 +35,7 @@ public class DummyPlayer : KinematicBody2D
     private AudioStreamPlayer _audio_attack;
     private AudioStreamPlayer _audio_death;
     private AudioStreamPlayer _audio_finish;
+    private Godot.Object _playerStats;
     
     public override void _Ready()
     {
@@ -51,6 +52,7 @@ public class DummyPlayer : KinematicBody2D
         _audio_attack = GetNode<AudioStreamPlayer>("AttackAudio");
         _audio_death = GetNode<AudioStreamPlayer>("DeathAudio");
         _audio_finish = GetNode<AudioStreamPlayer>("FinishAudio");
+        _playerStats = GetNode<Godot.Object>("/root/PlayerStatsExtended");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -75,6 +77,7 @@ public class DummyPlayer : KinematicBody2D
     {
         _end = true;
         CollisionMask = 0;
+        _playerStats.Call("end_current_level");
         _audio_finish.Play();
         _playerSprite.Animation = "running";
         _playerSprite.Connect("animation_finished", this, "Freeee");;
@@ -131,7 +134,7 @@ public class DummyPlayer : KinematicBody2D
 
     private void SetMovingForward()
     {
-        float posRotate = RotationDegrees < 0 ? RotationDegrees + 360 : RotationDegrees;
+        int posRotate = RotationDegrees < 0 ? (int)(RotationDegrees + 360) : (int)(RotationDegrees);
         if ((posRotate == 0 && _dir == 0) ||
             (posRotate == 90 && _dir == 1) ||
             (posRotate == 180 && _dir == 2) ||

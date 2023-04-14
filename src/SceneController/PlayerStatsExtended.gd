@@ -9,6 +9,7 @@ onready var win = JavaScript.get_interface("window")
 
 signal coins_amount_changed(new_amount)
 signal keys_amount_changed(new_amount)
+signal end_level()
 
 func _ready():
 	level_scores.append([])
@@ -33,4 +34,7 @@ func save_level_progress(chapter_id, level_id):
 func reset_current_state():
 	set_current_coins(0)
 	set_current_keys(0)
+
+func end_current_level():
+    emit_signal("end_level")
 

@@ -24,6 +24,7 @@ public class HUDV1 : CanvasLayer
         _playerStats = GetNode<Object>("/root/PlayerStatsExtended");
         _playerStats.Connect("coins_amount_changed", this, "_handleCoinAmountChange");
         _playerStats.Connect("keys_amount_changed", this, "_handleKeysAmountChange");
+        _playerStats.Connect("end_level", this, "StopTime");
         _elapsedTimeLabel = GetNode<RichTextLabel>("ElapsedTime");
         _coinsCountLabel = GetNode<RichTextLabel>("CoinsKeysCount/CoinsCounter");
         _keysCountLabel = GetNode<RichTextLabel>("CoinsKeysCount/KeyCounter");
@@ -50,7 +51,6 @@ public class HUDV1 : CanvasLayer
 
     private void _handleKeysAmountChange(int newAmount)
     {
-        GD.Print("Hello from C# to Godot :)");
         _keysCountLabel.BbcodeText = $"[center] {newAmount.ToString()} [/center]";
     }
 
@@ -59,6 +59,12 @@ public class HUDV1 : CanvasLayer
         _isTimerStarted = true;
         ElapsedTime = 0;
         Visible = true;
+    }
+
+    public void StopTime()
+    {
+        GD.Print("STOP TIME");
+        _isTimerStarted = false;
     }
 
     public override void _Process(float delta)

@@ -11,7 +11,7 @@
 [ext_resource path="res://src/Field/Items/Coin/Coin.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/Field/Items/RotateArea/RotateClockwise.tscn" type="PackedScene" id=10]
 
-[node name="Chapter1Level2" type="Node2D"]
+[node name="Chapter1Level3" type="Node2D"]
 scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 1 )
 
