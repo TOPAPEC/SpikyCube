@@ -23,6 +23,7 @@ public class Key : Area2D
     {
         
         var parent = (DummyPlayer)(other.GetParent());
+
         if (parent.MovingForward)
         {
             if (_playerStats.Get("current_keys") is int currentKeys)

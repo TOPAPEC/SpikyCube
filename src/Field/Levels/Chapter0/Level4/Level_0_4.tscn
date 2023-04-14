@@ -10,7 +10,7 @@
 [ext_resource path="res://src/Field/Items/RotateArea/RotateCounter.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/Field/Items/Flag/Flag.tscn" type="PackedScene" id=9]
 
-[node name="Chapter1Level2" type="Node2D"]
+[node name="Chapter1Level3" type="Node2D"]
 scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 4 )
 

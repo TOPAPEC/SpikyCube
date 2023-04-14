@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/Field/Levels/Chapter0/Level1/Level_0_1.cs" type="Script" id=1]
 [ext_resource path="res://src/Actors/Enemies/EnemySpike/EnemySpike.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://resources/NewTileset/tileset.tres" type="TileSet" id=5]
 [ext_resource path="res://src/Field/Items/Flag/Flag.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Field/Items/Coin/Coin.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/Field/Items/Key/Key.tscn" type="PackedScene" id=8]
 
 [node name="Chapter1Level1" type="Node2D"]
 scale = Vector2( 0.8, 0.8 )
@@ -27,7 +28,7 @@ position = Vector2( 320, 382.75 )
 rotation = 3.14159
 
 [node name="RotateClockwise" parent="." instance=ExtResource( 3 )]
-position = Vector2( 411.25, 165.25 )
+position = Vector2( 540, 670 )
 
 [node name="Coin" parent="." instance=ExtResource( 7 )]
 position = Vector2( 671.25, 671.5 )
@@ -36,7 +37,11 @@ position = Vector2( 671.25, 671.5 )
 position = Vector2( 410, 422.75 )
 
 [node name="Coin3" parent="." instance=ExtResource( 7 )]
-position = Vector2( 95, 545.25 )
+position = Vector2( 100, 490 )
 
 [node name="Flag" parent="." instance=ExtResource( 6 )]
 position = Vector2( 228.75, 420.25 )
+open = 0
+
+[node name="Key" parent="." instance=ExtResource( 8 )]
+position = Vector2( 100, 570 )
