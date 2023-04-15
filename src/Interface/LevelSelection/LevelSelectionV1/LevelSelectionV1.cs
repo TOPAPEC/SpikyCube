@@ -46,9 +46,6 @@ public class LevelSelectionV1 : Control, IScene
         {
             ((CoinsCounter)counters[i]).ChangeCoinsCount((int)_playerStats.Call("get_level_score", _chapterNumber, i));
         }
-
-        _nextChapter.Connect("pressed", _blockedSound, "play");
-        _previousChapter.Connect("pressed", _blockedSound, "play");
     }
 
     private void _levelChosen(int levelNumber)
