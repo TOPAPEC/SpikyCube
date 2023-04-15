@@ -99,9 +99,12 @@ bbcode_text = "[center] Пауза [/center]"
 text = " Пауза "
 
 [node name="RestartLevelButton" type="TextureButton" parent="."]
-margin_left = 658.0
-margin_top = 10.0
-margin_right = 755.0
-margin_bottom = 107.0
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -365.0
+margin_top = 9.0
+margin_right = -268.0
+margin_bottom = 106.0
 rect_scale = Vector2( 0.96, 0.96 )
 texture_normal = ExtResource( 6 )
+expand = true
