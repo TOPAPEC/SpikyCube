@@ -57,7 +57,7 @@ hor = -1
 position = Vector2( 368.75, 221.25 )
 
 [node name="EnemyMeduza" parent="Enemies" instance=ExtResource( 7 )]
-position = Vector2( 156.25, 92.5 )
+position = Vector2( 156.25, 90 )
 
 [node name="Flag" parent="." instance=ExtResource( 5 )]
 position = Vector2( 162.5, 218.75 )
