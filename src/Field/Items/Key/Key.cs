@@ -31,10 +31,6 @@ public class Key : Area2D
                 _playerStats.Call("set_current_keys", currentKeys + 1);
                 QueueFree();
             }
-            else
-            {
-                GD.Print("Error not an int!");
-            }
         }
     }
     

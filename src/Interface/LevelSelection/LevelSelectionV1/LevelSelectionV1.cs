@@ -37,7 +37,6 @@ public class LevelSelectionV1 : Control, IScene
         var levelButtons = _levelButtonsGrid.GetChildren();
         for (int i = 0; i < levelButtons.Count; ++i)
         {
-            GD.Print(i);
             ((TextureButton)levelButtons[i]).Connect("pressed", this, "_levelChosen", new Godot.Collections.Array { i });
         }
         

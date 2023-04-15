@@ -67,7 +67,6 @@ public class MenuV1 : Control
                      _buttonsBlock.SetProcess(false);
                      _buttonsBlock.SetPhysicsProcess(false);
                      EmitSignal("ButtonsHidden");
-                     GD.Print("PAUSE HIDDEN");
                  }
                  break;
          }

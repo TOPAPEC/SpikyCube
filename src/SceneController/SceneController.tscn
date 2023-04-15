@@ -1,17 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/SceneController/SceneController.cs" type="Script" id=1]
 [ext_resource path="res://src/Interface/HUD/HUDV1/HUDV1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://resources/5.jpg" type="Texture" id=3]
 [ext_resource path="res://src/Interface/Menu/MenuV1/MenuV1.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/Interface/Menu/MenuV1/greyscale.shader" type="Shader" id=5]
 [ext_resource path="res://resources/soundtracks/trackwithbegining.mp3" type="AudioStream" id=6]
-
-[sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0 )
-colors = PoolColorArray( 0.976471, 0.886275, 0.686275, 1 )
-
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 5 )
@@ -28,7 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = SubResource( 3 )
+texture = ExtResource( 3 )
 expand = true
 stretch_mode = 2
 

@@ -69,6 +69,7 @@ using System.Text.RegularExpressions;
         _pauseMenu.Connect("ResumeGamePressed", this, "ResumeGame");
         _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
         _pauseMenu.Connect("SelectLevelPressed", this, "ShowLevelSelection");
+        _playerStats.Call("init_sdk");
     }
 
     private void _centerLevel()
@@ -102,7 +103,6 @@ using System.Text.RegularExpressions;
 
     public void HideUI()
     {
-        GD.Print("UI");
         _UILayer.Visible = false;
         GetTree().Paused = false;
         if (!_checkIfSceneIsInterface(_levelId))
