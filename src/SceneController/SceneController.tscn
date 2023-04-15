@@ -30,6 +30,7 @@ stretch_mode = 2
 
 [node name="GameAudio" type="AudioStreamPlayer" parent="GameLayer"]
 stream = ExtResource( 6 )
+volume_db = -10.0
 
 [node name="HUD" parent="GameLayer" instance=ExtResource( 2 )]
 layer = 2
