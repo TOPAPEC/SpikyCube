@@ -74,5 +74,5 @@ func _ad(args):
 	# Здесь можно возобновить музыку / звуки
 
 func end_current_level():
-    emit_signal("end_level")
+	emit_signal("end_level")
 
