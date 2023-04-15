@@ -70,19 +70,27 @@ using System.Text.RegularExpressions;
         _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
         _pauseMenu.Connect("SelectLevelPressed", this, "ShowLevelSelection");
         _playerStats.Call("init_sdk");
+        GetTree().Root.Connect("size_changed", this, "_centerLevel");
     }
 
     private void _centerLevel()
     {
         var levelTileMap = CurrentLevel.GetNode<TileMap>("TileMap");
-        var tileMapRect = levelTileMap.GetUsedRect();
         var currentResolution = GetViewportRect().End - GetViewportRect().Position;
+        var maxCellsNum = 16;
+        var bottomMargin = 25;
+        var topMargin = 150;
+        var maxLevelSize = levelTileMap.CellSize.y * maxCellsNum;
+        var tileMapRect = levelTileMap.GetUsedRect();
+        var yLevelScale = (currentResolution.y - topMargin - bottomMargin) / maxLevelSize;
+        var xLevelScale = yLevelScale;
         var levelSize = tileMapRect.End - tileMapRect.Position;
+        ((Node2D)CurrentLevel).Scale = new Vector2(xLevelScale, yLevelScale);
+        GD.Print(((Node2D)CurrentLevel).Transform.Scale);
         var levelSizeInPx = levelSize * levelTileMap.CellSize * ((Node2D)CurrentLevel).Transform.Scale;
         var freeScreenSize = currentResolution - levelSizeInPx;
         var levelOffsetFractions = new Vector2(0.5f, 0f);
-        ((Node2D)CurrentLevel).Position = new Vector2(freeScreenSize * levelOffsetFractions) + new Vector2(0, 200f);
-        
+        ((Node2D)CurrentLevel).Position = new Vector2(freeScreenSize * levelOffsetFractions) + new Vector2(0, topMargin);
     }
 
     public void PauseGame()
