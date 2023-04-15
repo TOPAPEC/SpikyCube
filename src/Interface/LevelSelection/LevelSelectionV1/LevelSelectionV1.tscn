@@ -47,20 +47,24 @@ texture = SubResource( 3 )
 expand = true
 
 [node name="GameLogo" type="TextureButton" parent="."]
-margin_left = 192.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -321.5
 margin_top = -48.0
-margin_right = 835.0
+margin_right = 321.5
 margin_bottom = 274.0
 texture_normal = ExtResource( 5 )
 expand = true
 
 [node name="LevelsGrid" type="GridContainer" parent="."]
-anchor_left = 0.05
-anchor_top = 0.2
-anchor_right = 0.95
-anchor_bottom = 0.7
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -460.8
+margin_top = -307.2
+margin_right = 500.8
+margin_bottom = 275.8
 custom_constants/vseparation = 65
 custom_constants/hseparation = 113
 columns = 5
@@ -477,13 +481,13 @@ bbcode_text = "[center] 20 [/center]"
 text = " 20 "
 
 [node name="StarGrid" type="GridContainer" parent="."]
-anchor_left = 0.05
-anchor_top = 0.27
-anchor_right = 0.05
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -3.2
-margin_top = 27.52
-margin_right = 952.8
+margin_left = -464.0
+margin_top = -208.0
+margin_right = 492.0
 margin_bottom = 398.0
 mouse_filter = 2
 custom_constants/vseparation = 113
@@ -642,10 +646,13 @@ margin_right = 944.0
 margin_bottom = 531.0
 
 [node name="GridContainer" type="GridContainer" parent="."]
-anchor_left = 0.05
-anchor_top = 0.85
-anchor_right = 0.95
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+margin_left = -460.8
+margin_top = -153.6
+margin_right = 460.8
 custom_constants/hseparation = 721
 columns = 2
 
@@ -661,12 +668,13 @@ margin_bottom = 150.0
 texture_normal = ExtResource( 7 )
 
 [node name="ChapterNumber" type="RichTextLabel" parent="."]
-anchor_top = 0.9
-anchor_bottom = 0.9
-margin_left = 312.0
-margin_top = -41.6
-margin_right = 712.0
-margin_bottom = 110.4
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_top = -152.0
+margin_right = 200.0
 mouse_filter = 2
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 custom_fonts/normal_font = SubResource( 6 )
