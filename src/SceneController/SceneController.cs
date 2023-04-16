@@ -20,15 +20,14 @@ using System.Text.RegularExpressions;
     private String _levelId = "Chapter0Level0";
     private KinematicBody2D _player;
     private Object _playerStats;
+    private CanvasLayer _loadingScreen;
+    private CanvasLayer _levelSelectionLayer;
+    private LevelSelectionV1 _levelSelectionPanel;
+    private bool _isInterfaceOnScreen;
     
     public class LevelsDict
     {
-        public Dictionary<String, String> LevelPaths = new Dictionary<string, String>()
-        {
-            {
-                "LevelSelection", "res://src/Interface/LevelSelection/LevelSelectionV1/LevelSelectionV1.tscn"
-            },
-        };
+        public Dictionary<String, String> LevelPaths = new Dictionary<string, String>();
 
         public LevelsDict()
         {
@@ -59,6 +58,10 @@ using System.Text.RegularExpressions;
         _greyScaleShader = GetNode<ColorRect>("GameLayer/GreyScaleShader");
         _gameAudio = GetNode<AudioStreamPlayer>("GameLayer/GameAudio");
         _playerStats = GetNode<Object>("/root/PlayerStatsExtended");
+        _loadingScreen = GetNode<CanvasLayer>("LoadingScreen");
+        _levelSelectionLayer = GetNode<CanvasLayer>("LevelSelection");
+        _levelSelectionPanel = GetNode<LevelSelectionV1>("LevelSelection/LevelSelectionPanel");
+        _levelSelectionPanel.Connect("ChangeLevelTo", this, "LevelSelectionChangeScene");
         ChangeScene(_levelId);
         CurrentLevel = GetNode<Node>(CurrentLevelName);
         _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
@@ -69,7 +72,15 @@ using System.Text.RegularExpressions;
         _pauseMenu.Connect("ResumeGamePressed", this, "ResumeGame");
         _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
         _pauseMenu.Connect("SelectLevelPressed", this, "ShowLevelSelection");
-        _playerStats.Call("init_sdk");
+        
+        try
+        {
+            _playerStats.Call("init_sdk");
+        }
+        catch (Exception ex)
+        {
+            GD.Print($"Failed to load player data. {ex}");
+        }
         GetTree().Root.Connect("size_changed", this, "_centerLevel");
     }
 
@@ -109,7 +120,7 @@ using System.Text.RegularExpressions;
 
     public void ResumeGame()
     {
-        _greyScaleShader.Visible = false;
+         _greyScaleShader.Visible = false;
          _pauseMenu.HideButtons();
     }
 
@@ -126,13 +137,25 @@ using System.Text.RegularExpressions;
 
     private bool _checkIfSceneIsInterface(String sceneName)
     {
-        switch (sceneName)
-        {
-            case "LevelSelection":
-                return true;
-            default:
-                return false;
-        }
+        return _isInterfaceOnScreen;
+    }
+
+    public void ShowLevelSelection()
+    {
+        _isInterfaceOnScreen = true;
+        _levelSelectionPanel.UpdateCoinLabels();
+        HUD.Hide();
+        ResumeGame();
+        _levelSelectionLayer.Show();
+    }
+
+    public void LevelSelectionChangeScene(String newScene)
+    {
+        _loadingScreen.Show();
+        _isInterfaceOnScreen = false;
+        _levelSelectionLayer.Hide();
+        ChangeScene(newScene);
+        _loadingScreen.Hide();
     }
 
     public void ChangeScene(String newSceneName)
@@ -201,11 +224,5 @@ using System.Text.RegularExpressions;
             ChangeScene("LevelSelection");
             CurrentLevel.Connect("ChangeLevelTo", this, "ChangeScene");
         }
-    }
-
-    public void ShowLevelSelection()
-    {
-        ChangeScene("LevelSelection");
-        CurrentLevel.Connect("ChangeLevelTo", this, "ChangeScene");
     }
 }

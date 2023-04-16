@@ -15,8 +15,6 @@ public class LevelSelectionV1 : Control, IScene
 
     private GridContainer _levelButtonsGrid;
     private GridContainer _coinsCounterGrid;
-    private TextureButton _nextChapter;
-    private TextureButton _previousChapter;
     private Object _playerStats;
     private AudioStreamPlayer _mainMenuClickSound;
     private AudioStreamPlayer _blockedSound;
@@ -31,26 +29,28 @@ public class LevelSelectionV1 : Control, IScene
         _coinsCounterGrid = GetNode<GridContainer>("StarGrid");
         _mainMenuClickSound = GetNode<AudioStreamPlayer>("LevelSelectionClickSound");
         _blockedSound = GetNode<AudioStreamPlayer>("BlockedSound");
-        _nextChapter = GetNode<TextureButton>("GridContainer/PreviousChapterButton");
-        _previousChapter = GetNode<TextureButton>("GridContainer/NextChapterButton");
- 
         var levelButtons = _levelButtonsGrid.GetChildren();
         for (int i = 0; i < levelButtons.Count; ++i)
         {
             ((TextureButton)levelButtons[i]).Connect("pressed", this, "_levelChosen", new Godot.Collections.Array { i });
         }
-        
+        UpdateCoinLabels(); 
+    }
+
+    public void UpdateCoinLabels()
+    {
         var counters = _coinsCounterGrid.GetChildren();
         for (int i = 0; i < counters.Count; ++i) 
         {
-            ((CoinsCounter)counters[i]).ChangeCoinsCount((int)_playerStats.Call("get_level_score", _chapterNumber, i));
+            if (_playerStats.Call("get_level_score", _chapterNumber, i) is int coinsCount)
+            {
+                ((CoinsCounter)counters[i]).ChangeCoinsCount(coinsCount);
+            }
         }
     }
 
     private void _levelChosen(int levelNumber)
     {
-        _mainMenuClickSound.Play();
-        System.Threading.Thread.Sleep(500);
         EmitSignal("ChangeLevelTo", $"Chapter{_chapterNumber}Level{levelNumber}");
     }
 

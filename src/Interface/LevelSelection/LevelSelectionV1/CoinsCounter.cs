@@ -20,16 +20,28 @@ public class CoinsCounter : GridContainer
 
     public void ChangeCoinsCount(int newValue)
     {
+        GD.Print("INSIDECOIN");
+        GD.Print(newValue);
         if (newValue < 0 || newValue > 3)
         {
             newValue = 0;
         }
 
-        for (int i = 2; i >= newValue; i--)
+        for (int i = 0; i < 3; i++)
         {
-            _coins[i].Texture =
-                (Texture)ResourceLoader.Load(
-                    "res://resources/LevelItems/coinSilver48px.png");
+            GD.Print("ChangedTexture");
+            if (i < newValue)
+            {
+                _coins[i].Texture =
+                    (Texture)ResourceLoader.Load(
+                        "res://resources/LevelItems/coinGold48px.png");
+            }
+            else
+            {
+                _coins[i].Texture =
+                    (Texture)ResourceLoader.Load(
+                        "res://resources/LevelItems/coinSilver48px.png");
+            }
         }
     }
 

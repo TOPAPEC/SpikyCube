@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/SceneController/SceneController.cs" type="Script" id=1]
 [ext_resource path="res://src/Interface/HUD/HUDV1/HUDV1.tscn" type="PackedScene" id=2]
@@ -6,9 +6,17 @@
 [ext_resource path="res://src/Interface/Menu/MenuV1/MenuV1.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/Interface/Menu/MenuV1/greyscale.shader" type="Shader" id=5]
 [ext_resource path="res://resources/soundtracks/trackwithbegining.mp3" type="AudioStream" id=6]
+[ext_resource path="res://resources/Fonts/Spectral-ExtraBold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://src/Interface/LevelSelection/LevelSelectionV1/LevelSelectionV1.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 100
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 7 )
 
 [node name="SceneController" type="Node2D"]
 script = ExtResource( 1 )
@@ -49,3 +57,33 @@ layer = 10
 visible = false
 
 [node name="PauseMenu" parent="UILayer" instance=ExtResource( 4 )]
+
+[node name="LevelSelection" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="LevelSelectionPanel" parent="LevelSelection" instance=ExtResource( 8 )]
+
+[node name="LoadingScreen" type="CanvasLayer" parent="."]
+layer = 100
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="LoadingScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LoadingScreen"]
+anchor_top = 0.6
+anchor_right = 1.0
+anchor_bottom = 0.9
+margin_top = 41.6
+margin_bottom = 0.400024
+custom_fonts/normal_font = SubResource( 5 )
+bbcode_enabled = true
+bbcode_text = "[center] Загрузка... [/center]"
+text = " Загрузка... "

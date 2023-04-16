@@ -2,10 +2,12 @@ extends Node
 
 var current_coins = 0 setget set_current_coins
 var current_keys = 0 setget set_current_keys
+var last_selected_level = 0
 var callback_rewarded_ad = JavaScript.create_callback(self, '_rewarded_ad')
 var callback_ad = JavaScript.create_callback(self, '_ad')
 var callback_init_scores = JavaScript.create_callback(self, "load_player_profile")
 var callback_set_profile_info = JavaScript.create_callback(self, "set_profile_info")
+var callback_get_last_selected_level = JavaScript.create_callback(self, "set_last_level")
 var level_scores = []
 onready var win = JavaScript.get_interface("window")
 
@@ -15,7 +17,7 @@ signal end_level()
 
 func _ready():
 	level_scores.append([])
-	for i in range(20):
+	for _i in range(20):
 		level_scores[0].append(0)
 
 func get_level_score(chapter_id, level_id):
@@ -29,15 +31,22 @@ func set_current_keys(value):
 	current_keys = int(value)
 	emit_signal("keys_amount_changed", int(value))
 
+func set_last_level(args):
+    if is_instance_valid(args[0]) and is_instance_valid(args[0]["lastLevel"]):
+        last_selected_level = args[0]["lastLevel"]
+
 func save_level_progress(chapter_id, level_id):
 	level_scores[int(chapter_id)][int(level_id)] = current_coins
-	var js_level_scores = JavaScript.create_object("Array", 1);
-	print(js_level_scores)
-	js_level_scores[0] = JavaScript.create_object("Array", 20);
-	for i in range(js_level_scores[0].length):
-		js_level_scores[0][i] = level_scores[0][i]
-	print(js_level_scores)	
-	win.setData(js_level_scores)
+	if is_instance_valid(win):
+		var js_level_scores = JavaScript.create_object("Array", 1);
+		print(js_level_scores)
+		js_level_scores[0] = JavaScript.create_object("Array", 20);
+		for i in range(js_level_scores[0].length):
+			js_level_scores[0][i] = level_scores[0][i]
+		print(js_level_scores)	
+		win.setData(js_level_scores)
+	else:
+		print("Cannot upload progress, no js")
 	reset_current_state()
 
 func reset_current_state():
@@ -45,8 +54,11 @@ func reset_current_state():
 	set_current_keys(0)
 
 func init_sdk():
-	win.initGame()
-	win.getData(callback_set_profile_info)
+	if is_instance_valid(win):
+		win.initGame()
+		win.getData(callback_set_profile_info)
+	else:
+		print("Cannot load profile, no js")
 
 func load_player_profile():
 	win.getData(callback_set_profile_info)
