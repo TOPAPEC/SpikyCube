@@ -32,8 +32,8 @@ func set_current_keys(value):
 	emit_signal("keys_amount_changed", int(value))
 
 func set_last_level(args):
-    if is_instance_valid(args[0]) and is_instance_valid(args[0]["lastLevel"]):
-        last_selected_level = args[0]["lastLevel"]
+	if is_instance_valid(args[0]) and is_instance_valid(args[0]["lastLevel"]):
+		last_selected_level = args[0]["lastLevel"]
 
 func save_level_progress(chapter_id, level_id):
 	level_scores[int(chapter_id)][int(level_id)] = current_coins
