@@ -221,8 +221,7 @@ using System.Text.RegularExpressions;
         } 
         else 
         {
-            ChangeScene("LevelSelection");
-            CurrentLevel.Connect("ChangeLevelTo", this, "ChangeScene");
+            ShowLevelSelection();
         }
     }
 }
