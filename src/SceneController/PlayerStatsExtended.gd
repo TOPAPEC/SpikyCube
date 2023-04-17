@@ -88,3 +88,6 @@ func _ad(args):
 func end_current_level():
 	emit_signal("end_level")
 
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_FOCUS_IN: AudioServer.set_bus_mute(0, false)
+	elif what == MainLoop.NOTIFICATION_WM_FOCUS_OUT: AudioServer.set_bus_mute(0, true)
