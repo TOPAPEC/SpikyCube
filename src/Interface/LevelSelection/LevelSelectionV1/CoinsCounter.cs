@@ -20,8 +20,6 @@ public class CoinsCounter : GridContainer
 
     public void ChangeCoinsCount(int newValue)
     {
-        GD.Print("INSIDECOIN");
-        GD.Print(newValue);
         if (newValue < 0 || newValue > 3)
         {
             newValue = 0;
@@ -29,7 +27,6 @@ public class CoinsCounter : GridContainer
 
         for (int i = 0; i < 3; i++)
         {
-            GD.Print("ChangedTexture");
             if (i < newValue)
             {
                 _coins[i].Texture =

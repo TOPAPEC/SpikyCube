@@ -19,6 +19,7 @@ public class DummyPlayer : KinematicBody2D
     [Signal]
     public delegate void NextLevel();
 
+    private const float SwipeSensitivity = 15f;
     public GridTranslator GridTranslator { get; set; }
     private bool _isMoving;
     private int _dir; // 0=up 1=right 2=down 3=left
@@ -149,40 +150,89 @@ public class DummyPlayer : KinematicBody2D
 
     }
 
+    private void _move(String actionName)
+    {
+        _isMoving = true;
+        switch (actionName)
+        {
+            case "move_right":
+                _dir = 1;
+                _currentVelocity = Vector2.Right * Speed;
+                break;
+            case "move_left":
+                _dir = 3;
+                _currentVelocity = Vector2.Left * Speed;
+                break;
+            case "move_down":
+                _dir = 2;
+                _currentVelocity = Vector2.Down * Speed;
+                break;
+            case "move_up":
+                _dir = 0;
+                _currentVelocity = Vector2.Up * Speed;
+                break;
+        }
+        SetMovingForward();
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        base._UnhandledInput(@event);
+        if (!_isMoving & !_died)
+        {
+            if (@event is InputEventScreenDrag screenDrag)
+            {
+                var swipe = screenDrag.Relative;
+                if (Math.Abs(swipe.y) > SwipeSensitivity && Math.Abs(swipe.y) > Math.Abs(swipe.x))
+                {
+                    if (swipe.y > 0)
+                    {
+                        _move("move_down");
+                    }
+                    else
+                    {
+                        _move("move_up");
+                    }
+                }
+                else if (Math.Abs(swipe.x) > SwipeSensitivity)
+                {
+                    if (swipe.x < 0)
+                    {
+                        _move("move_left");
+                    }
+                    else
+                    {
+                        _move("move_right");
+                    }
+                }
+                
+            }
+            else
+            {
+                if (@event.IsActionPressed("move_right"))
+                {
+                    _move("move_right");
+                }    
+                else if (@event.IsActionPressed("move_left"))
+                {
+                    _move("move_left");
+                }
+                else if (@event.IsActionPressed("move_down"))
+                {
+                    _move("move_down");
+                }
+                else if (@event.IsActionPressed("move_up"))
+                {
+                    _move("move_up");
+                }
+            }
+        }       
+    }
+
     public override void _PhysicsProcess(float delta)
     {
         base._PhysicsProcess(delta);
-        if (!_isMoving & !_died)
-        {
-            if (Input.IsActionPressed("move_right"))
-            {
-                _isMoving = true;
-                _dir = 1;
-                _currentVelocity = Vector2.Right * Speed;
-                SetMovingForward();
-            }    
-            else if (Input.IsActionPressed("move_left"))
-            {
-                _isMoving = true;
-                _dir = 3;
-                _currentVelocity = Vector2.Left * Speed;
-                SetMovingForward();
-            }
-            else if (Input.IsActionPressed("move_down"))
-            {
-                _isMoving = true;
-                _dir = 2;
-                _currentVelocity = Vector2.Down * Speed;
-                SetMovingForward();
-            }
-            else if (Input.IsActionPressed("move_up"))
-            {
-                _isMoving = true;
-                _dir = 0;
-                _currentVelocity = Vector2.Up * Speed;
-                SetMovingForward();
-            }
-        }
+
         if (_died || _end) {
             _currentVelocity = new Vector2();
         } else if (!(MoveAndSlide(_currentVelocity, Vector2.Up) == _currentVelocity))

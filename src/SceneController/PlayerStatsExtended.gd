@@ -7,17 +7,17 @@ var callback_rewarded_ad = JavaScript.create_callback(self, '_rewarded_ad')
 var callback_ad = JavaScript.create_callback(self, '_ad')
 var callback_init_scores = JavaScript.create_callback(self, "load_player_profile")
 var callback_set_profile_info = JavaScript.create_callback(self, "set_profile_info")
-var callback_get_last_selected_level = JavaScript.create_callback(self, "set_last_level")
 var level_scores = []
 onready var win = JavaScript.get_interface("window")
 
 signal coins_amount_changed(new_amount)
 signal keys_amount_changed(new_amount)
 signal end_level()
+signal load_init_level(level)
 
 func _ready():
 	level_scores.append([])
-	for _i in range(20):
+	for _i in range(21):
 		level_scores[0].append(0)
 
 func get_level_score(chapter_id, level_id):
@@ -31,16 +31,24 @@ func set_current_keys(value):
 	current_keys = int(value)
 	emit_signal("keys_amount_changed", int(value))
 
-func set_last_level(args):
-	if is_instance_valid(args[0]) and is_instance_valid(args[0]["lastLevel"]):
-		last_selected_level = args[0]["lastLevel"]
+func set_last_level(last_level):
+	level_scores[0][20] = last_level
+	if is_instance_valid(win):
+		var js_level_scores = JavaScript.create_object("Array", 1)
+		print(js_level_scores)
+		js_level_scores[0] = JavaScript.create_object("Array", 21)
+		for i in range(js_level_scores[0].length):
+			js_level_scores[0][i] = level_scores[0][i]
+		print(js_level_scores)	
+		win.setData(js_level_scores)
+		print("SEND DATA")
 
 func save_level_progress(chapter_id, level_id):
 	level_scores[int(chapter_id)][int(level_id)] = current_coins
 	if is_instance_valid(win):
 		var js_level_scores = JavaScript.create_object("Array", 1);
 		print(js_level_scores)
-		js_level_scores[0] = JavaScript.create_object("Array", 20);
+		js_level_scores[0] = JavaScript.create_object("Array", 21);
 		for i in range(js_level_scores[0].length):
 			js_level_scores[0][i] = level_scores[0][i]
 		print(js_level_scores)	
@@ -65,8 +73,12 @@ func load_player_profile():
 
 func set_profile_info(args):
 	var data = args[0]
-	if "data" in data:
+	if "data" in data and is_instance_valid(data["data"]):
 		level_scores = data["data"]
+		if level_scores[0].length == 20:
+			level_scores[0].push(0)
+			print("PATCHED OLD SAVE")
+	emit_signal("load_init_level", "Chapter0Level%s" % level_scores[0][20])
 
 func js_show_ad():
 	win.ShowAd(callback_ad)

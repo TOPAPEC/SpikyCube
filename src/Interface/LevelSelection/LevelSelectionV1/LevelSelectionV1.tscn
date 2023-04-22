@@ -4,7 +4,7 @@
 [ext_resource path="res://resources/PXUI-Basic/CroppedSquare.png" type="Texture" id=2]
 [ext_resource path="res://src/Interface/LevelSelection/LevelSelectionV1/LevelSelectionV1.cs" type="Script" id=3]
 [ext_resource path="res://src/Interface/LevelSelection/LevelSelectionV1/CoinsCounter.tscn" type="PackedScene" id=4]
-[ext_resource path="res://resources/GUIItems/CrabirintLogoLarge.png" type="Texture" id=5]
+[ext_resource path="res://resources/GUIItems/CrabirintLogoLargeCropped.png" type="Texture" id=5]
 [ext_resource path="res://resources/UISounds/MainMenu.wav" type="AudioStream" id=8]
 [ext_resource path="res://resources/UISounds/ErrorSound.wav" type="AudioStream" id=9]
 
@@ -30,8 +30,6 @@ script = ExtResource( 3 )
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 40.0
-margin_bottom = 40.0
 grow_horizontal = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -41,24 +39,23 @@ expand = true
 [node name="GameLogo" type="TextureButton" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -321.5
-margin_right = 321.5
-margin_bottom = 322.0
+margin_left = -288.0
+margin_top = 40.0
+margin_right = 300.0
+margin_bottom = 192.0
 texture_normal = ExtResource( 5 )
 expand = true
 
 [node name="LevelsGrid" type="GridContainer" parent="."]
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -460.8
-margin_top = -207.2
-margin_right = 500.8
-margin_bottom = 375.8
+margin_left = -280.0
+margin_top = 250.0
+margin_right = 273.0
+margin_bottom = 777.0
 custom_constants/vseparation = 65
-custom_constants/hseparation = 113
-columns = 5
+custom_constants/hseparation = 55
+columns = 4
 
 [node name="Level1" type="TextureButton" parent="LevelsGrid"]
 margin_right = 97.0
@@ -80,8 +77,8 @@ bbcode_text = "[center] 1 [/center]"
 text = " 1 "
 
 [node name="Level2" type="TextureButton" parent="LevelsGrid"]
-margin_left = 210.0
-margin_right = 307.0
+margin_left = 152.0
+margin_right = 249.0
 margin_bottom = 97.0
 texture_normal = ExtResource( 2 )
 
@@ -100,8 +97,8 @@ bbcode_text = "[center] 2 [/center]"
 text = " 2 "
 
 [node name="Level3" type="TextureButton" parent="LevelsGrid"]
-margin_left = 420.0
-margin_right = 517.0
+margin_left = 304.0
+margin_right = 401.0
 margin_bottom = 97.0
 texture_normal = ExtResource( 2 )
 
@@ -120,8 +117,8 @@ bbcode_text = "[center] 3 [/center]"
 text = " 3 "
 
 [node name="Level4" type="TextureButton" parent="LevelsGrid"]
-margin_left = 630.0
-margin_right = 727.0
+margin_left = 456.0
+margin_right = 553.0
 margin_bottom = 97.0
 texture_normal = ExtResource( 2 )
 
@@ -140,9 +137,9 @@ bbcode_text = "[center] 4 [/center]"
 text = " 4 "
 
 [node name="Level5" type="TextureButton" parent="LevelsGrid"]
-margin_left = 840.0
-margin_right = 937.0
-margin_bottom = 97.0
+margin_top = 162.0
+margin_right = 97.0
+margin_bottom = 259.0
 texture_normal = ExtResource( 2 )
 
 [node name="LevelNumber" type="RichTextLabel" parent="LevelsGrid/Level5"]
@@ -160,8 +157,9 @@ bbcode_text = "[center] 5 [/center]"
 text = " 5 "
 
 [node name="Level6" type="TextureButton" parent="LevelsGrid"]
+margin_left = 152.0
 margin_top = 162.0
-margin_right = 97.0
+margin_right = 249.0
 margin_bottom = 259.0
 texture_normal = ExtResource( 2 )
 
@@ -180,9 +178,9 @@ bbcode_text = "[center] 6 [/center]"
 text = " 6 "
 
 [node name="Level7" type="TextureButton" parent="LevelsGrid"]
-margin_left = 210.0
+margin_left = 304.0
 margin_top = 162.0
-margin_right = 307.0
+margin_right = 401.0
 margin_bottom = 259.0
 texture_normal = ExtResource( 2 )
 
@@ -201,9 +199,9 @@ bbcode_text = "[center] 7 [/center]"
 text = " 7 "
 
 [node name="Level8" type="TextureButton" parent="LevelsGrid"]
-margin_left = 420.0
+margin_left = 456.0
 margin_top = 162.0
-margin_right = 517.0
+margin_right = 553.0
 margin_bottom = 259.0
 texture_normal = ExtResource( 2 )
 
@@ -222,10 +220,9 @@ bbcode_text = "[center] 8 [/center]"
 text = " 8 "
 
 [node name="Level9" type="TextureButton" parent="LevelsGrid"]
-margin_left = 630.0
-margin_top = 162.0
-margin_right = 727.0
-margin_bottom = 259.0
+margin_top = 324.0
+margin_right = 97.0
+margin_bottom = 421.0
 texture_normal = ExtResource( 2 )
 
 [node name="LevelNumber" type="RichTextLabel" parent="LevelsGrid/Level9"]
@@ -243,10 +240,10 @@ bbcode_text = "[center] 9 [/center]"
 text = " 9 "
 
 [node name="Level10" type="TextureButton" parent="LevelsGrid"]
-margin_left = 840.0
-margin_top = 162.0
-margin_right = 937.0
-margin_bottom = 259.0
+margin_left = 152.0
+margin_top = 324.0
+margin_right = 249.0
+margin_bottom = 421.0
 texture_normal = ExtResource( 2 )
 
 [node name="LevelNumber" type="RichTextLabel" parent="LevelsGrid/Level10"]
@@ -264,8 +261,9 @@ bbcode_text = "[center] 10 [/center]"
 text = " 10 "
 
 [node name="Level11" type="TextureButton" parent="LevelsGrid"]
+margin_left = 304.0
 margin_top = 324.0
-margin_right = 97.0
+margin_right = 401.0
 margin_bottom = 421.0
 texture_normal = ExtResource( 2 )
 
@@ -284,9 +282,9 @@ bbcode_text = "[center] 11 [/center]"
 text = " 11 "
 
 [node name="Level12" type="TextureButton" parent="LevelsGrid"]
-margin_left = 210.0
+margin_left = 456.0
 margin_top = 324.0
-margin_right = 307.0
+margin_right = 553.0
 margin_bottom = 421.0
 texture_normal = ExtResource( 2 )
 
@@ -305,10 +303,9 @@ bbcode_text = "[center] 12 [/center]"
 text = " 12 "
 
 [node name="Level13" type="TextureButton" parent="LevelsGrid"]
-margin_left = 420.0
-margin_top = 324.0
-margin_right = 517.0
-margin_bottom = 421.0
+margin_top = 486.0
+margin_right = 97.0
+margin_bottom = 583.0
 texture_normal = ExtResource( 2 )
 
 [node name="LevelNumber" type="RichTextLabel" parent="LevelsGrid/Level13"]
@@ -326,10 +323,10 @@ bbcode_text = "[center] 13 [/center]"
 text = " 13 "
 
 [node name="Level14" type="TextureButton" parent="LevelsGrid"]
-margin_left = 630.0
-margin_top = 324.0
-margin_right = 727.0
-margin_bottom = 421.0
+margin_left = 152.0
+margin_top = 486.0
+margin_right = 249.0
+margin_bottom = 583.0
 texture_normal = ExtResource( 2 )
 
 [node name="LevelNumber" type="RichTextLabel" parent="LevelsGrid/Level14"]
@@ -347,10 +344,10 @@ bbcode_text = "[center] 14 [/center]"
 text = " 14 "
 
 [node name="Level15" type="TextureButton" parent="LevelsGrid"]
-margin_left = 840.0
-margin_top = 324.0
-margin_right = 937.0
-margin_bottom = 421.0
+margin_left = 304.0
+margin_top = 486.0
+margin_right = 401.0
+margin_bottom = 583.0
 texture_normal = ExtResource( 2 )
 
 [node name="LevelNumber" type="RichTextLabel" parent="LevelsGrid/Level15"]
@@ -368,8 +365,9 @@ bbcode_text = "[center] 15 [/center]"
 text = " 15 "
 
 [node name="Level16" type="TextureButton" parent="LevelsGrid"]
+margin_left = 456.0
 margin_top = 486.0
-margin_right = 97.0
+margin_right = 553.0
 margin_bottom = 583.0
 texture_normal = ExtResource( 2 )
 
@@ -388,10 +386,9 @@ bbcode_text = "[center] 16 [/center]"
 text = " 16 "
 
 [node name="Level17" type="TextureButton" parent="LevelsGrid"]
-margin_left = 210.0
-margin_top = 486.0
-margin_right = 307.0
-margin_bottom = 583.0
+margin_top = 648.0
+margin_right = 97.0
+margin_bottom = 745.0
 texture_normal = ExtResource( 2 )
 
 [node name="LevelNumber" type="RichTextLabel" parent="LevelsGrid/Level17"]
@@ -409,10 +406,10 @@ bbcode_text = "[center] 17 [/center]"
 text = " 17 "
 
 [node name="Level18" type="TextureButton" parent="LevelsGrid"]
-margin_left = 420.0
-margin_top = 486.0
-margin_right = 517.0
-margin_bottom = 583.0
+margin_left = 152.0
+margin_top = 648.0
+margin_right = 249.0
+margin_bottom = 745.0
 texture_normal = ExtResource( 2 )
 
 [node name="LevelNumber" type="RichTextLabel" parent="LevelsGrid/Level18"]
@@ -430,10 +427,10 @@ bbcode_text = "[center] 18 [/center]"
 text = " 18 "
 
 [node name="Level19" type="TextureButton" parent="LevelsGrid"]
-margin_left = 630.0
-margin_top = 486.0
-margin_right = 727.0
-margin_bottom = 583.0
+margin_left = 304.0
+margin_top = 648.0
+margin_right = 401.0
+margin_bottom = 745.0
 texture_normal = ExtResource( 2 )
 
 [node name="LevelNumber" type="RichTextLabel" parent="LevelsGrid/Level19"]
@@ -451,10 +448,10 @@ bbcode_text = "[center] 19 [/center]"
 text = " 19 "
 
 [node name="Level20" type="TextureButton" parent="LevelsGrid"]
-margin_left = 840.0
-margin_top = 486.0
-margin_right = 937.0
-margin_bottom = 583.0
+margin_left = 456.0
+margin_top = 648.0
+margin_right = 553.0
+margin_bottom = 745.0
 texture_normal = ExtResource( 2 )
 
 [node name="LevelNumber" type="RichTextLabel" parent="LevelsGrid/Level20"]
@@ -473,17 +470,15 @@ text = " 20 "
 
 [node name="StarGrid" type="GridContainer" parent="."]
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -464.0
-margin_top = -108.0
-margin_right = 492.0
-margin_bottom = 498.0
+margin_left = -280.0
+margin_top = 342.0
+margin_right = 283.0
+margin_bottom = 692.0
 mouse_filter = 2
 custom_constants/vseparation = 113
-custom_constants/hseparation = 106
-columns = 5
+custom_constants/hseparation = 47
+columns = 4
 
 [node name="Counter1" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
@@ -494,147 +489,147 @@ margin_bottom = 48.0
 [node name="Counter2" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 210.0
-margin_right = 314.0
+margin_left = 151.0
+margin_right = 255.0
 margin_bottom = 48.0
 
 [node name="Counter3" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 420.0
-margin_right = 524.0
+margin_left = 302.0
+margin_right = 406.0
 margin_bottom = 48.0
 
 [node name="Counter4" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 630.0
-margin_right = 734.0
+margin_left = 453.0
+margin_right = 557.0
 margin_bottom = 48.0
 
 [node name="Counter5" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 840.0
-margin_right = 944.0
-margin_bottom = 48.0
+margin_top = 161.0
+margin_right = 104.0
+margin_bottom = 209.0
 
 [node name="Counter6" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_left = 151.0
 margin_top = 161.0
-margin_right = 104.0
+margin_right = 255.0
 margin_bottom = 209.0
 
 [node name="Counter7" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 210.0
+margin_left = 302.0
 margin_top = 161.0
-margin_right = 314.0
+margin_right = 406.0
 margin_bottom = 209.0
 
 [node name="Counter8" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 420.0
+margin_left = 453.0
 margin_top = 161.0
-margin_right = 524.0
+margin_right = 557.0
 margin_bottom = 209.0
 
 [node name="Counter9" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 630.0
-margin_top = 161.0
-margin_right = 734.0
-margin_bottom = 209.0
+margin_top = 322.0
+margin_right = 104.0
+margin_bottom = 370.0
 
 [node name="Counter10" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 840.0
-margin_top = 161.0
-margin_right = 944.0
-margin_bottom = 209.0
+margin_left = 151.0
+margin_top = 322.0
+margin_right = 255.0
+margin_bottom = 370.0
 
 [node name="Counter11" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_left = 302.0
 margin_top = 322.0
-margin_right = 104.0
+margin_right = 406.0
 margin_bottom = 370.0
 
 [node name="Counter12" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 210.0
+margin_left = 453.0
 margin_top = 322.0
-margin_right = 314.0
+margin_right = 557.0
 margin_bottom = 370.0
 
 [node name="Counter13" parent="StarGrid" instance=ExtResource( 4 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 420.0
-margin_top = 322.0
-margin_right = 524.0
-margin_bottom = 370.0
-
-[node name="Counter14" parent="StarGrid" instance=ExtResource( 4 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 630.0
-margin_top = 322.0
-margin_right = 734.0
-margin_bottom = 370.0
-
-[node name="Counter15" parent="StarGrid" instance=ExtResource( 4 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 840.0
-margin_top = 322.0
-margin_right = 944.0
-margin_bottom = 370.0
-
-[node name="Counter16" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 483.0
 margin_right = 104.0
 margin_bottom = 531.0
 
+[node name="Counter14" parent="StarGrid" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 151.0
+margin_top = 483.0
+margin_right = 255.0
+margin_bottom = 531.0
+
+[node name="Counter15" parent="StarGrid" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 302.0
+margin_top = 483.0
+margin_right = 406.0
+margin_bottom = 531.0
+
+[node name="Counter16" parent="StarGrid" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 453.0
+margin_top = 483.0
+margin_right = 557.0
+margin_bottom = 531.0
+
 [node name="Counter17" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 210.0
-margin_top = 483.0
-margin_right = 314.0
-margin_bottom = 531.0
+margin_top = 644.0
+margin_right = 104.0
+margin_bottom = 692.0
 
 [node name="Counter18" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 420.0
-margin_top = 483.0
-margin_right = 524.0
-margin_bottom = 531.0
+margin_left = 151.0
+margin_top = 644.0
+margin_right = 255.0
+margin_bottom = 692.0
 
 [node name="Counter19" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 630.0
-margin_top = 483.0
-margin_right = 734.0
-margin_bottom = 531.0
+margin_left = 302.0
+margin_top = 644.0
+margin_right = 406.0
+margin_bottom = 692.0
 
 [node name="Counter20" parent="StarGrid" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 840.0
-margin_top = 483.0
-margin_right = 944.0
-margin_bottom = 531.0
+margin_left = 453.0
+margin_top = 644.0
+margin_right = 557.0
+margin_bottom = 692.0
 
 [node name="LevelSelectionClickSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )

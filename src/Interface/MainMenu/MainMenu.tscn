@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://resources/PXUI-Basic/StartGameButton.png" type="Texture" id=1]
+[ext_resource path="res://resources/GUIItems/CrabirintLogoLargeCropped.png" type="Texture" id=2]
+[ext_resource path="res://resources/PXUI-Basic/TutorialButton.png" type="Texture" id=3]
+[ext_resource path="res://resources/PXUI-Basic/Setting.png" type="Texture" id=4]
+[ext_resource path="res://resources/Crab/Crab1_scaled_18x_pngcrushed.png" type="Texture" id=5]
+[ext_resource path="res://resources/Crab/Crab4_scaled_18x_pngcrushed.png" type="Texture" id=6]
+[ext_resource path="res://resources/Crab/Crab5_scaled_18x_pngcrushed.png" type="Texture" id=7]
+[ext_resource path="res://resources/Crab/Crab3_scaled_18x_pngcrushed.png" type="Texture" id=8]
+[ext_resource path="res://resources/Crab/Crab2_scaled_18x_pngcrushed.png" type="Texture" id=9]
+[ext_resource path="res://resources/MainMenuBackground.png" type="Texture" id=10]
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 10 )
+expand = true
+
+[node name="StartGameButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -159.0
+margin_top = 410.0
+margin_right = 161.0
+margin_bottom = 730.0
+texture_normal = ExtResource( 1 )
+expand = true
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="StartGameButton"]
+position = Vector2( 160, 157 )
+scale = Vector2( 0.8, 0.8 )
+frames = SubResource( 3 )
+frame = 2
+playing = true
+
+[node name="GameLogo" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -288.0
+margin_top = 40.0
+margin_right = 300.0
+margin_bottom = 192.0
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -323.0
+margin_top = 170.0
+margin_right = 325.0
+margin_bottom = 370.0
+custom_constants/hseparation = 248
+columns = 2
+
+[node name="TutorialButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -288.0
+margin_top = 810.0
+margin_right = -88.0
+margin_bottom = 1010.0
+texture_normal = ExtResource( 3 )
+
+[node name="SettingButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 97.0
+margin_top = 810.0
+margin_right = 297.0
+margin_bottom = 1010.0
+texture_normal = ExtResource( 4 )

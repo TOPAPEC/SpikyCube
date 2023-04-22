@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/SceneController/SceneController.cs" type="Script" id=1]
 [ext_resource path="res://src/Interface/HUD/HUDV1/HUDV1.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://resources/soundtracks/trackwithbegining.mp3" type="AudioStream" id=6]
 [ext_resource path="res://resources/Fonts/Spectral-ExtraBold.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://src/Interface/LevelSelection/LevelSelectionV1/LevelSelectionV1.tscn" type="PackedScene" id=8]
+[ext_resource path="res://resources/PixelizedBackGround.jpg" type="Texture" id=9]
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 5 )
@@ -28,9 +29,10 @@ layer = -10
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource( 3 )
+texture = ExtResource( 9 )
 expand = true
 stretch_mode = 2
 
@@ -41,7 +43,6 @@ stream = ExtResource( 6 )
 volume_db = -10.0
 
 [node name="HUD" parent="GameLayer" instance=ExtResource( 2 )]
-layer = 2
 
 [node name="GreyScaleShader" type="ColorRect" parent="GameLayer"]
 visible = false
@@ -50,6 +51,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 40.0
 margin_bottom = 40.0
+color = Color( 0, 0, 0, 1 )
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 pause_mode = 2

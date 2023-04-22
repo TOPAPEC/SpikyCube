@@ -10,6 +10,9 @@ public class MenuV1 : Control
     public delegate void ResumeGamePressed();
 
     [Signal]
+    public delegate void RestartGamePressed();
+
+    [Signal]
     public delegate void SelectLevelPressed();
 
     [Signal]
@@ -18,6 +21,7 @@ public class MenuV1 : Control
     private Control _buttonsBlock;
     private TextureButton _resumeGameButton;
     private TextureButton _selectLevelButton;
+    private TextureButton _restartButton;
     private AudioStreamPlayer _pauseButtonsAudio;
 
     private int _hiddenButtonsBlockMarginLeft = 700;
@@ -31,60 +35,41 @@ public class MenuV1 : Control
         _buttonsBlock = GetNode<Control>("ButtonsBlock");
         _resumeGameButton = GetNode<TextureButton>("ButtonsBlock/ResumeGameButton");
         _selectLevelButton = GetNode<TextureButton>("ButtonsBlock/SelectLevelButton");
+        _restartButton = GetNode<TextureButton>("ButtonsBlock/RestartLevelButton");
         _pauseButtonsAudio = GetNode<AudioStreamPlayer>("PauseButtonsAudio");
-        _buttonsBlock.Visible = false;
         _resumeGameButton.Connect("pressed", this, "_emitResumeGamePressed");
         _selectLevelButton.Connect("pressed", this, "_emitSelectLevelPressed");
         _selectLevelButton.Connect("pressed", _pauseButtonsAudio, "play");
         _resumeGameButton.Connect("pressed", _pauseButtonsAudio, "play");
+        _restartButton.Connect("pressed", this, "_emitRestartGamePressed");
     }
 
+
+    private void _emitRestartGamePressed()
+    {
+        EmitSignal("RestartGamePressed");
+        HideButtons();
+    }
+    
     private void _emitResumeGamePressed()
     {
         EmitSignal("ResumeGamePressed");
+        HideButtons();
     }
 
     private void _emitSelectLevelPressed()
     {
         EmitSignal("SelectLevelPressed");
-    }
-
-    public override void _Process(float delta)
-    {
-        base._Process(delta);
-         switch (_buttonsBlockState)
-         {
-             case "entering": 
-                 _buttonsBlock.MarginLeft = Mathf.Lerp(_buttonsBlock.MarginLeft, _visibleButtonsBlockMarginLeft, 4f * delta);
-                 break;
-             case "exiting":
-                 _buttonsBlock.MarginLeft = Mathf.Lerp(_buttonsBlock.MarginLeft, _hiddenButtonsBlockMarginLeft, 64f * delta);
-                 if (Mathf.Abs(_buttonsBlock.MarginLeft - _hiddenButtonsBlockMarginLeft) < 0.01f)
-                 {
-                     _buttonsBlockState = "idle";
-                     _buttonsBlock.Visible = false;
-                     Visible = false;
-                     _buttonsBlock.SetProcess(false);
-                     _buttonsBlock.SetPhysicsProcess(false);
-                     EmitSignal("ButtonsHidden");
-                 }
-                 break;
-         }
+        HideButtons();
     }
 
     public void ShowButtons()
     {
-        _buttonsBlock.MarginLeft = _hiddenButtonsBlockMarginLeft;
-        _buttonsBlockState = "entering";
-        _buttonsBlock.Visible = true;
         Visible = true;
-        _buttonsBlock.SetProcess(true);
-        _buttonsBlock.SetPhysicsProcess(true);
     }
 
     public void HideButtons()
     {
-        _buttonsBlock.MarginLeft = _visibleButtonsBlockMarginLeft;
-        _buttonsBlockState = "exiting";
+        Visible = false;
     }
 }
