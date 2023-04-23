@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://resources/PXUI-Basic/StartGameButton.png" type="Texture" id=1]
 [ext_resource path="res://resources/GUIItems/CrabirintLogoLargeCropped.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://resources/Crab/Crab3_scaled_18x_pngcrushed.png" type="Texture" id=8]
 [ext_resource path="res://resources/Crab/Crab2_scaled_18x_pngcrushed.png" type="Texture" id=9]
 [ext_resource path="res://resources/MainMenuBackground.png" type="Texture" id=10]
+[ext_resource path="res://src/Interface/MainMenu/MainMenu.cs" type="Script" id=11]
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
@@ -22,6 +23,7 @@ animations = [ {
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 11 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -43,7 +45,7 @@ expand = true
 position = Vector2( 160, 157 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 3 )
-frame = 2
+frame = 4
 playing = true
 
 [node name="GameLogo" type="TextureButton" parent="."]

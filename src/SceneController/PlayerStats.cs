@@ -14,18 +14,10 @@ namespace SpikyCube.SceneController
         [Signal]
         public delegate void KeysAmountChanged(int newAmount);
 
-        // -1 Level was never tried
-        public List<List<int>> LevelScores;
-
-        private int _coinsCollected;
-        private int _keysCollected;
-
-        public PlayerStats()
+        public List<List<int>> LevelScores
         {
-            LevelScores = new List<List<int>>(1);
-            LevelScores.Add(new List<int>(new int[20]));
+            get => LevelScores;
         }
-
         public int CoinsCollected
         {
             get => _coinsCollected;
@@ -35,7 +27,6 @@ namespace SpikyCube.SceneController
                 _coinsCollected = value;
             }
         }
-
         public int KeysCollected
         {
             get => _keysCollected;
@@ -46,9 +37,60 @@ namespace SpikyCube.SceneController
             }
         }
 
+        public String SaveVersion
+        {
+            get => _saveVersion;
+        }
+
+        public String LastProfileVersion
+        {
+            get => "1.0";
+        }
+
+        private String _saveVersion;
+        private int _coinsCollected;
+        private int _keysCollected;
+        private int _lastSelectedLevel;
+        private List<List<int>> _levelScores;
+        private int _playerSkin;
+        private List<int> _enemySkins;
+        private List<int> _unlockedPlayerSkins;
+        private List<int> _unlockedEnemySkins;
+        private int _worldSkin;
+        private List<int> _unlockedWorldSkins;
+
+        public PlayerStats()
+        {
+            _levelScores = new List<List<int>>(1);
+            _levelScores.Add(new List<int>(new int[20]));
+        }
+
+        public bool UpdateProfileVersion()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateBlankProfile()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LoadProfile()
+        {
+            
+        }
+
+        public void _fillProfile(JavaScriptObject[] returnArgs)
+        {
+            if (!(returnArgs[0] is null))
+            {
+                
+            }
+        }
+
         public void SaveLevelProgress(int chapterId, int levelId)
         {
-            LevelScores[chapterId][levelId] = _coinsCollected;
+            _levelScores[chapterId][levelId] = _coinsCollected;
             CoinsCollected = 0;
             KeysCollected = 0;
         }

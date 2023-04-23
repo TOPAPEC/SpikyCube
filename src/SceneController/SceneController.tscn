@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/SceneController/SceneController.cs" type="Script" id=1]
 [ext_resource path="res://src/Interface/HUD/HUDV1/HUDV1.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://resources/Fonts/Spectral-ExtraBold.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://src/Interface/LevelSelection/LevelSelectionV1/LevelSelectionV1.tscn" type="PackedScene" id=8]
 [ext_resource path="res://resources/PixelizedBackGround.jpg" type="Texture" id=9]
+[ext_resource path="res://src/Interface/MainMenu/MainMenu.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 5 )
@@ -59,6 +60,11 @@ layer = 10
 visible = false
 
 [node name="PauseMenu" parent="UILayer" instance=ExtResource( 4 )]
+
+[node name="MainMenu" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="MainMenu" parent="MainMenu" instance=ExtResource( 10 )]
 
 [node name="LevelSelection" type="CanvasLayer" parent="."]
 visible = false

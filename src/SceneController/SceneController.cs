@@ -12,16 +12,18 @@ using System.Text.RegularExpressions;
     public static readonly LevelsDict Levels = new LevelsDict();
     public HUDV1 HUD;
     private MenuV1 _pauseMenu;
+    private MainMenu _mainMenu;
     private CanvasLayer _gameLayer;
-    private CanvasLayer _UILayer;
+    private CanvasLayer _uiLayer;
+    private CanvasLayer _mainMenuCanvasLayer;
+    private CanvasLayer _loadingScreen;
+    private CanvasLayer _levelSelectionLayer;
     private ColorRect _greyScaleShader;
     private AudioStreamPlayer _gameAudio;
     private float _audioPlaybackPosition;
     private String _levelId = "Chapter0Level0";
     private KinematicBody2D _player;
     private Object _playerStats;
-    private CanvasLayer _loadingScreen;
-    private CanvasLayer _levelSelectionLayer;
     private LevelSelectionV1 _levelSelectionPanel;
     private bool _isInterfaceOnScreen;
     private bool _isGameInitializing = true;
@@ -54,7 +56,7 @@ using System.Text.RegularExpressions;
     {
         HUD = GetNode<HUDV1>("GameLayer/HUD");
         _pauseMenu = GetNode<MenuV1>("UILayer/PauseMenu");
-        _UILayer = GetNode<CanvasLayer>("UILayer");
+        _uiLayer = GetNode<CanvasLayer>("UILayer");
         _gameLayer = GetNode<CanvasLayer>("GameLayer");
         _greyScaleShader = GetNode<ColorRect>("GameLayer/GreyScaleShader");
         _gameAudio = GetNode<AudioStreamPlayer>("GameLayer/GameAudio");
@@ -62,6 +64,8 @@ using System.Text.RegularExpressions;
         _loadingScreen = GetNode<CanvasLayer>("LoadingScreen");
         _levelSelectionLayer = GetNode<CanvasLayer>("LevelSelection");
         _levelSelectionPanel = GetNode<LevelSelectionV1>("LevelSelection/LevelSelectionPanel");
+        _mainMenu = GetNode<MainMenu>("MainMenu/MainMenu");
+        _mainMenuCanvasLayer = GetNode<CanvasLayer>("MainMenu");
         _levelSelectionPanel.Connect("ChangeLevelTo", this, "LevelSelectionChangeScene");
         _playerStats.Connect("load_init_level", this, "LevelSelectionChangeScene");
         try
@@ -128,7 +132,7 @@ using System.Text.RegularExpressions;
         _gameAudio.Stop();
         _greyScaleShader.Visible = true;
         _pauseMenu.ShowButtons();
-        _UILayer.Visible = true;
+        _uiLayer.Visible = true;
         GetTree().Paused = true;
     }
 
