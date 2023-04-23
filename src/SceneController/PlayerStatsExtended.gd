@@ -12,7 +12,6 @@ onready var win = JavaScript.get_interface("window")
 signal coins_amount_changed(new_amount)
 signal keys_amount_changed(new_amount)
 signal end_level()
-signal load_init_level(level)
 signal profile_is_ready()
 
 func _ready():
@@ -22,7 +21,7 @@ func _ready():
         profile["LevelScores"].push(JavaScript.create_object("Array", 20))
         for i in range(20):
             profile["LevelScores"][i] = 0
-        profile["LastLevel"] = 0
+        profile["LastLevel"] = JavaScript.create_object("Array", 3)
         profile["IsTutorialPassed"] = 0
         profile["Skins"] = JavaScript.create_object("Object")
         profile["Skins"]["PlayerSkin"] = 0
@@ -35,6 +34,7 @@ func _ready():
         profile["LevelScores"].append([])
         for _i in range(21):
             profile["LevelScores"][0].append(0)
+        profile["LastLevel"] = [0, 0, 0]
 
 func get_latest_save_schema_version():
     return "1.0"
@@ -55,6 +55,10 @@ func check_profile_correct(new_profile):
 
 func get_level_score(chapter_id, level_id):
     return profile["LevelScores"][chapter_id][level_id]
+
+func set_last_level(chapter, level, aux):
+    profile["LastLevel"] = JavaScript.eval("new Array(%s, %s, %s)" % [chapter, level, aux])
+    upload_profile()
 
 func set_current_coins(value):
     current_coins = int(value)
@@ -88,6 +92,7 @@ func init_sdk():
         win.getData(callback_set_profile_info)
     else:
         print("Cannot load profile, no js")
+        emit_signal("profile_is_ready")
 
 func load_player_profile():
     win.getData(callback_set_profile_info)
@@ -95,11 +100,11 @@ func load_player_profile():
 func set_profile_info(args):
     var new_profile = args[0]
     var profile_version = args[0]["SaveSchemaVersion"]
-    if profile_version != get_latest_save_schema_version():	    
+    if profile_version != get_latest_save_schema_version():
         var updated_profile = update_profile(new_profile)
     if check_profile_correct(new_profile):
         profile = new_profile
-    emit_signal("load_init_level", "Chapter0Level%s" % profile["LastLevel"])
+    emit_signal("profile_is_ready")
 
 func upload_profile():
     win.setData(profile)
