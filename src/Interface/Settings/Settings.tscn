@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://resources/UISounds/MainMenu.wav" type="AudioStream" id=1]
+[ext_resource path="res://resources/PXUI-Basic/BackButton.png" type="Texture" id=2]
+[ext_resource path="res://resources/UISounds/ErrorSound.wav" type="AudioStream" id=3]
+[ext_resource path="res://src/Interface/Settings/Settings.cs" type="Script" id=4]
+[ext_resource path="res://resources/GUIItems/CrabirintLogoLargeCropped.png" type="Texture" id=5]
+[ext_resource path="res://resources/PXUI-Basic/CommingSoon.png" type="Texture" id=6]
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0.976471, 0.886275, 0.686275, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 4 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 272.0 ],
+"_edit_vertical_guides_": [ 361.0 ]
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource( 3 )
+expand = true
+
+[node name="GameLogo" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -288.0
+margin_top = 200.0
+margin_right = 300.0
+margin_bottom = 352.0
+texture_normal = ExtResource( 5 )
+expand = true
+
+[node name="LevelSelectionClickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+
+[node name="BlockedSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="ChangeChapterSound" type="AudioStreamPlayer" parent="."]
+
+[node name="BackButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -312.0
+margin_top = 48.0
+margin_right = -187.0
+margin_bottom = 173.0
+texture_normal = ExtResource( 2 )
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -203.0
+margin_top = 443.0
+margin_right = 202.0
+margin_bottom = 548.0
+texture = ExtResource( 6 )

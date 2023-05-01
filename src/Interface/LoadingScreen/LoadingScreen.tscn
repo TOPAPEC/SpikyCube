@@ -48,7 +48,7 @@ __meta__ = {
 position = Vector2( 360, 688 )
 frames = SubResource( 1 )
 
-[node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
+[node name="LoadingDots" type="AnimatedSprite" parent="."]
 position = Vector2( 360, 944 )
 frames = SubResource( 2 )
 playing = true

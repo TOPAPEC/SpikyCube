@@ -20,7 +20,7 @@ public class DummyPlayer : KinematicBody2D
     public delegate void NextLevel();
 
     private const float SwipeSensitivity = 15f;
-    public GridTranslator GridTranslator { get; set; }
+    // public GridTranslator GridTranslator { get; set; }
     private bool _isMoving;
     private int _dir; // 0=up 1=right 2=down 3=left
     private bool _isMovingForward;
@@ -64,13 +64,11 @@ public class DummyPlayer : KinematicBody2D
 
     public void Freee()
     {
-        QueueFree();
         EmitSignal("RestartLevel");
     }
     
     public void Freeee()
     {
-        QueueFree();
         EmitSignal("NextLevel");
     }
 

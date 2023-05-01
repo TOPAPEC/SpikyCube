@@ -32,6 +32,6 @@ color = Color( 0, 0, 0, 1 )
 [node name="UILayer" type="CanvasLayer" parent="."]
 pause_mode = 2
 layer = 10
-visible = false
 
 [node name="PauseMenu" parent="UILayer" instance=ExtResource( 5 )]
+visible = false

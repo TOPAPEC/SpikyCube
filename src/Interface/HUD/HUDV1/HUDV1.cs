@@ -3,7 +3,7 @@ using System;
 using SpikyCube.SceneController;
 using Object = Godot.Object;
 
-public class HUDV1 : Control
+public class HUDV1 : Control, IScene
 {
     [Signal]
     public delegate void HudPauseButtonPressed();
@@ -26,12 +26,6 @@ public class HUDV1 : Control
         _coinsCounter = GetNode<TextureRect>("CoinsCounter");
         _keysCounter = GetNode<TextureRect>("KeyCounter");
         _pauseButton = GetNode<TextureButton>("PauseButton");
-        _pauseButton.Connect("pressed", this, "_emitPauseSignal");
-    }
-
-    public void _emitPauseSignal()
-    {
-        EmitSignal("HudPauseButtonPressed");
     }
 
     private void _handleCoinAmountChange(int newAmount)
@@ -80,4 +74,13 @@ public class HUDV1 : Control
         _isTimerStarted = false;
     }
 
+    public void ExitScene()
+    {
+        QueueFree();
+    }
+
+    public void EnterScene(Node2D sceneController)
+    {
+        _pauseButton.Connect("pressed", sceneController, "PauseGame");
+    }
 }

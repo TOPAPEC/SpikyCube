@@ -26,15 +26,16 @@ public class MainMenu : Control, IScene
         _openSettingsButton = GetNode<TextureButton>("SettingsButton");
         _openLevelSelectionButton = GetNode<TextureButton>("LevelSelectionButton");
         _startTutorialButton = GetNode<TextureButton>("TutorialButton");
-        _startGameButton.Connect("pressed", this, "emit_signal", new Array() { "ChangeScene", new Array() { "LevelController" } });
-        _openShopButton.Connect("pressed", this, "emit_signal", new Array() { "ChangeScene", new Array() { "Shop" } });
-        _openSettingsButton.Connect("pressed", this, "emit_signal", new Array() { "ChangeScene", new Array() { "Settings" } });
-        _openLevelSelectionButton.Connect("pressed", this, "emit_signal", new Array() { "ChangeScene", new Array() { "LevelSelection" } });
+        _startGameButton.Connect("pressed", this, "emit_signal", new Array() { "ChangeScene", "LevelController" });
+        _openShopButton.Connect("pressed", this, "emit_signal", new Array() { "ChangeScene", "Shop" });
+        _openSettingsButton.Connect("pressed", this, "emit_signal", new Array() { "ChangeScene", "Settings" });
+        _openLevelSelectionButton.Connect("pressed", this, "emit_signal", new Array() { "ChangeScene", "LevelSelection" });
         _startTutorialButton.Connect("pressed", this, "emit_signal", new Array() { "StartTutorial" });
     }
 
-    public void EnterScene()
+    public void EnterScene(Node2D sceneController)
     {
+        this.Connect("ChangeScene", sceneController, "ChangeScene");
     }
 
     public void ExitScene()

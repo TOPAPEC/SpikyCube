@@ -1,12 +1,15 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://resources/Fonts/Spectral-ExtraBold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://resources/PXUI-Basic/CroppedSquare.png" type="Texture" id=2]
 [ext_resource path="res://src/Interface/LevelSelection/LevelSelectionV1/LevelSelectionV1.cs" type="Script" id=3]
 [ext_resource path="res://src/Interface/LevelSelection/LevelSelectionV1/CoinsCounter.tscn" type="PackedScene" id=4]
-[ext_resource path="res://resources/GUIItems/CrabirintLogoLargeCropped.png" type="Texture" id=5]
+[ext_resource path="res://resources/PXUI-Basic/Chapter0.png" type="Texture" id=5]
+[ext_resource path="res://resources/PXUI-Basic/BackButton.png" type="Texture" id=6]
+[ext_resource path="res://resources/PXUI-Basic/ArrowButton.png" type="Texture" id=7]
 [ext_resource path="res://resources/UISounds/MainMenu.wav" type="AudioStream" id=8]
 [ext_resource path="res://resources/UISounds/ErrorSound.wav" type="AudioStream" id=9]
+[ext_resource path="res://resources/PXUI-Basic/ArrowButtonInverted.png" type="Texture" id=10]
 
 [sub_resource type="Gradient" id=4]
 offsets = PoolRealArray( 0 )
@@ -26,6 +29,10 @@ font_data = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 272.0 ],
+"_edit_vertical_guides_": [ 32.0, 688.0, 360.0 ]
+}
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -36,23 +43,13 @@ size_flags_vertical = 3
 texture = SubResource( 3 )
 expand = true
 
-[node name="GameLogo" type="TextureButton" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -288.0
-margin_top = 40.0
-margin_right = 300.0
-margin_bottom = 192.0
-texture_normal = ExtResource( 5 )
-expand = true
-
 [node name="LevelsGrid" type="GridContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -280.0
-margin_top = 250.0
+margin_top = 402.0
 margin_right = 273.0
-margin_bottom = 777.0
+margin_bottom = 1147.0
 custom_constants/vseparation = 65
 custom_constants/hseparation = 55
 columns = 4
@@ -472,9 +469,9 @@ text = " 20 "
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -280.0
-margin_top = 342.0
+margin_top = 494.0
 margin_right = 283.0
-margin_bottom = 692.0
+margin_bottom = 1186.0
 mouse_filter = 2
 custom_constants/vseparation = 113
 custom_constants/hseparation = 47
@@ -638,3 +635,33 @@ stream = ExtResource( 8 )
 stream = ExtResource( 9 )
 
 [node name="ChangeChapterSound" type="AudioStreamPlayer" parent="."]
+
+[node name="BackButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -312.0
+margin_top = 48.0
+margin_right = -187.0
+margin_bottom = 173.0
+texture_normal = ExtResource( 6 )
+
+[node name="PreviousChapter" type="TextureButton" parent="."]
+margin_left = 32.0
+margin_top = 192.0
+margin_right = 182.0
+margin_bottom = 342.0
+texture_normal = ExtResource( 10 )
+
+[node name="NextChapter" type="TextureButton" parent="."]
+margin_left = 536.0
+margin_top = 192.0
+margin_right = 686.0
+margin_bottom = 342.0
+texture_normal = ExtResource( 7 )
+
+[node name="ChapterNumber" type="TextureRect" parent="."]
+margin_left = 288.0
+margin_top = 192.0
+margin_right = 438.0
+margin_bottom = 342.0
+texture = ExtResource( 5 )

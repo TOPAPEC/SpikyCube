@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class MenuV1 : Control
+public class MenuV1 : Control, IScene
 {
     // Declare member variables here. Examples:
     // private int a = 2;
@@ -71,5 +71,17 @@ public class MenuV1 : Control
     public void HideButtons()
     {
         Visible = false;
+    }
+
+    public void EnterScene(Node2D sceneController)
+    {
+        _resumeGameButton.Connect("pressed", sceneController, "ResumeGame");
+        _restartButton.Connect("pressed", sceneController, "RestartLevel");
+        _selectLevelButton.Connect("pressed", sceneController, "ToMainMenu");
+    }
+
+    public void ExitScene()
+    {
+        QueueFree();
     }
 }

@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Net.Mime;
+using Godot.Collections;
 using SpikyCube.SceneController;
 using Object = Godot.Object;
 
@@ -11,13 +13,14 @@ public class LevelSelectionV1 : Control, IScene
     // private string b = "text";
 
     [Signal]
-    public delegate void ChangeLevelTo(String levelName);
+    public delegate void ChangeLevelTo();
 
     private GridContainer _levelButtonsGrid;
     private GridContainer _coinsCounterGrid;
     private Object _playerStats;
     private AudioStreamPlayer _mainMenuClickSound;
     private AudioStreamPlayer _blockedSound;
+    private TextureButton _backButton;
     private int _chapterNumber = 0;
     
     
@@ -51,12 +54,15 @@ public class LevelSelectionV1 : Control, IScene
 
     private void _levelChosen(int levelNumber)
     {
-        EmitSignal("ChangeLevelTo", $"Chapter{_chapterNumber}Level{levelNumber}");
+        _playerStats.Call("set_last_level", _chapterNumber, levelNumber, 0);
+        EmitSignal("ChangeLevelTo");
     }
 
-    public void EnterScene()
+    public void EnterScene(Node2D sceneController)
     {
-        
+        this.Connect("ChangeLevelTo", sceneController, "ChangeScene", new Godot.Collections.Array() {"LevelController"});
+        _backButton = GetNode<TextureButton>("BackButton");
+        _backButton.Connect("pressed", sceneController, "ChangeScene", new Godot.Collections.Array() { "MainMenu" });
     }
 
     public void ExitScene()

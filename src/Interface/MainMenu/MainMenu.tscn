@@ -27,6 +27,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 11 )
 __meta__ = {
+"_edit_horizontal_guides_": [ 268.0 ],
 "_edit_vertical_guides_": [ 360.0 ]
 }
 
@@ -55,7 +56,6 @@ expand = true
 position = Vector2( 160, 157 )
 scale = Vector2( 0.8, 0.8 )
 frames = SubResource( 3 )
-frame = 1
 playing = true
 
 [node name="GameLogo" type="TextureButton" parent="."]
