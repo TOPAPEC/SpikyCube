@@ -3,6 +3,6 @@ using System;
 
 public interface IScene
 {
-    void EnterScene();
+    void EnterScene(Node2D sceneController);
     void ExitScene();
 }

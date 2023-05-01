@@ -7,37 +7,54 @@ var callback_ad = JavaScript.create_callback(self, '_ad')
 var callback_init_scores = JavaScript.create_callback(self, "load_player_profile")
 var callback_set_profile_info = JavaScript.create_callback(self, "set_profile_info")
 var profile = JavaScript.create_object("Object")
+var __IS_LOCAL_DEBUG = 1
 onready var win = JavaScript.get_interface("window")
 
 signal coins_amount_changed(new_amount)
 signal keys_amount_changed(new_amount)
 signal end_level()
-signal load_init_level(level)
 signal profile_is_ready()
 
-func _ready():
+func init_player_data():
     if is_instance_valid(win):
         profile["SaveSchemaVersion"] = "1.0"
-        profile["LevelScores"] = JavaScript.create_object("Array", 1)
+        profile["LevelScores"] = JavaScript.create_object("Array", 0)
         profile["LevelScores"].push(JavaScript.create_object("Array", 20))
         for i in range(20):
-            profile["LevelScores"][i] = 0
-        profile["LastLevel"] = 0
+            profile["LevelScores"][0][i] = 0
+        profile["LastLevel"] = JavaScript.create_object("Array", 3)
+        profile["LastLevel"][0] = 0
+        profile["LastLevel"][1] = 0
+        profile["LastLevel"][2] = 0
         profile["IsTutorialPassed"] = 0
         profile["Skins"] = JavaScript.create_object("Object")
         profile["Skins"]["PlayerSkin"] = 0
         profile["Skins"]["WorldSkin"] = 0
         profile["Skins"]["EnemySkins"] = JavaScript.create_object("Array", 0)
+        print("Initing SDK------------------------")
     else:
         print("Cannot init profile, no js")
         profile = {}
         profile["LevelScores"] = []
+        profile["IsTutorialPassed"] = 0
         profile["LevelScores"].append([])
         for _i in range(21):
             profile["LevelScores"][0].append(0)
+        profile["LastLevel"] = [0, 0, 0]
+    init_sdk()
 
 func get_latest_save_schema_version():
     return "1.0"
+
+func is_tutorial_passed():
+    return bool(profile["IsTutorialPassed"])
+
+func finish_tutorial():
+    print("Tutorial is finished")
+    profile["IsTutorialPassed"] = 1;
+
+func reset_tutorial():
+    profile["IsTutorialPassed"] = 0;
 
 func update_profile(old_profile):
     var profile_version = old_profile["SaveSchemaVersion"]
@@ -56,6 +73,20 @@ func check_profile_correct(new_profile):
 func get_level_score(chapter_id, level_id):
     return profile["LevelScores"][chapter_id][level_id]
 
+func set_last_level(chapter, level, aux):
+    print("[%s, %s, %s]" % [chapter, level, aux])
+    var tmp = JavaScript.create_object("Array", 3) 
+    tmp[0] = chapter
+    tmp[1] = level
+    tmp[2] = aux
+    profile["LastLevel"] = tmp
+    print("Set last level: %s" % profile["LastLevel"][0])
+    if is_instance_valid(win) and not __IS_LOCAL_DEBUG:
+        upload_profile()
+
+func get_last_level():
+    return [int(profile["LastLevel"][0]), int(profile["LastLevel"][1]), int(profile["LastLevel"][2])]
+
 func set_current_coins(value):
     current_coins = int(value)
     emit_signal("coins_amount_changed", int(value))
@@ -72,7 +103,7 @@ func get_current_keys():
 
 func save_level_progress(chapter_id, level_id):
     profile["LevelScores"][int(chapter_id)][int(level_id)] = current_coins
-    if is_instance_valid(win):
+    if is_instance_valid(win) and not __IS_LOCAL_DEBUG:
         upload_profile()
     else:
         print("Cannot upload progress, no js")
@@ -83,11 +114,12 @@ func reset_current_state():
     set_current_keys(0)
 
 func init_sdk():
-    if is_instance_valid(win):
+    if is_instance_valid(win) and not __IS_LOCAL_DEBUG:
         win.initGame()
         win.getData(callback_set_profile_info)
     else:
         print("Cannot load profile, no js")
+        emit_signal("profile_is_ready")
 
 func load_player_profile():
     win.getData(callback_set_profile_info)
@@ -95,11 +127,11 @@ func load_player_profile():
 func set_profile_info(args):
     var new_profile = args[0]
     var profile_version = args[0]["SaveSchemaVersion"]
-    if profile_version != get_latest_save_schema_version():	    
+    if profile_version != get_latest_save_schema_version():
         var updated_profile = update_profile(new_profile)
     if check_profile_correct(new_profile):
         profile = new_profile
-    emit_signal("load_init_level", "Chapter0Level%s" % profile["LastLevel"])
+    emit_signal("profile_is_ready")
 
 func upload_profile():
     win.setData(profile)

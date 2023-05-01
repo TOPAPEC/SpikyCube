@@ -1,259 +1,61 @@
-    using Godot;
+using Godot;
 using System;
 using System.Collections.Generic;
-using SpikyCube.SceneController;
-using System.Text.RegularExpressions;
-    using Object = Godot.Object;
+using Object = Godot.Object;
 
-    public class SceneController : Node2D
+public class SceneController : Node2D
 {
-    public Node CurrentLevel;
-    public readonly String CurrentLevelName = "GameLayer/Chapter0Level0";
-    public static readonly LevelsDict Levels = new LevelsDict();
-    public HUDV1 HUD;
-    private MenuV1 _pauseMenu;
-    private MainMenu _mainMenu;
-    private CanvasLayer _gameLayer;
-    private CanvasLayer _uiLayer;
-    private CanvasLayer _mainMenuCanvasLayer;
-    private CanvasLayer _loadingScreen;
-    private CanvasLayer _levelSelectionLayer;
-    private ColorRect _greyScaleShader;
-    private AudioStreamPlayer _gameAudio;
-    private float _audioPlaybackPosition;
-    private String _levelId = "Chapter0Level0";
-    private KinematicBody2D _player;
+    public Node CurrentScene;
+    public String CurrentSceneName;
+
     private Object _playerStats;
-    private LevelSelectionV1 _levelSelectionPanel;
-    private bool _isInterfaceOnScreen;
-    private bool _isGameInitializing = true;
+
+    private LoadingScreen _loadingScreen;
+
+    private CanvasLayer _gameLayer;
     
-    public class LevelsDict
+    private Dictionary<String, String> ScenePaths = new Dictionary<string, string>()
     {
-        public Dictionary<String, String> LevelPaths = new Dictionary<string, String>();
-
-        public LevelsDict()
-        {
-            _fillLevelDict(0, 0, 20);
-        }
-        
-        private void _fillLevelDict(int chapter, int fromLevel, int toLevel)
-        {
-            for (int i = fromLevel; i < toLevel; ++i)
-            {
-                String levelName = $"Chapter{chapter}Level{i}";
-                LevelPaths[levelName] = $"res://src/Field/Levels/Chapter{chapter}/Level{i}/Level_{chapter}_{i}.tscn";
-            }
-        }
-
-        public PackedScene this[String levelName]
-        {
-            get => (PackedScene)ResourceLoader.Load(LevelPaths[levelName]);
-        }
-    }
+        { "LevelSelection", "res://src/Interface/LevelSelection/LevelSelectionV1/LevelSelectionV1.tscn"},
+        { "LevelController", "res://src/Interface/LevelController/LevelController.tscn" },
+        { "MainMenu", "res://src/Interface/MainMenu/MainMenu.tscn" },
+        { "Shop", "res://src/Interface/Shop/Shop.tscn" },
+        { "Settings", "res://src/Interface/Settings/Settings.tscn" }
+    };
 
     public override void _Ready()
     {
-        HUD = GetNode<HUDV1>("GameLayer/HUD");
-        _pauseMenu = GetNode<MenuV1>("UILayer/PauseMenu");
-        _uiLayer = GetNode<CanvasLayer>("UILayer");
-        _gameLayer = GetNode<CanvasLayer>("GameLayer");
-        _greyScaleShader = GetNode<ColorRect>("GameLayer/GreyScaleShader");
-        _gameAudio = GetNode<AudioStreamPlayer>("GameLayer/GameAudio");
         _playerStats = GetNode<Object>("/root/PlayerStatsExtended");
-        _loadingScreen = GetNode<CanvasLayer>("LoadingScreen");
-        _levelSelectionLayer = GetNode<CanvasLayer>("LevelSelection");
-        _levelSelectionPanel = GetNode<LevelSelectionV1>("LevelSelection/LevelSelectionPanel");
-        _mainMenu = GetNode<MainMenu>("MainMenu/MainMenu");
-        _mainMenuCanvasLayer = GetNode<CanvasLayer>("MainMenu");
-        _levelSelectionPanel.Connect("ChangeLevelTo", this, "LevelSelectionChangeScene");
-        _playerStats.Connect("load_init_level", this, "LevelSelectionChangeScene");
-        try
-        {
-            _playerStats.Call("init_sdk");
-        }
-        catch (Exception ex)
-        {
-            GD.Print($"Failed to load player data. {ex}");
-        }
-        ChangeScene(_levelId);
-        CurrentLevel = GetNode<Node>(CurrentLevelName);
-        _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
-        HUD.ShowHud();
-        HUD.Connect("HudPauseButtonPressed", this, "PauseGame");
-        _pauseMenu.Connect("RestartGamePressed", this, "ChangeToCurrentLevel");
-        _gameAudio.Playing = true;
-        _pauseMenu.Connect("ResumeGamePressed", this, "ResumeGame");
-        _pauseMenu.Connect("ButtonsHidden", this, "HideUI");
-        _pauseMenu.Connect("SelectLevelPressed", this, "ShowLevelSelection");
-        
-
-        GetTree().Root.Connect("size_changed", this, "_centerLevel");
+        _loadingScreen = GetNode<LoadingScreen>("LoadingScreen/LoadingScreen");
+        _gameLayer = GetNode<CanvasLayer>("Game");
+        _loadingScreen.StartLoading();
+        _playerStats.Connect("profile_is_ready", this, "StartGame");
+        _playerStats.Call("init_player_data");
+        CurrentScene = GetNode<Node>("Game/MainMenu");
+        ((IScene)CurrentScene).EnterScene(this);
     }
 
-    private void _centerLevel()
+    public void StartGame()
     {
-        if (!(_checkIfSceneIsInterface(_levelId)))
-        {
-            var levelTileMap = CurrentLevel.GetNode<TileMap>("TileMap");
-            var currentResolution = GetViewportRect().End - GetViewportRect().Position;
-            var maxYCellsCount = 12;
-            var bottomYMargin = 25;
-            var topYMargin = 150;
-            var xScreenResolution = Math.Min(720, currentResolution.x);
-            var sideMargin = 10;
-            var maxLevelSize = levelTileMap.CellSize.y * maxYCellsCount;
-            var tileMapRect = levelTileMap.GetUsedRect();
-            var yLevelScale = (currentResolution.y - topYMargin - bottomYMargin) / maxLevelSize;
-            var xLevelScale = (xScreenResolution - sideMargin * 2) / maxLevelSize;
-            var levelSize = tileMapRect.End - tileMapRect.Position;
-            if (xLevelScale * levelSize.y > currentResolution.y - topYMargin - bottomYMargin)
-            {
-                xLevelScale = yLevelScale;
-            }
-            else
-            {
-                yLevelScale = Math.Min(xLevelScale, yLevelScale);
-                xLevelScale = yLevelScale;
-            }
-            ((Node2D)CurrentLevel).Scale = new Vector2(xLevelScale, yLevelScale);
-            GD.Print(((Node2D)CurrentLevel).Transform.Scale);
-            var levelSizeInPx = levelSize * levelTileMap.CellSize * ((Node2D)CurrentLevel).Transform.Scale;
-            var freeScreenSize = currentResolution - levelSizeInPx;
-            var levelOffsetFractions = new Vector2(0.5f, 0f);
-            ((Node2D)CurrentLevel).Position = new Vector2(freeScreenSize * levelOffsetFractions) + new Vector2(0, topYMargin);           
-        }
-
+        _loadingScreen.StopLoading();
     }
 
-    public void PauseGame()
+    public void StartTutorial()
     {
-        _audioPlaybackPosition = _gameAudio.GetPlaybackPosition();
-        _gameAudio.Stop();
-        _greyScaleShader.Visible = true;
-        _pauseMenu.ShowButtons();
-        _uiLayer.Visible = true;
-        GetTree().Paused = true;
+        _playerStats.Call("set_last_level", new Godot.Collections.Array() { 0, 0, 0 });
+        ChangeScene("LevelController");
     }
 
-    public void ResumeGame()
+    public void ChangeScene(String nextScene)
     {
-         _greyScaleShader.Visible = false;
-         HideUI();
-    }
-
-    public void HideUI()
-    {
-        GetTree().Paused = false;
-        if (!_checkIfSceneIsInterface(_levelId))
-        {
-            _gameAudio.Play();
-            _gameAudio.Seek(_audioPlaybackPosition);
-        } 
-    }
-
-    private bool _checkIfSceneIsInterface(String sceneName)
-    {
-        return _isInterfaceOnScreen;
-    }
-
-    public void ShowLevelSelection()
-    {
-        _isInterfaceOnScreen = true;
-        _levelSelectionPanel.UpdateCoinLabels();
-        HUD.Hide();
-        ResumeGame();
-        _levelSelectionLayer.Show();
-    }
-
-    public void LevelSelectionChangeScene(String newScene)
-    {
-        _isGameInitializing = false;
-        _loadingScreen.Show();
-        _isInterfaceOnScreen = false;
-        _levelSelectionLayer.Hide();
-        ChangeScene(newScene);
-        _loadingScreen.Hide();
-    }
-
-    public void ChangeScene(String newSceneName)
-    {
-        _levelId = newSceneName;
-        ResumeGame();
-        HUD.ShowHud();
-        if (!(CurrentLevel is null))
-        {
-            ((IScene)CurrentLevel).ExitScene();
-            CurrentLevel.QueueFree();
-        }
-
-        var newScene = Levels[newSceneName];
-        var newSceneInstance = newScene.Instance();
-        newSceneInstance.Name = _levelId;
-        ((IScene)newSceneInstance).EnterScene();
-        CurrentLevel = newSceneInstance;
-        if (_checkIfSceneIsInterface(newSceneName))
-        {
-            HUD.HideHud();
-        }
-        else
-        {
-            HUD.ShowHud();
-            ((Node2D)CurrentLevel).ZIndex = -1;
-            _player = CurrentLevel.GetNode<KinematicBody2D>("DummyPlayer");
-            _player.Connect("RestartLevel", this, "ChangeToCurrentLevel");
-            _player.Connect("NextLevel", this, "ChangeToNextLevel");
-            _centerLevel();
-        }
+        GD.Print($"Changing scene {nextScene}");
+        ((IScene)CurrentScene).ExitScene();
+        var newScenePackedScene = ResourceLoader.Load<PackedScene>(ScenePaths[nextScene]);
+        var newSceneInstance = newScenePackedScene.Instance();
         _gameLayer.AddChild(newSceneInstance);
-        _playerStats.Call("reset_current_state");
-        String sceneName = _levelId;
-        string pattern = "Chapter(.+)Level(.+)";
-        int chapter = 0;
-        int level = 0;
-        foreach (Match match in Regex.Matches(sceneName, pattern, RegexOptions.IgnoreCase)) 
-        {
-            int.TryParse(match.Groups[1].Value, out chapter);
-            int.TryParse(match.Groups[2].Value, out level);
-        }
-
-        if (!_isGameInitializing)
-        {
-            _playerStats.Call("set_last_level", level);
-        }
-    }
-
-    public void ChangeToCurrentLevel()
-    {
-        _audioPlaybackPosition = _gameAudio.GetPlaybackPosition() + 0.2f;
-        ChangeScene(_levelId);
-    }
-    
-    public void ChangeToNextLevel()
-    {
-        String sceneName = _levelId;
-        string pattern = "Chapter(.+)Level(.+)";
-        int chapter = 0;
-        int level = 0;
-        foreach (Match match in Regex.Matches(sceneName, pattern, RegexOptions.IgnoreCase)) 
-        {
-            int.TryParse(match.Groups[1].Value, out chapter);
-            int.TryParse(match.Groups[2].Value, out level);
-        }
-        _playerStats.Call("save_level_progress", chapter, level);
-        String sceneNameNextLevel = String.Format("Chapter{0}Level{1}", chapter, level + 1);
-        String sceneNameNextChapter = String.Format("Chapter{0}Level{1}", chapter + 1, 0);
-        if (Levels.LevelPaths.ContainsKey(sceneNameNextLevel)) 
-        {
-            ChangeScene(sceneNameNextLevel);
-        } 
-        else if (Levels.LevelPaths.ContainsKey(sceneNameNextChapter)) 
-        {
-            ChangeScene(sceneNameNextChapter);
-        } 
-        else 
-        {
-            ShowLevelSelection();
-        }
+        ((IScene)newSceneInstance).EnterScene(this);
+        CurrentScene = newSceneInstance;
+        CurrentSceneName = nextScene;
     }
 }
+
